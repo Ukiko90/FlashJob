@@ -7,36 +7,48 @@ st.set_page_config(
     page_title="FlashJob - Lavoro Last Minute", page_icon="⚡", layout="centered"
 )
 
-# --- STILE CSS ---
+# --- STILE CSS PROFESSIONALE (UI/UX) ---
 st.markdown(
     """
     <style>
-    .main { background-color: #f1f5f9; }
-    .block-container { padding-top: 1rem !important; padding-bottom: 3rem !important; max-width: 650px; }
+    /* Sfondo generale e container principale */
+    .main { background-color: #f8fafc; }
+    .block-container { 
+        padding-top: 1.5rem !important; 
+        padding-bottom: 4rem !important; 
+        max-width: 680px; 
+    }
 
-    .ios-card {
-        background-color: white;
-        padding: 18px;
+    /* Card standard per i turni */
+    .flash-card {
+        background-color: #ffffff;
+        padding: 20px;
         border-radius: 16px;
-        box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-        margin-bottom: 14px;
+        box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.08);
+        margin-bottom: 16px;
         border: 1px solid #e2e8f0;
+        transition: transform 0.2s ease;
+    }
+    .flash-card:hover {
+        border-color: #cbd5e1;
     }
 
-    .ios-card-pro {
-        background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
-        padding: 18px;
+    /* Card in evidenza PRO */
+    .flash-card-pro {
+        background: linear-gradient(145deg, #ffffff 0%, #fffdf4 100%);
+        padding: 20px;
         border-radius: 16px;
-        box-shadow: 0 4px 20px -2px rgba(234, 179, 8, 0.15);
-        margin-bottom: 14px;
-        border: 1px solid #fde047;
+        box-shadow: 0 6px 20px -4px rgba(234, 179, 8, 0.15);
+        margin-bottom: 16px;
+        border: 1.5px solid #fde047;
     }
 
+    /* Pulsanti personalizzati */
     .stButton > button {
         border-radius: 12px;
         font-weight: 600;
         width: 100%;
-        padding: 0.6rem 1rem;
+        padding: 0.65rem 1rem;
         background-color: #0f172a;
         color: white;
         border: none;
@@ -49,18 +61,51 @@ st.markdown(
         transform: translateY(-1px);
     }
 
+    /* Campi di input */
     .stTextInput > div > div > input, .stSelectbox > div > div > div {
-        border-radius: 10px;
-        border-color: #cbd5e1;
-        background-color: #f8fafc;
+        border-radius: 10px !important;
+        border-color: #cbd5e1 !important;
+        background-color: #ffffff !important;
+        padding: 0.4rem;
     }
 
-    h1 { font-size: 1.4rem !important; font-weight: 800 !important; color: #0f172a; }
-    h2 { font-size: 1.2rem !important; font-weight: 700 !important; color: #1e293b; }
-    
-    .badge-free { background-color: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; margin-top: 4px; }
-    .badge-pro { background-color: #fef08a; color: #854d0e; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; margin-bottom: 6px; }
-    .ad-banner { background-color: #eff6ff; border: 1px dashed #3b82f6; padding: 10px; border-radius: 10px; text-align: center; color: #1e3a8a; font-size: 0.85rem; margin-bottom: 15px; }
+    /* Tipografia */
+    h1 { font-size: 1.5rem !important; font-weight: 800 !important; color: #0f172a; }
+    h2, h3 { color: #1e293b; }
+
+    /* Badge e Tag */
+    .badge-free { 
+        background-color: #f0fdf4; 
+        color: #166534; 
+        padding: 6px 14px; 
+        border-radius: 30px; 
+        font-size: 0.8rem; 
+        font-weight: 700; 
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid #bbf7d0;
+    }
+    .badge-pro { 
+        background-color: #fef08a; 
+        color: #854d0e; 
+        padding: 4px 10px; 
+        border-radius: 20px; 
+        font-size: 0.75rem; 
+        font-weight: 700; 
+        display: inline-block; 
+        margin-bottom: 8px; 
+    }
+    .ad-banner { 
+        background-color: #eff6ff; 
+        border: 1px dashed #3b82f6; 
+        padding: 14px; 
+        border-radius: 12px; 
+        text-align: center; 
+        color: #1e3a8a; 
+        font-size: 0.85rem; 
+        margin-bottom: 20px; 
+    }
     </style>
 """,
     unsafe_allow_html=True,
@@ -85,11 +130,11 @@ if "offerte" not in st.session_state:
 if "candidature" not in st.session_state:
   st.session_state.candidature = []
 
-# --- LOGO PERFETTO (COMPATTO, LARGO E LEGGIBILE) ---
+# --- LOGO DESIGN PULITO E PROPORZIONATO ---
 logo_html = """
-<div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
-    <div style="width: 100%; max-width: 420px;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 120" style="width: 100%; height: auto; display: block; filter: drop-shadow(0px 4px 12px rgba(15,23,42,0.15));">
+<div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 12px;">
+    <div style="width: 100%; max-width: 380px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 115" style="width: 100%; height: auto; display: block; filter: drop-shadow(0px 6px 16px rgba(15,23,42,0.12));">
           <defs>
             <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#0f172a" />
@@ -100,20 +145,25 @@ logo_html = """
               <stop offset="100%" stop-color="#ca8a04" />
             </linearGradient>
           </defs>
-          <rect width="512" height="120" rx="28" fill="url(#bgGrad)" />
-          <path d="M 75 18 L 42 72 H 63 L 52 102 L 102 60 H 81 L 91 18 Z" fill="url(#boltGrad)" />
-          <text x="130" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="46" font-weight="900" fill="#ffffff">FlashJob</text>
-          <text x="133" y="88" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">Il lavoro a portata di clic</text>
+          <rect width="512" height="115" rx="26" fill="url(#bgGrad)" />
+          <path d="M 70 18 L 38 68 H 58 L 48 98 L 94 56 H 74 L 84 18 Z" fill="url(#boltGrad)" />
+          <text x="122" y="55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="42" font-weight="900" fill="#ffffff">FlashJob</text>
+          <text x="125" y="83" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#94a3b8">Il lavoro a portata di clic</text>
         </svg>
     </div>
 </div>
 """
 st.markdown(logo_html, unsafe_allow_html=True)
+
+# Badge di garanzia centrato
 st.markdown(
-    "<div style='text-align: center;'><span class='badge-free'>🛡️ 100% Gratuito per i Lavoratori (Zero Commissioni)</span></div>",
+    """
+    <div style='text-align: center; margin-bottom: 24px;'>
+        <span class='badge-free'>🛡️ 100% Gratuito per i Lavoratori &bull; Zero Commissioni</span>
+    </div>
+""",
     unsafe_allow_html=True,
 )
-st.divider()
 
 # --- MENU A TENDINA PRINCIPALE ---
 ruolo = st.selectbox(
@@ -124,6 +174,8 @@ ruolo = st.selectbox(
         "⭐ Azienda PRO (Abbonamenti & Vetrina)",
     ],
 )
+
+st.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
 
 # ==========================================
 # 👤 AREA LAVORATORE
@@ -144,6 +196,13 @@ if "Lavoratore" in ruolo:
   if not offerte_aperte:
     st.info("Nessun turno disponibile in questa zona al momento.")
   else:
+    st.markdown(
+        "<p style='color: #64748b; font-size: 0.9rem; margin-bottom:"
+        " 12px;'>Inserisci i tuoi dati una sola volta per candidarti"
+        " rapidamente ai turni:</p>",
+        unsafe_allow_html=True,
+    )
+
     nome_utente = st.text_input(
         "Il tuo Nome e Cognome:", placeholder="Es. Mario Rossi"
     )
@@ -151,9 +210,13 @@ if "Lavoratore" in ruolo:
         "Il tuo WhatsApp / Telefono:", placeholder="Es. 3331234567"
     )
 
+    st.markdown(
+        "<div style='margin-bottom: 15px;'></div>", unsafe_allow_html=True
+    )
+
     for offerta in offerte_aperte:
       is_pro = offerta.get("premium", False)
-      card_class = "ios-card-pro" if is_pro else "ios-card"
+      card_class = "flash-card-pro" if is_pro else "flash-card"
       badge_html = (
           "<span class='badge-pro'>⭐ IN EVIDENZA</span><br>" if is_pro else ""
       )
@@ -162,10 +225,10 @@ if "Lavoratore" in ruolo:
           f"""
             <div class="{card_class}">
                 {badge_html}
-                <h3 style="margin:0 0 6px 0; color:#0f172a; font-size:1.05rem;">📍 {offerta['azienda']} <span style="font-size:0.85rem; font-weight:normal; color:#64748b;">({offerta['citta']})</span></h3>
-                <p style="margin:3px 0; font-size:0.95rem; font-weight:600; color:#334155;">Mansione: {offerta['mansione']}</p>
-                <p style="margin:3px 0; color:#475569; font-size:0.85rem;">📅 {offerta['data']} &nbsp;|&nbsp; 🕒 {offerta['orario']}</p>
-                <p style="margin:6px 0 0 0; font-size:1.05rem; font-weight:700; color:#16a34a;">💰 Compenso: {offerta['compenso']}</p>
+                <h3 style="margin:0 0 6px 0; color:#0f172a; font-size:1.1rem;">📍 {offerta['azienda']} <span style="font-size:0.85rem; font-weight:normal; color:#64748b;">({offerta['citta']})</span></h3>
+                <p style="margin:4px 0; font-size:0.95rem; font-weight:600; color:#334155;">Mansione: {offerta['mansione']}</p>
+                <p style="margin:4px 0; color:#475569; font-size:0.85rem;">📅 {offerta['data']} &nbsp;|&nbsp; 🕒 {offerta['orario']}</p>
+                <p style="margin:8px 0 0 0; font-size:1.1rem; font-weight:700; color:#16a34a;">💰 Compenso: {offerta['compenso']}</p>
             </div>
         """,
           unsafe_allow_html=True,
@@ -204,7 +267,7 @@ elif "Azienda" in ruolo and "PRO" not in ruolo:
       """
         <div class="ad-banner">
         📢 <b>Spazio Sponsorizzato</b><br>
-        <i>Passa a PRO per rimuovere i banner e mettere i turni in cima!</i>
+        <i>Passa a PRO per rimuovere i limiti e posizionare i turni in cima alla bacheca!</i>
         </div>
     """,
       unsafe_allow_html=True,
@@ -227,7 +290,9 @@ elif "Azienda" in ruolo and "PRO" not in ruolo:
 
     compenso = st.text_input("Compenso Netto", placeholder="Es. 90€ a fine turno")
 
+    st.markdown("<div style='margin-top: 10px;'></div>", unsafe_allow_html=True)
     pubblica = st.form_submit_button("🚀 Pubblica Subito in Bacheca")
+
     if pubblica:
       if nome_azienda and mansione and compenso:
         nuova_offerta = {
@@ -242,23 +307,23 @@ elif "Azienda" in ruolo and "PRO" not in ruolo:
             "premium": False,
         }
         st.session_state.offerte.append(nuova_offerta)
-        st.success("Offerta online!")
+        st.success("Offerta pubblicata con successo!")
         st.rerun()
       else:
-        st.warning("Compila tutti i campi.")
+        st.warning("Compila tutti i campi obbligatori.")
 
   st.divider()
   st.subheader("📋 Candidature Ricevute")
 
   if not st.session_state.candidature:
-    st.info("Nessuna candidatura ricevuta.")
+    st.info("Nessuna candidatura ricevuta al momento.")
   else:
     for cand in st.session_state.candidature:
       st.markdown(
           f"""
-            <div class="ios-card">
+            <div class="flash-card">
                 <p style="margin:0; font-weight:bold; color:#0f172a;">👤 {cand['nome_lavoratore']}</p>
-                <p style="margin:3px 0; color:#334155;">📞 Tel: <b>{cand['telefono']}</b></p>
+                <p style="margin:4px 0 0 0; color:#334155;">📞 Telefono: <b style="color:#0f172a;">{cand['telefono']}</b></p>
             </div>
         """,
           unsafe_allow_html=True,
@@ -269,15 +334,17 @@ elif "Azienda" in ruolo and "PRO" not in ruolo:
 # ==========================================
 else:
   st.subheader("⭐ FlashJob PRO")
-  st.write("Sblocca la massima visibilità per le tue urgenze.")
+  st.write("Sblocca la massima visibilità per le tue urgenze di personale.")
+
+  st.markdown("<div style='margin-top: 10px;'></div>", unsafe_allow_html=True)
 
   col_p1, col_p2 = st.columns(2)
   with col_p1:
     st.markdown(
         """
-        <div class="ios-card">
-            <h4>Piano Base</h4>
-            <p style="font-size:0.85rem; color:#64748b;">Gratuito</p>
+        <div class="flash-card" style="text-align: center;">
+            <h4 style="margin-bottom:5px;">Piano Base</h4>
+            <p style="font-size:0.85rem; color:#64748b; margin-bottom:0;">Gratuito</p>
         </div>
     """,
         unsafe_allow_html=True,
@@ -285,13 +352,28 @@ else:
   with col_p2:
     st.markdown(
         """
-        <div class="ios-card-pro">
-            <h4>Piano PRO</h4>
-            <p style="font-size:0.85rem; color:#854d0e;"><b>39€ / mese</b></p>
+        <div class="flash-card-pro" style="text-align: center;">
+            <h4 style="margin-bottom:5px; color:#854d0e;">Piano PRO</h4>
+            <p style="font-size:0.85rem; color:#854d0e; margin-bottom:0;"><b>39€ / mese</b></p>
         </div>
     """,
         unsafe_allow_html=True,
     )
 
+  st.markdown("<div style='margin-top: 10px;'></div>", unsafe_allow_html=True)
+
   if st.button("Abbonati ora a FlashJob PRO"):
-    st.success("🎉 Account aziendale aggiornato a PRO!")
+    st.success("🎉 Account aziendale aggiornato a PRO con successo!")
+
+# --- FOOTER / NOTE LEGALI (TUTELA PIATTAFORMA) ---
+st.markdown("---")
+st.markdown(
+    """
+    <div style='text-align: center; color: #94a3b8; font-size: 0.75rem; line-height: 1.4;'>
+        <b>FlashJob</b> è esclusivamente una piattaforma tecnologica di comunicazione e bacheca annunci.<br>
+        Non gestisce contratti di lavoro, retribuzioni o pagamenti tra le parti.<br>
+        Consulta i <a href="https://github.com/TuoNomeUtente/TuoRepo/blob/main/TERMINI.md" target="_blank" style="color: #64748b; text-decoration: underline;">Termini e Condizioni Legali</a>.
+    </div>
+""",
+    unsafe_allow_html=True,
+)
