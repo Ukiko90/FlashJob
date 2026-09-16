@@ -68,42 +68,44 @@ st.markdown(
 
 # --- MEMORIA DI STATO ---
 if "offerte" not in st.session_state:
-    st.session_state.offerte = [
-        {
-            "id": 1,
-            "azienda": "The Sanctuary",
-            "citta": "Milano",
-            "mansione": "Addetto Sala / Bar",
-            "data": "2026-06-20",
-            "orario": "16:00 - 00:00",
-            "compenso": "90€ netti",
-            "stato": "Aperta",
-            "premium": True,
-        }
-    ]
+  st.session_state.offerte = [
+      {
+          "id": 1,
+          "azienda": "The Sanctuary",
+          "citta": "Milano",
+          "mansione": "Addetto Sala / Bar",
+          "data": "2026-06-20",
+          "orario": "16:00 - 00:00",
+          "compenso": "90€ netti",
+          "stato": "Aperta",
+          "premium": True,
+      }
+  ]
 
 if "candidature" not in st.session_state:
-    st.session_state.candidature = []
+  st.session_state.candidature = []
 
-# --- LOGO CORRETTO E BEN VISIBILE ---
+# --- LOGO CORRETTO E CENTRATO (FIX DIMENSIONI) ---
 logo_html = """
-<div style="text-align: center; margin-bottom: 8px;">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 170" width="100%" style="max-width: 420px; height: auto; filter: drop-shadow(0px 4px 12px rgba(15,23,42,0.15));">
-      <defs>
-        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#0f172a" />
-          <stop offset="100%" stop-color="#1e293b" />
-        </linearGradient>
-        <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#fde047" />
-          <stop offset="100%" stop-color="#ca8a04" />
-        </linearGradient>
-      </defs>
-      <rect width="512" height="170" rx="35" fill="url(#bgGrad)" />
-      <path d="M 95 25 L 55 95 H 82 L 70 145 L 130 80 H 102 L 115 25 Z" fill="url(#boltGrad)" />
-      <text x="165" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="44" font-weight="900" fill="#ffffff">FlashJob</text>
-      <text x="168" y="115" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="600" fill="#94a3b8">Il lavoro a portata di clic</text>
-    </svg>
+<div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
+    <div style="width: 100%; max-width: 320px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 170" style="width: 100%; height: auto; display: block; filter: drop-shadow(0px 4px 12px rgba(15,23,42,0.15));">
+          <defs>
+            <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#0f172a" />
+              <stop offset="100%" stop-color="#1e293b" />
+            </linearGradient>
+            <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fde047" />
+              <stop offset="100%" stop-color="#ca8a04" />
+            </linearGradient>
+          </defs>
+          <rect width="512" height="170" rx="35" fill="url(#bgGrad)" />
+          <path d="M 95 25 L 55 95 H 82 L 70 145 L 130 80 H 102 L 115 25 Z" fill="url(#boltGrad)" />
+          <text x="165" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="44" font-weight="900" fill="#ffffff">FlashJob</text>
+          <text x="168" y="115" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="600" fill="#94a3b8">Il lavoro a portata di clic</text>
+        </svg>
+    </div>
 </div>
 """
 st.markdown(logo_html, unsafe_allow_html=True)
@@ -127,176 +129,169 @@ ruolo = st.selectbox(
 # 👤 AREA LAVORATORE
 # ==========================================
 if "Lavoratore" in ruolo:
-    st.subheader("Bacheca Turni Attivi ⚡")
+  st.subheader("Bacheca Turni Attivi ⚡")
 
-    citta_filtro = st.selectbox(
-        "Filtra per zona:", ["Tutte le città", "Milano", "Roma", "Altro"]
+  citta_filtro = st.selectbox(
+      "Filtra per zona:", ["Tutte le città", "Milano", "Roma", "Altro"]
+  )
+
+  offerte_aperte = [o for o in st.session_state.offerte if o["stato"] == "Aperta"]
+  if citta_filtro != "Tutte le città":
+    offerte_aperte = [o for o in offerte_aperte if o["citta"] == citta_filtro]
+
+  offerte_aperte.sort(key=lambda x: x.get("premium", False), reverse=True)
+
+  if not offerte_aperte:
+    st.info("Nessun turno disponibile in questa zona al momento.")
+  else:
+    nome_utente = st.text_input(
+        "Il tuo Nome e Cognome:", placeholder="Es. Mario Rossi"
+    )
+    telefono_utente = st.text_input(
+        "Il tuo WhatsApp / Telefono:", placeholder="Es. 3331234567"
     )
 
-    offerte_aperte = [
-        o for o in st.session_state.offerte if o["stato"] == "Aperta"
-    ]
-    if citta_filtro != "Tutte le città":
-        offerte_aperte = [
-            o for o in offerte_aperte if o["citta"] == citta_filtro
-        ]
+    for offerta in offerte_aperte:
+      is_pro = offerta.get("premium", False)
+      card_class = "ios-card-pro" if is_pro else "ios-card"
+      badge_html = (
+          "<span class='badge-pro'>⭐ IN EVIDENZA</span><br>" if is_pro else ""
+      )
 
-    offerte_aperte.sort(key=lambda x: x.get("premium", False), reverse=True)
+      st.markdown(
+          f"""
+            <div class="{card_class}">
+                {badge_html}
+                <h3 style="margin:0 0 6px 0; color:#0f172a; font-size:1.05rem;">📍 {offerta['azienda']} <span style="font-size:0.85rem; font-weight:normal; color:#64748b;">({offerta['citta']})</span></h3>
+                <p style="margin:3px 0; font-size:0.95rem; font-weight:600; color:#334155;">Mansione: {offerta['mansione']}</p>
+                <p style="margin:3px 0; color:#475569; font-size:0.85rem;">📅 {offerta['data']} &nbsp;|&nbsp; 🕒 {offerta['orario']}</p>
+                <p style="margin:6px 0 0 0; font-size:1.05rem; font-weight:700; color:#16a34a;">💰 Compenso: {offerta['compenso']}</p>
+            </div>
+        """,
+          unsafe_allow_html=True,
+      )
 
-    if not offerte_aperte:
-        st.info("Nessun turno disponibile in questa zona al momento.")
-    else:
-        nome_utente = st.text_input(
-            "Il tuo Nome e Cognome:", placeholder="Es. Mario Rossi"
-        )
-        telefono_utente = st.text_input(
-            "Il tuo WhatsApp / Telefono:", placeholder="Es. 3331234567"
-        )
-
-        for offerta in offerte_aperte:
-            is_pro = offerta.get("premium", False)
-            card_class = "ios-card-pro" if is_pro else "ios-card"
-            badge_html = (
-                "<span class='badge-pro'>⭐ IN EVIDENZA</span><br>"
-                if is_pro
-                else ""
-            )
-
-            st.markdown(
-                f"""
-                <div class="{card_class}">
-                    {badge_html}
-                    <h3 style="margin:0 0 6px 0; color:#0f172a; font-size:1.05rem;">📍 {offerta['azienda']} <span style="font-size:0.85rem; font-weight:normal; color:#64748b;">({offerta['citta']})</span></h3>
-                    <p style="margin:3px 0; font-size:0.95rem; font-weight:600; color:#334155;">Mansione: {offerta['mansione']}</p>
-                    <p style="margin:3px 0; color:#475569; font-size:0.85rem;">📅 {offerta['data']} &nbsp;|&nbsp; 🕒 {offerta['orario']}</p>
-                    <p style="margin:6px 0 0 0; font-size:1.05rem; font-weight:700; color:#16a34a;">💰 Compenso: {offerta['compenso']}</p>
-                </div>
-            """,
-                unsafe_allow_html=True,
-            )
-
-            if st.button(
-                f"🔥 Candidati per {offerta['azienda']}",
-                key=f"cand_{offerta['id']}",
-            ):
-                if not nome_utente or not telefono_utente:
-                    st.warning(
-                        "⚠️ Inserisci nome e telefono nei campi sopra prima di candidarti!"
-                    )
-                else:
-                    nuova_candidatura = {
-                        "id": len(st.session_state.candidature) + 1,
-                        "offerta_id": offerta["id"],
-                        "nome_lavoratore": nome_utente,
-                        "telefono": telefono_utente,
-                        "data_candidatura": datetime.now().strftime("%H:%M:%S"),
-                    }
-                    st.session_state.candidature.append(nuova_candidatura)
-                    st.success(
-                        f"🎉 Candidatura inviata! L'azienda ti contatterà al numero `{telefono_utente}`."
-                    )
-                    st.rerun()
+      if st.button(
+          f"🔥 Candidati per {offerta['azienda']}", key=f"cand_{offerta['id']}"
+      ):
+        if not nome_utente or not telefono_utente:
+          st.warning(
+              "⚠️ Inserisci nome e telefono nei campi sopra prima di"
+              " candidarti!"
+          )
+        else:
+          nuova_candidatura = {
+              "id": len(st.session_state.candidature) + 1,
+              "offerta_id": offerta["id"],
+              "nome_lavoratore": nome_utente,
+              "telefono": telefono_utente,
+              "data_candidatura": datetime.now().strftime("%H:%M:%S"),
+          }
+          st.session_state.candidature.append(nuova_candidatura)
+          st.success(
+              f"🎉 Candidatura inviata! L'azienda ti contatterà al numero"
+              f" `{telefono_utente}`."
+          )
+          st.rerun()
 
 # ==========================================
 # 💼 AREA AZIENDA (FREE)
 # ==========================================
 elif "Azienda" in ruolo and "PRO" not in ruolo:
-    st.subheader("Pubblica un Turno d'Emergenza")
+  st.subheader("Pubblica un Turno d'Emergenza")
 
-    st.markdown(
-        """
+  st.markdown(
+      """
         <div class="ad-banner">
         📢 <b>Spazio Sponsorizzato</b><br>
         <i>Passa a PRO per rimuovere i banner e mettere i turni in cima!</i>
         </div>
     """,
-        unsafe_allow_html=True,
+      unsafe_allow_html=True,
+  )
+
+  with st.form("form_azienda_free", clear_on_submit=True):
+    nome_azienda = st.text_input(
+        "Nome Attività", placeholder="Es. Ristorante La Pergola"
+    )
+    citta = st.selectbox("Città / Zona", ["Milano", "Roma", "Altro"])
+    mansione = st.text_input(
+        "Mansione richiesta", placeholder="Es. Cameriere / Barista"
     )
 
-    with st.form("form_azienda_free", clear_on_submit=True):
-        nome_azienda = st.text_input(
-            "Nome Attività", placeholder="Es. Ristorante La Pergola"
-        )
-        citta = st.selectbox("Città / Zona", ["Milano", "Roma", "Altro"])
-        mansione = st.text_input(
-            "Mansione richiesta", placeholder="Es. Cameriere / Barista"
-        )
+    col1, col2 = st.columns(2)
+    with col1:
+      data_turno = st.date_input("Data del turno")
+    with col2:
+      orario = st.text_input("Orario", placeholder="Es. 19:00 - 01:00")
 
-        col1, col2 = st.columns(2)
-        with col1:
-            data_turno = st.date_input("Data del turno")
-        with col2:
-            orario = st.text_input("Orario", placeholder="Es. 19:00 - 01:00")
+    compenso = st.text_input("Compenso Netto", placeholder="Es. 90€ a fine turno")
 
-        compenso = st.text_input(
-            "Compenso Netto", placeholder="Es. 90€ a fine turno"
-        )
+    pubblica = st.form_submit_button("🚀 Pubblica Subito in Bacheca")
+    if pubblica:
+      if nome_azienda and mansione and compenso:
+        nuova_offerta = {
+            "id": len(st.session_state.offerte) + 1,
+            "azienda": nome_azienda,
+            "citta": citta,
+            "mansione": mansione,
+            "data": str(data_turno),
+            "orario": orario,
+            "compenso": compenso,
+            "stato": "Aperta",
+            "premium": False,
+        }
+        st.session_state.offerte.append(nuova_offerta)
+        st.success("Offerta online!")
+        st.rerun()
+      else:
+        st.warning("Compila tutti i campi.")
 
-        pubblica = st.form_submit_button("🚀 Pubblica Subito in Bacheca")
-        if pubblica:
-            if nome_azienda and mansione and compenso:
-                nuova_offerta = {
-                    "id": len(st.session_state.offerte) + 1,
-                    "azienda": nome_azienda,
-                    "citta": citta,
-                    "mansione": mansione,
-                    "data": str(data_turno),
-                    "orario": orario,
-                    "compenso": compenso,
-                    "stato": "Aperta",
-                    "premium": False,
-                }
-                st.session_state.offerte.append(nuova_offerta)
-                st.success("Offerta online!")
-                st.rerun()
-            else:
-                st.warning("Compila tutti i campi.")
+  st.divider()
+  st.subheader("📋 Candidature Ricevute")
 
-    st.divider()
-    st.subheader("📋 Candidature Ricevute")
-
-    if not st.session_state.candidature:
-        st.info("Nessuna candidatura ricevuta.")
-    else:
-        for cand in st.session_state.candidature:
-            st.markdown(
-                f"""
-                <div class="ios-card">
-                    <p style="margin:0; font-weight:bold; color:#0f172a;">👤 {cand['nome_lavoratore']}</p>
-                    <p style="margin:3px 0; color:#334155;">📞 Tel: <b>{cand['telefono']}</b></p>
-                </div>
-            """,
-                unsafe_allow_html=True,
-            )
+  if not st.session_state.candidature:
+    st.info("Nessuna candidatura ricevuta.")
+  else:
+    for cand in st.session_state.candidature:
+      st.markdown(
+          f"""
+            <div class="ios-card">
+                <p style="margin:0; font-weight:bold; color:#0f172a;">👤 {cand['nome_lavoratore']}</p>
+                <p style="margin:3px 0; color:#334155;">📞 Tel: <b>{cand['telefono']}</b></p>
+            </div>
+        """,
+          unsafe_allow_html=True,
+      )
 
 # ==========================================
 # ⭐ AREA AZIENDA PRO
 # ==========================================
 else:
-    st.subheader("⭐ FlashJob PRO")
-    st.write("Sblocca la massima visibilità per le tue urgenze.")
+  st.subheader("⭐ FlashJob PRO")
+  st.write("Sblocca la massima visibilità per le tue urgenze.")
 
-    col_p1, col_p2 = st.columns(2)
-    with col_p1:
-        st.markdown(
-            """
+  col_p1, col_p2 = st.columns(2)
+  with col_p1:
+    st.markdown(
+        """
         <div class="ios-card">
             <h4>Piano Base</h4>
             <p style="font-size:0.85rem; color:#64748b;">Gratuito</p>
         </div>
     """,
-                unsafe_allow_html=True,
-        )
-    with col_p2:
-        st.markdown(
-            """
+        unsafe_allow_html=True,
+    )
+  with col_p2:
+    st.markdown(
+        """
         <div class="ios-card-pro">
             <h4>Piano PRO</h4>
             <p style="font-size:0.85rem; color:#854d0e;"><b>39€ / mese</b></p>
         </div>
     """,
-                unsafe_allow_html=True,
-        )
+        unsafe_allow_html=True,
+    )
 
-    if st.button("Abbonati ora a FlashJob PRO"):
-        st.success("🎉 Account aziendale aggiornato a PRO!")
+  if st.button("Abbonati ora a FlashJob PRO"):
+    st.success("🎉 Account aziendale aggiornato a PRO!")
