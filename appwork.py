@@ -85,11 +85,11 @@ if "offerte" not in st.session_state:
 if "candidature" not in st.session_state:
   st.session_state.candidature = []
 
-# --- LOGO CORRETTO E CENTRATO (FIX DIMENSIONI) ---
+# --- LOGO PERFETTO (COMPATTO, LARGO E LEGGIBILE) ---
 logo_html = """
 <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
-    <div style="width: 100%; max-width: 320px;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 170" style="width: 100%; height: auto; display: block; filter: drop-shadow(0px 4px 12px rgba(15,23,42,0.15));">
+    <div style="width: 100%; max-width: 420px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 120" style="width: 100%; height: auto; display: block; filter: drop-shadow(0px 4px 12px rgba(15,23,42,0.15));">
           <defs>
             <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#0f172a" />
@@ -100,10 +100,10 @@ logo_html = """
               <stop offset="100%" stop-color="#ca8a04" />
             </linearGradient>
           </defs>
-          <rect width="512" height="170" rx="35" fill="url(#bgGrad)" />
-          <path d="M 95 25 L 55 95 H 82 L 70 145 L 130 80 H 102 L 115 25 Z" fill="url(#boltGrad)" />
-          <text x="165" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="44" font-weight="900" fill="#ffffff">FlashJob</text>
-          <text x="168" y="115" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="600" fill="#94a3b8">Il lavoro a portata di clic</text>
+          <rect width="512" height="120" rx="28" fill="url(#bgGrad)" />
+          <path d="M 75 18 L 42 72 H 63 L 52 102 L 102 60 H 81 L 91 18 Z" fill="url(#boltGrad)" />
+          <text x="130" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="46" font-weight="900" fill="#ffffff">FlashJob</text>
+          <text x="133" y="88" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">Il lavoro a portata di clic</text>
         </svg>
     </div>
 </div>
