@@ -7,12 +7,12 @@ st.set_page_config(
     page_title="FlashJob - Lavoro Last Minute", page_icon="⚡", layout="centered"
 )
 
-# --- STILE CSS CORRETTO (Senza tag head per evitare testo visibile) ---
+# --- STILE CSS MOBILE PRO ---
 st.markdown(
     """
     <style>
     .main { background-color: #f1f5f9; }
-    .block-container { padding-top: 1.5rem !important; padding-bottom: 3rem !important; max-width: 650px; }
+    .block-container { padding-top: 1rem !important; padding-bottom: 3rem !important; max-width: 650px; }
 
     .ios-card {
         background-color: white;
@@ -55,11 +55,11 @@ st.markdown(
         background-color: #f8fafc;
     }
 
-    h1 { font-size: 1.7rem !important; font-weight: 800 !important; color: #0f172a; letter-spacing: -0.5px; }
-    h2 { font-size: 1.3rem !important; font-weight: 700 !important; color: #1e293b; }
+    h1 { font-size: 1.5rem !important; font-weight: 800 !important; color: #0f172a; }
+    h2 { font-size: 1.2rem !important; font-weight: 700 !important; color: #1e293b; }
     
-    .badge-free { background-color: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; }
-    .badge-pro { background-color: #fef08a; color: #854d0e; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; }
+    .badge-free { background-color: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; margin-top: 5px; }
+    .badge-pro { background-color: #fef08a; color: #854d0e; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; margin-bottom: 8px; }
     .ad-banner { background-color: #eff6ff; border: 1px dashed #3b82f6; padding: 12px; border-radius: 12px; text-align: center; color: #1e3a8a; font-size: 0.85rem; margin-bottom: 20px; }
     </style>
 """,
@@ -85,11 +85,33 @@ if "offerte" not in st.session_state:
 if "candidature" not in st.session_state:
     st.session_state.candidature = []
 
-# --- INTESTAZIONE APP ---
-st.markdown("⚡ **FlashJob**")
-st.markdown("*Il lavoro last-minute a chiamata, senza attese.*")
+# --- LOGO UFFICIALE INTEGRATO (BANNER SVG) ---
+logo_html = """
+<div style="text-align: center; margin-bottom: 10px;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 170" width="100%" max-width="400px" height="110" style="margin: auto; filter: drop-shadow(0px 4px 12px rgba(15,23,42,0.15));">
+      <defs>
+        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#0f172a" />
+          <stop offset="100%" stop-color="#1e293b" />
+        </linearGradient>
+        <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fde047" />
+          <stop offset="100%" stop-color="#ca8a04" />
+        </linearGradient>
+      </defs>
+      <rect width="512" height="170" rx="35" fill="url(#bgGrad)" />
+      <!-- Fulmine -->
+      <path d="M 95 25 L 55 95 H 82 L 70 145 L 130 80 H 102 L 115 25 Z" fill="url(#boltGrad)" />
+      <!-- Testo -->
+      <text x="165" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="44" font-weight="900" fill="#ffffff">FlashJob</text>
+      <text x="168" y="115" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="600" fill="#94a3b8">Il lavoro a portata di clic</text>
+    </svg>
+</div>
+"""
+st.markdown(logo_html, unsafe_allow_html=True)
+
 st.markdown(
-    "<span class='badge-free'>🛡️ 100% Gratuito per i Lavoratori (Zero Commissioni)</span>",
+    "<div style='text-align: center;'><span class='badge-free'>🛡️ 100% Gratuito per i Lavoratori (Zero Commissioni)</span></div>",
     unsafe_allow_html=True,
 )
 st.divider()
