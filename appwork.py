@@ -7,40 +7,40 @@ st.set_page_config(
     page_title="FlashJob - Lavoro Last Minute", page_icon="⚡", layout="centered"
 )
 
-# --- STILE CSS MOBILE COMPATTO ---
+# --- STILE CSS ---
 st.markdown(
     """
     <style>
     .main { background-color: #f1f5f9; }
-    .block-container { padding-top: 0.5rem !important; padding-bottom: 2rem !important; max-width: 650px; }
+    .block-container { padding-top: 1rem !important; padding-bottom: 3rem !important; max-width: 650px; }
 
     .ios-card {
         background-color: white;
-        padding: 15px;
-        border-radius: 14px;
-        box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.05);
-        margin-bottom: 12px;
+        padding: 18px;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        margin-bottom: 14px;
         border: 1px solid #e2e8f0;
     }
 
     .ios-card-pro {
         background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
-        padding: 15px;
-        border-radius: 14px;
-        box-shadow: 0 4px 15px -2px rgba(234, 179, 8, 0.15);
-        margin-bottom: 12px;
+        padding: 18px;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px -2px rgba(234, 179, 8, 0.15);
+        margin-bottom: 14px;
         border: 1px solid #fde047;
     }
 
     .stButton > button {
-        border-radius: 10px;
+        border-radius: 12px;
         font-weight: 600;
         width: 100%;
-        padding: 0.5rem 1rem;
+        padding: 0.6rem 1rem;
         background-color: #0f172a;
         color: white;
         border: none;
-        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
         transition: all 0.2s ease;
     }
     .stButton > button:hover {
@@ -50,17 +50,17 @@ st.markdown(
     }
 
     .stTextInput > div > div > input, .stSelectbox > div > div > div {
-        border-radius: 8px;
+        border-radius: 10px;
         border-color: #cbd5e1;
         background-color: #f8fafc;
     }
 
-    h1 { font-size: 1.3rem !important; font-weight: 800 !important; color: #0f172a; }
-    h2 { font-size: 1.1rem !important; font-weight: 700 !important; color: #1e293b; }
+    h1 { font-size: 1.4rem !important; font-weight: 800 !important; color: #0f172a; }
+    h2 { font-size: 1.2rem !important; font-weight: 700 !important; color: #1e293b; }
     
-    .badge-free { background-color: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; display: inline-block; margin-top: 3px; }
-    .badge-pro { background-color: #fef08a; color: #854d0e; padding: 3px 8px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; display: inline-block; margin-bottom: 6px; }
-    .ad-banner { background-color: #eff6ff; border: 1px dashed #3b82f6; padding: 10px; border-radius: 10px; text-align: center; color: #1e3a8a; font-size: 0.8rem; margin-bottom: 15px; }
+    .badge-free { background-color: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; margin-top: 4px; }
+    .badge-pro { background-color: #fef08a; color: #854d0e; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; margin-bottom: 6px; }
+    .ad-banner { background-color: #eff6ff; border: 1px dashed #3b82f6; padding: 10px; border-radius: 10px; text-align: center; color: #1e3a8a; font-size: 0.85rem; margin-bottom: 15px; }
     </style>
 """,
     unsafe_allow_html=True,
@@ -85,10 +85,10 @@ if "offerte" not in st.session_state:
 if "candidature" not in st.session_state:
     st.session_state.candidature = []
 
-# --- LOGO COMPATTO INTEGRATO ---
+# --- LOGO CORRETTO E BEN VISIBILE ---
 logo_html = """
-<div style="text-align: center; margin-bottom: 4px;">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 170" width="220" height="68" style="margin: auto; filter: drop-shadow(0px 2px 6px rgba(15,23,42,0.12));">
+<div style="text-align: center; margin-bottom: 8px;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 170" width="100%" style="max-width: 420px; height: auto; filter: drop-shadow(0px 4px 12px rgba(15,23,42,0.15));">
       <defs>
         <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#0f172a" />
@@ -166,10 +166,10 @@ if "Lavoratore" in ruolo:
                 f"""
                 <div class="{card_class}">
                     {badge_html}
-                    <h3 style="margin:0 0 4px 0; color:#0f172a; font-size:1rem;">📍 {offerta['azienda']} <span style="font-size:0.8rem; font-weight:normal; color:#64748b;">({offerta['citta']})</span></h3>
-                    <p style="margin:2px 0; font-size:0.9rem; font-weight:600; color:#334155;">Mansione: {offerta['mansione']}</p>
-                    <p style="margin:2px 0; color:#475569; font-size:0.8rem;">📅 {offerta['data']} &nbsp;|&nbsp; 🕒 {offerta['orario']}</p>
-                    <p style="margin:4px 0 0 0; font-size:1rem; font-weight:700; color:#16a34a;">💰 Compenso: {offerta['compenso']}</p>
+                    <h3 style="margin:0 0 6px 0; color:#0f172a; font-size:1.05rem;">📍 {offerta['azienda']} <span style="font-size:0.85rem; font-weight:normal; color:#64748b;">({offerta['citta']})</span></h3>
+                    <p style="margin:3px 0; font-size:0.95rem; font-weight:600; color:#334155;">Mansione: {offerta['mansione']}</p>
+                    <p style="margin:3px 0; color:#475569; font-size:0.85rem;">📅 {offerta['data']} &nbsp;|&nbsp; 🕒 {offerta['orario']}</p>
+                    <p style="margin:6px 0 0 0; font-size:1.05rem; font-weight:700; color:#16a34a;">💰 Compenso: {offerta['compenso']}</p>
                 </div>
             """,
                 unsafe_allow_html=True,
@@ -263,7 +263,7 @@ elif "Azienda" in ruolo and "PRO" not in ruolo:
                 f"""
                 <div class="ios-card">
                     <p style="margin:0; font-weight:bold; color:#0f172a;">👤 {cand['nome_lavoratore']}</p>
-                    <p style="margin:2px 0; color:#334155;">📞 Tel: <b>{cand['telefono']}</b></p>
+                    <p style="margin:3px 0; color:#334155;">📞 Tel: <b>{cand['telefono']}</b></p>
                 </div>
             """,
                 unsafe_allow_html=True,
@@ -282,7 +282,7 @@ else:
             """
         <div class="ios-card">
             <h4>Piano Base</h4>
-            <p style="font-size:0.8rem; color:#64748b;">Gratuito</p>
+            <p style="font-size:0.85rem; color:#64748b;">Gratuito</p>
         </div>
     """,
                 unsafe_allow_html=True,
@@ -292,7 +292,7 @@ else:
             """
         <div class="ios-card-pro">
             <h4>Piano PRO</h4>
-            <p style="font-size:0.8rem; color:#854d0e;"><b>39€ / mese</b></p>
+            <p style="font-size:0.85rem; color:#854d0e;"><b>39€ / mese</b></p>
         </div>
     """,
                 unsafe_allow_html=True,
