@@ -2,28 +2,76 @@ from datetime import datetime
 import pandas as pd
 import streamlit as st
 
-# --- CONFIGURAZIONE PAGINA ---
+# --- CONFIGURAZIONE PAGINA E ICONA PER IPHONE (PWA META TAGS) ---
 st.set_page_config(
     page_title="FlashJob - Lavoro Last Minute", page_icon="⚡", layout="centered"
 )
 
-# --- STILE GRAFICO MOBILE PRO ---
+# Inseriamo i meta tag HTML per trasformarla in una vera Web App mobile-friendly su iOS
 st.markdown(
     """
+    <head>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title" content="FlashJob">
+        <link rel="apple-touch-icon" href="https://img.icons8.com/color/144/lightning-bolt.png">
+    </head>
     <style>
-    .main { background-color: #f8fafc; }
-    .block-container { padding-top: 1rem !important; padding-bottom: 2rem !important; max-width: 700px; }
-    .stButton > button {
-        border-radius: 10px; font-weight: 600; width: 100%; padding: 0.6rem 1rem;
-        background-color: #0f172a; color: white; border: none; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    /* Stile generale e sfondo moderno */
+    .main { background-color: #f1f5f9; }
+    .block-container { padding-top: 1.5rem !important; padding-bottom: 3rem !important; max-width: 650px; }
+
+    /* Stile card / contenitori in stile iOS */
+    .ios-card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        margin-bottom: 16px;
+        border: 1px solid #e2e8f0;
     }
-    .stButton > button:hover { background-color: #1e293b; color: white; }
-    .stTextInput > div > div > input, .stSelectbox > div > div > div { border-radius: 8px; border-color: #cbd5e1; }
-    h1 { font-size: 1.5rem !important; font-weight: 800 !important; color: #0f172a; }
-    h2 { font-size: 1.2rem !important; font-weight: 700 !important; color: #1e293b; }
-    .ad-box { background-color: #eff6ff; border: 1px dashed #3b82f6; padding: 12px; border-radius: 8px; text-align: center; color: #1e3a8a; font-size: 0.85rem; margin-bottom: 15px; }
-    .free-badge { background-color: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; display: inline-block; margin-bottom: 8px; }
-    .pro-badge { background-color: #fef08a; color: #854d0e; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; display: inline-block; margin-bottom: 8px; }
+
+    .ios-card-pro {
+        background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px -2px rgba(234, 179, 8, 0.15);
+        margin-bottom: 16px;
+        border: 1px solid #fde047;
+    }
+
+    /* Pulsanti grandi e touch-friendly */
+    .stButton > button {
+        border-radius: 12px;
+        font-weight: 600;
+        width: 100%;
+        padding: 0.7rem 1rem;
+        background-color: #0f172a;
+        color: white;
+        border: none;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        transition: all 0.2s ease;
+    }
+    .stButton > button:hover {
+        background-color: #1e293b;
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    /* Input di testo e selectbox raffinati */
+    .stTextInput > div > div > input, .stSelectbox > div > div > div {
+        border-radius: 10px;
+        border-color: #cbd5e1;
+        background-color: #f8fafc;
+    }
+
+    /* Tipografia pulita */
+    h1 { font-size: 1.7rem !important; font-weight: 800 !important; color: #0f172a; letter-spacing: -0.5px; }
+    h2 { font-size: 1.3rem !important; font-weight: 700 !important; color: #1e293b; }
+    
+    .badge-free { background-color: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; }
+    .badge-pro { background-color: #fef08a; color: #854d0e; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; }
+    .ad-banner { background-color: #eff6ff; border: 1px dashed #3b82f6; padding: 12px; border-radius: 12px; text-align: center; color: #1e3a8a; font-size: 0.85rem; margin-bottom: 20px; }
     </style>
 """,
     unsafe_allow_html=True,
@@ -39,7 +87,7 @@ if "offerte" not in st.session_state:
             "mansione": "Addetto Sala / Bar",
             "data": "2026-06-20",
             "orario": "16:00 - 00:00",
-            "compenso": "90€ netti (Pagamento Immediato)",
+            "compenso": "90€ netti",
             "stato": "Aperta",
             "premium": True,
         }
@@ -48,17 +96,18 @@ if "offerte" not in st.session_state:
 if "candidature" not in st.session_state:
     st.session_state.candidature = []
 
-# --- INTESTAZIONE ---
-st.markdown("⚡ **FlashJob**: Il lavoro last-minute a chiamata")
+# --- INTESTAZIONE APP ---
+st.markdown("⚡ **FlashJob**")
+st.markdown("*Il lavoro last-minute a chiamata, senza attese.*")
 st.markdown(
-    "<span class='free-badge'>🛡️ 100% GRATUITO PER I LAVORATORI (Zero Commissioni)</span>",
+    "<span class='badge-free'>🛡️ 100% Gratuito per i Lavoratori (Zero Commissioni)</span>",
     unsafe_allow_html=True,
 )
 st.divider()
 
-# --- SELETTORE RUOLO ---
+# --- MENU A TENDINA PRINCIPALE ---
 ruolo = st.selectbox(
-    "Seleziona il tuo profilo:",
+    "Seleziona il tuo profilo di accesso:",
     [
         "👤 Lavoratore (Cerco Turno / Lavoro)",
         "💼 Azienda (Pubblica Turno Urgente)",
@@ -66,18 +115,19 @@ ruolo = st.selectbox(
     ],
 )
 
+st.write("")  # Spaziatura
+
 # ==========================================
 # 👤 AREA LAVORATORE
 # ==========================================
 if "Lavoratore" in ruolo:
-    st.subheader("Bacheca Turni Disponibili ⚡")
+    st.subheader("Bacheca Turni Attivi ⚡")
     st.write(
-        "Qui trovi i turni last-minute pubblicati dai locali. Candidati subito e fatti chiamare."
+        "Scegli un turno, candidati con un tocco e fatti chiamare subito."
     )
 
-    # Filtro rapido per città
     citta_filtro = st.selectbox(
-        "Filtra per Zona / Città:", ["Tutte le città", "Milano", "Roma", "Altro"]
+        "Filtra per zona:", ["Tutte le città", "Milano", "Roma", "Altro"]
     )
 
     offerte_aperte = [
@@ -88,80 +138,80 @@ if "Lavoratore" in ruolo:
             o for o in offerte_aperte if o["citta"] == citta_filtro
         ]
 
-    # Ordinamento: prima i PRO in evidenza
     offerte_aperte.sort(key=lambda x: x.get("premium", False), reverse=True)
 
     if not offerte_aperte:
         st.info("Nessun turno disponibile in questa zona al momento.")
     else:
-        st.divider()
+        st.write("")
         nome_utente = st.text_input(
             "Il tuo Nome e Cognome:", placeholder="Es. Mario Rossi"
         )
         telefono_utente = st.text_input(
-            "Il tuo WhatsApp / Telefono (per essere ricontattato subito):",
-            placeholder="Es. 3331234567",
+            "Il tuo WhatsApp / Telefono:", placeholder="Es. 3331234567"
         )
-        st.divider()
+        st.write("")
 
         for offerta in offerte_aperte:
-            with st.container():
-                if offerta.get("premium"):
-                    st.markdown(
-                        "<span class='pro-badge'>⭐ TURNO IN EVIDENZA (TOP LOCALE)</span>",
-                        unsafe_allow_html=True,
+            is_pro = offerta.get("premium", False)
+            card_class = "ios-card-pro" if is_pro else "ios-card"
+
+            # Utilizziamo un contenitore HTML personalizzato per simulare una splendida card iOS
+            badge_html = (
+                "<span class='badge-pro'>⭐ IN EVIDENZA</span><br><br>"
+                if is_pro
+                else ""
+            )
+
+            st.markdown(
+                f"""
+                <div class="{card_class}">
+                    {badge_html}
+                    <h3 style="margin:0 0 8px 0; color:#0f172a;">📍 {offerta['azienda']} <span style="font-size:0.9rem; font-weight:normal; color:#64748b;">({offerta['citta']})</span></h3>
+                    <p style="margin:4px 0; font-size:1rem; font-weight:600; color:#334155;">Mansione: {offerta['mansione']}</p>
+                    <p style="margin:4px 0; color:#475569; font-size:0.9rem;">📅 {offerta['data']} &nbsp;|&nbsp; 🕒 {offerta['orario']}</p>
+                    <p style="margin:8px 0 0 0; font-size:1.1rem; font-weight:700; color:#16a34a;">💰 Compenso: {offerta['compenso']}</p>
+                </div>
+            """,
+                unsafe_allow_html=True,
+            )
+
+            if st.button(
+                f"🔥 Candidati per {offerta['azienda']}",
+                key=f"cand_{offerta['id']}",
+            ):
+                if not nome_utente or not telefono_utente:
+                    st.warning(
+                        "⚠️ Inserisci nome e telefono nei campi sopra prima di candidarti!"
                     )
+                else:
+                    nuova_candidatura = {
+                        "id": len(st.session_state.candidature) + 1,
+                        "offerta_id": offerta["id"],
+                        "nome_lavoratore": nome_utente,
+                        "telefono": telefono_utente,
+                        "data_candidatura": datetime.now().strftime("%H:%M:%S"),
+                    }
+                    st.session_state.candidature.append(nuova_candidatura)
+                    st.success(
+                        f"🎉 Ottimo {nome_utente}! Candidatura inviata con successo. L'azienda ti contatterà al numero `{telefono_utente}` se selezionato."
+                    )
+                    st.rerun()
 
-                st.markdown(f"### 📍 {offerta['azienda']} ({offerta['citta']})")
-                st.write(f"**Mansione:** {offerta['mansione']}")
-                st.markdown(
-                    f"📅 **Data:** {offerta['data']} | 🕒 **Orario:** {offerta['orario']}"
-                )
-                st.markdown(f"💰 **Compenso:** **{offerta['compenso']}**")
-                st.caption(
-                    "💡 *Nota:* FlashJob è gratuito per te. L'accordo economico e il pagamento avvengono direttamente con l'azienda a fine turno."
-                )
-
-                if st.button(
-                    f"🔥 Voglio farlo io! (Candidati Subito)",
-                    key=f"cand_{offerta['id']}",
-                ):
-                    if not nome_utente or not telefono_utente:
-                        st.warning(
-                            "Inserisci prima il tuo nome e il tuo numero di telefono!"
-                        )
-                    else:
-                        nuova_candidatura = {
-                            "id": len(st.session_state.candidature) + 1,
-                            "offerta_id": offerta["id"],
-                            "nome_lavoratore": nome_utente,
-                            "telefono": telefono_utente,
-                            "data_candidatura": datetime.now().strftime(
-                                "%H:%M:%S"
-                            ),
-                        }
-                        st.session_state.candidature.append(nuova_candidatura)
-                        st.success(
-                            f"Ottimo {nome_utente}! Candidatura inviata. Se l'azienda ti sceglie, ti chiamerà al numero `{telefono_utente}`."
-                        )
-                        st.rerun()
-                st.divider()
+            st.write("")
 
 # ==========================================
 # 💼 AREA AZIENDA (FREE)
 # ==========================================
 elif "Azienda" in ruolo and "PRO" not in ruolo:
     st.subheader("Pubblica un Turno d'Emergenza")
-    st.write(
-        "Hai un'improvvisa assenza di personale? Pubblica l'offerta in 10 secondi."
-    )
+    st.write("Hai bisogno di personale ora? Inserisci i dettagli del turno.")
 
-    # Banner pubblicitario promozionale per la versione Free
     st.markdown(
         """
-        <div class="ad-box">
-        📢 <b>Spazio Sponsorizzato Locale / Servizi per Aziende</b><br>
-        <i>Vuoi rimuovere questi banner e posizionare i tuoi turni sempre in cima? Scopri il piano Azienda PRO!</i>
+        <div class="ad-banner">
+        📢 <b>Spazio Sponsorizzato Locale</b><br>
+        <i>Promuovi qui la tua attività o passa a PRO per rimuovere i banner e mettere i turni in cima!</i>
         </div>
     """,
         unsafe_allow_html=True,
@@ -173,7 +223,7 @@ elif "Azienda" in ruolo and "PRO" not in ruolo:
         )
         citta = st.selectbox("Città / Zona", ["Milano", "Roma", "Altro"])
         mansione = st.text_input(
-            "Mansione richiesta", placeholder="Es. Cameriere di sala / Cuoco"
+            "Mansione richiesta", placeholder="Es. Cameriere / Barista"
         )
 
         col1, col2 = st.columns(2)
@@ -183,10 +233,11 @@ elif "Azienda" in ruolo and "PRO" not in ruolo:
             orario = st.text_input("Orario", placeholder="Es. 19:00 - 01:00")
 
         compenso = st.text_input(
-            "Compenso Netto stimato (es. 90€)", placeholder="Es. 90€"
+            "Compenso Netto (es. 90€ con pagamento a fine turno)",
+            placeholder="Es. 90€",
         )
 
-        pubblica = st.form_submit_button("🚀 Pubblica Offerta Last-Minute")
+        pubblica = st.form_submit_button("🚀 Pubblica Subito in Bacheca")
         if pubblica:
             if nome_azienda and mansione and compenso:
                 nuova_offerta = {
@@ -201,60 +252,69 @@ elif "Azienda" in ruolo and "PRO" not in ruolo:
                     "premium": False,
                 }
                 st.session_state.offerte.append(nuova_offerta)
-                st.success(
-                    "Offerta pubblicata con successo! I lavoratori la vedranno subito."
-                )
+                st.success("Offerta online! I lavoratori la vedranno all'istante.")
                 st.rerun()
             else:
-                st.warning("Per favore, compila tutti i campi.")
+                st.warning("Compila tutti i campi obbligatori.")
 
     st.divider()
-    st.subheader("📋 Gestione Candidature Ricevute")
+    st.subheader("📋 Candidature Ricevute")
 
     if not st.session_state.candidature:
         st.info("Nessuna candidatura ricevuta al momento.")
     else:
         for cand in st.session_state.candidature:
             st.markdown(
-                f"👤 **{cand['nome_lavoratore']}** | 📞 WhatsApp/Tel: `{cand['telefono']}`"
+                f"""
+                <div class="ios-card">
+                    <p style="margin:0; font-weight:bold; color:#0f172a;">👤 {cand['nome_lavoratore']}</p>
+                    <p style="margin:4px 0; color:#334155;">📞 Tel/WhatsApp: <b>{cand['telefono']}</b></p>
+                    <p style="margin:0; font-size:0.8rem; color:#64748b;">Candidato alle ore {cand['data_candidatura']}</p>
+                </div>
+            """,
+                unsafe_allow_html=True,
             )
-            st.caption(
-                "💡 Contatta direttamente il lavoratore per confermare l'orario e organizzare il pagamento immediato a fine turno."
-            )
-            st.divider()
 
 # ==========================================
-# ⭐ AREA AZIENDA PRO (Abbonamento & Vetrina)
+# ⭐ AREA AZIENDA PRO
 # ==========================================
 else:
-    st.subheader("⭐ FlashJob PRO - Soluzione per Attività")
-    st.write(
-        "Ottimizza la ricerca di personale e dai massima visibilità alle tue urgenze."
-    )
+    st.subheader("⭐ FlashJob PRO - Abbonamento Attività")
+    st.write("Sblocca la massima visibilità per le tue urgenze di personale.")
 
     col_p1, col_p2 = st.columns(2)
     with col_p1:
-        st.markdown("### Piano Base (Free)")
         st.markdown(
             """
-        - Pubblicità visibile
-        - Posizione standard in bacheca
-        - Gestione base candidature
-        - **Costo:** 0€ (Sempre gratuito)
-        """
+        <div class="ios-card">
+            <h4>Piano Base (Free)</h4>
+            <p style="font-size:0.85rem; color:#64748b;">Per iniziare subito</p>
+            <ul style="padding-left:15px; font-size:0.9rem;">
+                <li>Annunci standard</li>
+                <li>Presenza banner pubblicitari</li>
+                <li><b>Costo: 0€</b></li>
+            </ul>
+        </div>
+    """,
+                unsafe_allow_html=True,
         )
     with col_p2:
-        st.markdown("### Piano PRO (Abbonamento)")
         st.markdown(
             """
-        - **Annunci in Evidenza** (Blocco Top)
-        - **Zero Pubblicità** nell'app
-        - Notifiche push prioritarie ai lavoratori in zona
-        - **Costo:** 39€ / mese (disdici quando vuoi)
-        """
+        <div class="ios-card-pro">
+            <h4>Piano PRO</h4>
+            <p style="font-size:0.85rem; color:#854d0e;">Massima potenza</p>
+            <ul style="padding-left:15px; font-size:0.9rem;">
+                <li><b>In Evidenza Top Blocco</b></li>
+                <li><b>Zero Pubblicità</b></li>
+                <li><b>Costo: 39€ / mese</b></li>
+            </ul>
+        </div>
+    """,
+                unsafe_allow_html=True,
         )
 
-    if st.button("Attiva Abbonamento Azienda PRO (39€/mese)"):
+    if st.button("Abbonati ora a FlashJob PRO (39€/mese)"):
         st.success(
-            "🎉 Account aggiornato a PRO! I tuoi prossimi turni saranno marchiati come 'In Evidenza'."
+            "🎉 Attivato! Il tuo account aziendale è ora PRO. I tuoi annunci appariranno in evidenza dorata."
         )
