@@ -2,26 +2,18 @@ from datetime import datetime
 import pandas as pd
 import streamlit as st
 
-# --- CONFIGURAZIONE PAGINA E ICONA PER IPHONE (PWA META TAGS) ---
+# --- CONFIGURAZIONE PAGINA ---
 st.set_page_config(
     page_title="FlashJob - Lavoro Last Minute", page_icon="⚡", layout="centered"
 )
 
-# Inseriamo i meta tag HTML per trasformarla in una vera Web App mobile-friendly su iOS
+# --- STILE CSS CORRETTO (Senza tag head per evitare testo visibile) ---
 st.markdown(
     """
-    <head>
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-        <meta name="apple-mobile-web-app-title" content="FlashJob">
-        <link rel="apple-touch-icon" href="https://img.icons8.com/color/144/lightning-bolt.png">
-    </head>
     <style>
-    /* Stile generale e sfondo moderno */
     .main { background-color: #f1f5f9; }
     .block-container { padding-top: 1.5rem !important; padding-bottom: 3rem !important; max-width: 650px; }
 
-    /* Stile card / contenitori in stile iOS */
     .ios-card {
         background-color: white;
         padding: 20px;
@@ -40,7 +32,6 @@ st.markdown(
         border: 1px solid #fde047;
     }
 
-    /* Pulsanti grandi e touch-friendly */
     .stButton > button {
         border-radius: 12px;
         font-weight: 600;
@@ -58,14 +49,12 @@ st.markdown(
         transform: translateY(-1px);
     }
 
-    /* Input di testo e selectbox raffinati */
     .stTextInput > div > div > input, .stSelectbox > div > div > div {
         border-radius: 10px;
         border-color: #cbd5e1;
         background-color: #f8fafc;
     }
 
-    /* Tipografia pulita */
     h1 { font-size: 1.7rem !important; font-weight: 800 !important; color: #0f172a; letter-spacing: -0.5px; }
     h2 { font-size: 1.3rem !important; font-weight: 700 !important; color: #1e293b; }
     
@@ -115,7 +104,7 @@ ruolo = st.selectbox(
     ],
 )
 
-st.write("")  # Spaziatura
+st.write("")
 
 # ==========================================
 # 👤 AREA LAVORATORE
@@ -155,8 +144,6 @@ if "Lavoratore" in ruolo:
         for offerta in offerte_aperte:
             is_pro = offerta.get("premium", False)
             card_class = "ios-card-pro" if is_pro else "ios-card"
-
-            # Utilizziamo un contenitore HTML personalizzato per simulare una splendida card iOS
             badge_html = (
                 "<span class='badge-pro'>⭐ IN EVIDENZA</span><br><br>"
                 if is_pro
