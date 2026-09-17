@@ -1,3 +1,4 @@
+import base64
 import html
 import re
 import streamlit as st
@@ -10,56 +11,61 @@ st.set_page_config(
 )
 
 # ============================================================
+# SFONDO IN BASE64 (Immagine personalizzata)
+# ============================================================
+# Inserisci qui la stringa base64 della tua immagine di sfondo
+BG_BASE64 = "INSERISCI_QUI_LA_STRINGA_BASE64_DELLA_TUA_IMMAGINE"
+
+# ============================================================
 # DATA
 # ============================================================
 if "lavoratori" not in st.session_state:
-    st.session_state.lavoratori = [
-        {
-            "nome": "Marco Rossi",
-            "mansione": "Cameriere / Sala",
-            "zona": "Navigli, Milano",
-            "tel": "+39 333 1234567",
-            "completati": 18,
-            "referenze": (
-                "Puntuale, professionale e con ottime capacità di gestione "
-                "sala anche nei momenti di massimo afflusso."
-            ),
-        },
-        {
-            "nome": "Sara Bianchi",
-            "mansione": "Barista / Bartender",
-            "zona": "Porta Romana, Milano",
-            "tel": "+39 340 9876543",
-            "completati": 24,
-            "referenze": (
-                "Eccezionale nella mixology, rapidissima e dotata di grande "
-                "empatia con la clientela."
-            ),
-        },
-    ]
+  st.session_state.lavoratori = [
+      {
+          "nome": "Marco Rossi",
+          "mansione": "Cameriere / Sala",
+          "zona": "Navigli, Milano",
+          "tel": "+39 333 1234567",
+          "completati": 18,
+          "referenze": (
+              "Puntuale, professionale e con ottime capacità di gestione sala"
+              " anche nei momenti di massimo afflusso."
+          ),
+      },
+      {
+          "nome": "Sara Bianchi",
+          "mansione": "Barista / Bartender",
+          "zona": "Porta Romana, Milano",
+          "tel": "+39 340 9876543",
+          "completati": 24,
+          "referenze": (
+              "Eccezionale nella mixology, rapidissima e dotata di grande"
+              " empatia con la clientela."
+          ),
+      },
+  ]
 
 if "selected_candidate" not in st.session_state:
-    st.session_state.selected_candidate = None
+  st.session_state.selected_candidate = None
 
 
 def safe(value):
-    return html.escape(str(value))
+  return html.escape(str(value))
 
 
 def whatsapp_url(phone):
-    # WhatsApp vuole il numero in formato internazionale senza +, spazi o simboli.
-    return "https://wa.me/" + re.sub(r"\D", "", phone)
+  return "https://wa.me/" + re.sub(r"\D", "", phone)
 
 
 # ============================================================
-# DESIGN SYSTEM
+# DESIGN SYSTEM CON SFONDO PERSONALIZZATO
 # ============================================================
 st.markdown(
-    """
+    f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-:root {
+:root {{
     --bg: #f5f6f8;
     --surface: rgba(255,255,255,.88);
     --surface-strong: #ffffff;
@@ -72,46 +78,49 @@ st.markdown(
     --green-soft: #eaf8f1;
     --shadow: 0 12px 40px rgba(17,24,39,.07);
     --radius: 18px;
-}
+}}
 
-html, body, [class*="css"] {
+html, body, [class*="css"] {{
     font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
+}}
 
-.stApp {
-    background:
-        radial-gradient(circle at 50% -10%, #ffffff 0%, transparent 38%),
-        linear-gradient(180deg, #f8f9fb 0%, var(--bg) 100%);
+.stApp {{
+    background: 
+        linear-gradient(rgba(245, 246, 248, 0.85), rgba(245, 246, 248, 0.85)),
+        url("data:image/jpeg;base64,{BG_BASE64}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     color: var(--text);
-}
+}}
 
-.block-container {
+.block-container {{
     max-width: 1180px !important;
     padding: 0 28px 60px !important;
-}
+}}
 
-/* Nasconde elementi Streamlit che rendono l'app meno simile a un prodotto SaaS */
-[data-testid="stHeader"] {
+[data-testid="stHeader"] {{
     background: transparent;
-}
-[data-testid="stToolbar"] {
+}}
+[data-testid="stToolbar"] {{
     display: none;
-}
-footer {
+}}
+footer {{
     visibility: hidden;
-}
+}}
 
 /* HERO */
-.hero {
+.hero {{
     margin: 0 -28px 34px;
     padding: 54px 28px 42px;
     text-align: center;
     background: rgba(255,255,255,.82);
     border-bottom: 1px solid var(--line);
     box-shadow: 0 1px 0 rgba(0,0,0,.02);
-}
+    backdrop-filter: blur(10px);
+}}
 
-.logo-mark {
+.logo-mark {{
     width: 48px;
     height: 48px;
     margin: 0 auto 15px;
@@ -124,29 +133,29 @@ footer {
     font-size: 23px;
     font-weight: 700;
     box-shadow: 0 8px 20px rgba(0,0,0,.13);
-}
+}}
 
-.hero h1 {
+.hero h1 {{
     margin: 0;
     font-size: clamp(2.2rem, 5vw, 3.7rem);
     letter-spacing: -.055em;
     line-height: 1;
     font-weight: 700;
-}
+}}
 
-.hero p {
+.hero p {{
     max-width: 680px;
     margin: 15px auto 0;
     color: var(--muted);
     font-size: 1rem;
     line-height: 1.6;
-}
+}}
 
 /* NAV */
-div[data-testid="stRadio"] > label {
+div[data-testid="stRadio"] > label {{
     display: none;
-}
-div[data-testid="stRadio"] div[role="radiogroup"] {
+}}
+div[data-testid="stRadio"] div[role="radiogroup"] {{
     width: fit-content;
     margin: 0 auto 34px;
     padding: 5px;
@@ -155,62 +164,63 @@ div[data-testid="stRadio"] div[role="radiogroup"] {
     border-radius: 13px;
     background: rgba(255,255,255,.82);
     box-shadow: 0 4px 18px rgba(17,24,39,.04);
-}
-div[data-testid="stRadio"] div[role="radiogroup"] label {
+    backdrop-filter: blur(10px);
+}}
+div[data-testid="stRadio"] div[role="radiogroup"] label {{
     border-radius: 9px;
     padding: 8px 15px;
     color: #616873 !important;
     font-size: .82rem;
     font-weight: 600;
-}
-div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
+}}
+div[data-testid="stRadio"] div[role="radiogroup"] label:hover {{
     background: #f2f4f7;
-}
-div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
+}}
+div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     background: #17181b;
     color: #fff !important;
-}
+}}
 
 /* TITOLI */
-.section-title {
+.section-title {{
     margin: 0 0 7px;
     font-size: 1.55rem;
     letter-spacing: -.025em;
     font-weight: 700;
-}
-.section-subtitle {
+}}
+.section-subtitle {{
     margin: 0 0 25px;
     color: var(--muted);
     line-height: 1.6;
     font-size: .94rem;
-}
+}}
 
 /* CARD */
-.card {
+.card {{
     background: var(--surface);
     border: 1px solid rgba(17,24,39,.07);
     border-radius: var(--radius);
     padding: 25px;
     box-shadow: var(--shadow);
     backdrop-filter: blur(18px);
-}
-.card h3 {
+}}
+.card h3 {{
     margin: 0 0 9px;
     font-size: 1.08rem;
     letter-spacing: -.015em;
-}
-.card p, .card li {
+}}
+.card p, .card li {{
     color: #626975;
     font-size: .9rem;
     line-height: 1.65;
-}
-.card ul {
+}}
+.card ul {{
     margin: 12px 0 0;
     padding-left: 19px;
-}
+}}
 
 /* BADGE */
-.badge {
+.badge {{
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -222,18 +232,18 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     font-weight: 700;
     letter-spacing: .07em;
     text-transform: uppercase;
-}
-.badge.blue {
+}}
+.badge.blue {{
     background: var(--blue-soft);
     color: var(--blue);
-}
-.badge.green {
+}}
+.badge.green {{
     background: var(--green-soft);
     color: var(--green);
-}
+}}
 
 /* STATS */
-.stats {
+.stats {{
     display: grid;
     grid-template-columns: repeat(3,1fr);
     margin: 24px 0;
@@ -241,19 +251,19 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     border: 1px solid var(--line);
     border-radius: 15px;
     background: #fafbfc;
-}
-.stat {
+}}
+.stat {{
     padding: 17px 10px;
     text-align: center;
     border-right: 1px solid var(--line);
-}
-.stat:last-child { border-right: 0; }
-.stat strong {
+}}
+.stat:last-child {{ border-right: 0; }}
+.stat strong {{
     display: block;
     font-size: 1.35rem;
     letter-spacing: -.03em;
-}
-.stat span {
+}}
+.stat span {{
     display: block;
     margin-top: 3px;
     color: var(--muted);
@@ -261,10 +271,10 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .07em;
-}
+}}
 
 /* PROFILE */
-.profile {
+.profile {{
     max-width: 760px;
     margin: 0 auto;
     padding: 34px;
@@ -272,13 +282,14 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     border: 1px solid var(--line);
     border-radius: 22px;
     box-shadow: var(--shadow);
-}
-.profile-head {
+    backdrop-filter: blur(18px);
+}}
+.profile-head {{
     display: flex;
     align-items: center;
     gap: 17px;
-}
-.avatar {
+}}
+.avatar {{
     width: 72px;
     height: 72px;
     flex: 0 0 72px;
@@ -286,29 +297,29 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     object-fit: cover;
     border: 3px solid #fff;
     box-shadow: 0 5px 18px rgba(0,0,0,.12);
-}
-.profile h2 {
+}}
+.profile h2 {{
     margin: 0;
     font-size: 1.4rem;
     letter-spacing: -.03em;
-}
-.role {
+}}
+.role {{
     margin: 4px 0 0;
     color: var(--blue);
     font-size: .88rem;
     font-weight: 600;
-}
-.meta {
+}}
+.meta {{
     margin: 4px 0 0;
     color: var(--muted);
     font-size: .78rem;
-}
-.divider {
+}}
+.divider {{
     height: 1px;
     margin: 25px 0;
     background: var(--line);
-}
-.quote {
+}}
+.quote {{
     padding: 17px 18px;
     border-left: 3px solid var(--blue);
     border-radius: 0 12px 12px 0;
@@ -316,60 +327,57 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     color: #3f4650;
     font-size: .9rem;
     line-height: 1.65;
-}
+}}
 
 /* DATABASE */
-.worker {
+.worker {{
     min-height: 165px;
-}
-.worker-top {
+}}
+.worker-top {{
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 15px;
-}
-.worker h3 {
+}}
+.worker h3 {{
     margin: 0;
     font-size: 1.04rem;
-}
-.worker-role {
+}}
+.worker-role {{
     margin: 5px 0;
     color: #626975;
     font-size: .86rem;
-}
-.worker-meta {
+}}
+.worker-meta {{
     color: var(--muted);
     font-size: .78rem;
-}
-.worker-status {
+}}
+.worker-status {{
     color: var(--green);
     font-size: .72rem;
     font-weight: 700;
-}
-.worker-button-space {
-    margin-top: 17px;
-}
+}}
 
 /* GALLERY */
-.gallery {
+.gallery {{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     margin-top: 28px;
-}
-.gallery-item {
+}}
+.gallery-item {{
     position: relative;
     height: 280px;
     overflow: hidden;
     border-radius: 18px;
     background: #ddd;
-}
-.gallery-item img {
+}}
+.gallery-item img {{
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-.gallery-caption {
+}}
+.gallery-caption {{
     position: absolute;
     left: 0;
     right: 0;
@@ -379,10 +387,10 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     background: linear-gradient(transparent, rgba(0,0,0,.78));
     font-size: .8rem;
     font-weight: 600;
-}
+}}
 
-/* FOOTER */
-.legal {
+/* LEGAL */
+.legal {{
     margin-top: 48px;
     padding: 22px;
     border: 1px solid var(--line);
@@ -391,11 +399,12 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     color: #7b818a;
     font-size: .7rem;
     line-height: 1.65;
-}
-.legal b { color: #333840; }
+    backdrop-filter: blur(10px);
+}}
+.legal b {{ color: #333840; }}
 
 /* STREAMLIT BUTTONS */
-.stButton > button {
+.stButton > button {{
     width: 100%;
     min-height: 42px;
     border: 1px solid #17181b;
@@ -405,34 +414,33 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     font-weight: 600;
     font-size: .82rem;
     transition: all .15s ease;
-}
-.stButton > button:hover {
+}}
+.stButton > button:hover {{
     border-color: #000;
     background: #000;
     color: #fff;
     transform: translateY(-1px);
-}
-.back-button .stButton > button {
+}}
+.back-button .stButton > button {{
     width: auto;
     background: transparent;
     color: #333840;
     border-color: var(--line);
-}
+}}
 
-/* Responsive */
-@media (max-width: 720px) {
-    .block-container { padding: 0 15px 40px !important; }
-    .hero { margin: 0 -15px 25px; padding: 40px 18px 34px; }
-    div[data-testid="stRadio"] div[role="radiogroup"] {
+@media (max-width: 720px) {{
+    .block-container {{ padding: 0 15px 40px !important; }}
+    .hero {{ margin: 0 -15px 25px; padding: 40px 18px 34px; }}
+    div[data-testid="stRadio"] div[role="radiogroup"] {{
         width: 100%;
         overflow-x: auto;
-    }
-    div[data-testid="stRadio"] div[role="radiogroup"] label {
+    }}
+    div[data-testid="stRadio"] div[role="radiogroup"] label {{
         white-space: nowrap;
-    }
-    .gallery { grid-template-columns: 1fr; }
-    .profile { padding: 23px; }
-}
+    }}
+    .gallery {{ grid-template-columns: 1fr; }}
+    .profile {{ padding: 23px; }}
+}}
 </style>
 """,
     unsafe_allow_html=True,
@@ -465,22 +473,22 @@ scelta = st.radio(
 # PANORAMICA
 # ============================================================
 if scelta == "Panoramica & Modello":
-    st.markdown(
-        """
+  st.markdown(
+      """
 <div class="section-title">Infrastruttura Operativa</div>
 <div class="section-subtitle">
 Flashjob mette in contatto aziende e professionisti hospitality attraverso
 un database operativo con profili, disponibilità, storico e referenze.
 </div>
 """,
-        unsafe_allow_html=True,
-    )
+      unsafe_allow_html=True,
+  )
 
-    col1, col2 = st.columns(2, gap="large")
+  col1, col2 = st.columns(2, gap="large")
 
-    with col1:
-        st.markdown(
-            """
+  with col1:
+    st.markdown(
+        """
 <div class="card">
     <span class="badge blue">Area Aziende</span>
     <h3>Standard di Servizio</h3>
@@ -492,12 +500,12 @@ un database operativo con profili, disponibilità, storico e referenze.
     </ul>
 </div>
 """,
-            unsafe_allow_html=True,
-        )
+        unsafe_allow_html=True,
+    )
 
-    with col2:
-        st.markdown(
-            """
+  with col2:
+    st.markdown(
+        """
 <div class="card">
     <span class="badge green">Area Lavoratori</span>
     <h3>Affidabilità & Compliance</h3>
@@ -509,13 +517,13 @@ un database operativo con profili, disponibilità, storico e referenze.
     </ul>
 </div>
 """,
-            unsafe_allow_html=True,
-        )
+        unsafe_allow_html=True,
+    )
 
-    st.markdown("<div style='height:22px'></div>", unsafe_allow_html=True)
+  st.markdown("<div style='height:22px'></div>", unsafe_allow_html=True)
 
-    st.markdown(
-        """
+  st.markdown(
+      """
 <div class="section-title">Standard Visivo & Location</div>
 <div class="section-subtitle">
 Un'esperienza digitale pulita e professionale, coerente con il posizionamento
@@ -535,26 +543,26 @@ premium del settore hospitality milanese.
     </div>
 </div>
 """,
-        unsafe_allow_html=True,
-    )
+      unsafe_allow_html=True,
+  )
 
 # ============================================================
 # DATABASE AZIENDALE
 # ============================================================
 elif scelta == "Database Aziendale":
-    selected = st.session_state.selected_candidate
+  selected = st.session_state.selected_candidate
 
-    if selected is not None:
-        st.markdown('<div class="back-button">', unsafe_allow_html=True)
-        if st.button("← Torna al database"):
-            st.session_state.selected_candidate = None
-            st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
+  if selected is not None:
+    st.markdown('<div class="back-button">', unsafe_allow_html=True)
+    if st.button("← Torna al database"):
+      st.session_state.selected_candidate = None
+      st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
 
-        c = selected
+    c = selected
 
-        st.markdown(
-            f"""
+    st.markdown(
+        f"""
 <div class="profile">
     <div class="profile-head">
         <img class="avatar"
@@ -589,35 +597,34 @@ elif scelta == "Database Aziendale":
     <div class="quote">“{safe(c["referenze"])}”</div>
 </div>
 """,
-            unsafe_allow_html=True,
-        )
+        unsafe_allow_html=True,
+    )
 
-        st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
 
-        # Link esterno generato in modo sicuro dal numero.
-        st.link_button(
-            "Contatta e prenota via WhatsApp →",
-            whatsapp_url(c["tel"]),
-            use_container_width=True,
-        )
+    st.link_button(
+        "Contatta e prenota via WhatsApp →",
+        whatsapp_url(c["tel"]),
+        use_container_width=True,
+    )
 
-    else:
-        st.markdown(
-            """
+  else:
+    st.markdown(
+        """
 <div class="section-title">Database Professionisti</div>
 <div class="section-subtitle">
 Seleziona un professionista per visualizzare profilo, storico e referenze.
 </div>
 """,
-            unsafe_allow_html=True,
-        )
+        unsafe_allow_html=True,
+    )
 
-        for idx, lav in enumerate(st.session_state.lavoratori):
-            left, right = st.columns([5, 1.7], gap="large")
+    for idx, lav in enumerate(st.session_state.lavoratori):
+      left, right = st.columns([5, 1.7], gap="large")
 
-            with left:
-                st.markdown(
-                    f"""
+      with left:
+        st.markdown(
+            f"""
 <div class="card worker">
     <div class="worker-top">
         <div>
@@ -633,35 +640,33 @@ Seleziona un professionista per visualizzare profilo, storico e referenze.
     </div>
 </div>
 """,
-                    unsafe_allow_html=True,
-                )
+            unsafe_allow_html=True,
+        )
 
-            with right:
-                st.markdown("<div style='height:42px'></div>", unsafe_allow_html=True)
-                if st.button(
-                    "Visualizza profilo",
-                    key=f"profile_{idx}",
-                    use_container_width=True,
-                ):
-                    st.session_state.selected_candidate = lav
-                    st.rerun()
+      with right:
+        st.markdown("<div style='height:42px'></div>", unsafe_allow_html=True)
+        if st.button(
+            "Visualizza profilo", key=f"profile_{idx}", use_container_width=True
+        ):
+          st.session_state.selected_candidate = lav
+          st.rerun()
 
 # ============================================================
 # AREA LAVORATORE
 # ============================================================
 else:
-    st.markdown(
-        """
+  st.markdown(
+      """
 <div class="section-title">Area Personale</div>
 <div class="section-subtitle">
 Gestisci il tuo profilo, monitora i turni e consulta lo storico delle attività.
 </div>
 """,
-        unsafe_allow_html=True,
-    )
+      unsafe_allow_html=True,
+  )
 
-    st.markdown(
-        """
+  st.markdown(
+      """
 <div class="profile">
     <div class="profile-head">
         <img class="avatar"
@@ -705,8 +710,8 @@ Gestisci il tuo profilo, monitora i turni e consulta lo storico delle attività.
     </div>
 </div>
 """,
-        unsafe_allow_html=True,
-    )
+      unsafe_allow_html=True,
+  )
 
 # ============================================================
 # LEGAL
