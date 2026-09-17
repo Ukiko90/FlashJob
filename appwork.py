@@ -10,11 +10,11 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# --- STILE CSS "MODERN SAAS" (Sfondo curato, UI elegante) ---
+# --- STILE CSS CON ANIMAZIONE TICKER (TESTO SCORREVOLE) ---
 st.markdown(
     """
     <style>
-    /* Sfondo carino con gradiente morbido ed elegante */
+    /* Sfondo carino con gradiente morbido */
     .stApp { 
         background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
         background-attachment: fixed;
@@ -98,20 +98,6 @@ st.markdown(
 
     h1, h2, h3 { color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
 
-    .badge-milano { 
-        background-color: #eff6ff; 
-        color: #1e40af; 
-        padding: 6px 14px; 
-        border-radius: 20px; 
-        font-size: 0.85rem; 
-        font-weight: 700; 
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        border: 1px solid #bfdbfe;
-        margin-top: 10px;
-        margin-bottom: 22px;
-    }
     .badge-verified {
         background-color: #f0fdf4;
         color: #166534;
@@ -122,6 +108,35 @@ st.markdown(
         display: inline-block;
         margin-bottom: 6px;
         border: 1px solid #bbf7d0;
+    }
+    
+    /* Stili per il testo scorrevole (Ticker) */
+    .ticker-wrap {
+        width: 100%;
+        overflow: hidden;
+        background: linear-gradient(90deg, #1e293b, #0f172a, #1e293b);
+        padding: 10px 0;
+        border-radius: 14px;
+        margin-top: 12px;
+        margin-bottom: 22px;
+        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.15);
+        border: 1px solid #334155;
+    }
+    .ticker {
+        display: inline-block;
+        white-space: nowrap;
+        animation: marquee 25s linear infinite;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #f8fafc;
+    }
+    .ticker span {
+        display: inline-block;
+        padding-left: 40px;
+    }
+    @keyframes marquee {
+        0% { transform: translate3d(0, 0, 0); }
+        100% { transform: translate3d(-50%, 0, 0); }
     }
     </style>
 """,
@@ -152,7 +167,7 @@ if "lavoratori_schedulati" not in st.session_state:
           "email": "sara.bartender@email.com",
           "telefono": "+39 340 9876543",
           "residenza": "Milano (Zona Porta Romana)",
-          "automunita": "No",
+          "automunito": "No",
           "foto": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
       },
   ]
@@ -163,7 +178,7 @@ if "azienda_pro" not in st.session_state:
 if "vista_corrente" not in st.session_state:
   st.session_state.vista_corrente = "Landing Page"
 
-# --- HEADER & LOGO (FULMINE PIÙ PICCOLO E RAFFINATO) ---
+# --- HEADER & LOGO CON TESTO SCORREVOLE SOTTO ---
 logo_html = """
 <div style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 10px; margin-bottom: 15px;">
     <div style="width: 100%; max-width: 320px;">
@@ -179,14 +194,25 @@ logo_html = """
             </linearGradient>
           </defs>
           <rect width="512" height="115" rx="24" fill="url(#bgGrad)" />
-          <!-- Fulmine rimpicciolito e centrato meglio (coordinate scalate) -->
+          <!-- Fulmine rimpicciolito -->
           <path d="M 62 30 L 44 64 H 56 L 48 90 L 82 58 H 68 L 76 30 Z" fill="url(#boltGrad)" />
           <text x="115" y="55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="42" font-weight="900" fill="#ffffff">FlashJob</text>
           <text x="118" y="83" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" fill="#facc15">MILANO &bull; HOTEL & RESTAURANT HUB</text>
         </svg>
     </div>
-    <div style='text-align: center;'>
-        <span class='badge-milano'>⚡ Assunzioni rapide nel settore H&R &bull; Solo a Milano</span>
+    
+    <!-- Barra con Testo in Scorrimento Continuo -->
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <span>⚡ Assunzioni rapide nel settore H&R • Solo a Milano</span>
+            <span>🚀 Camerieri, Baristi e Cuochi pronti a lavorare</span>
+            <span>📞 Contatto diretto su WhatsApp senza commissioni</span>
+            <span>⭐ Risolvi le emergenze di personale in 2 minuti</span>
+            <span>⚡ Assunzioni rapide nel settore H&R • Solo a Milano</span>
+            <span>🚀 Camerieri, Baristi e Cuochi pronti a lavorare</span>
+            <span>📞 Contatto diretto su WhatsApp senza commissioni</span>
+            <span>⭐ Risolvi le emergenze di personale in 2 minuti</span>
+        </div>
     </div>
 </div>
 """
@@ -283,7 +309,7 @@ if st.session_state.vista_corrente == "Landing Page":
 
 
 # ==========================================
-# ⭐ 2. AREA AZIENDA PRO (PROFILI COMPLETI VISIBILI)
+# ⭐ 2. AREA AZIENDA PRO
 # ==========================================
 elif st.session_state.vista_corrente == "Area Aziende":
   st.subheader("⭐ FlashJob PRO - Accesso Aziende (Milano)")
@@ -352,7 +378,6 @@ elif st.session_state.vista_corrente == "Area Aziende":
       st.info("Nessun lavoratore trovato con questa mansione specifica al momento.")
     else:
       for lav in lavoratori_filtrati:
-        # Layout della card con foto profilo e tutti i campi richiesti
         foto_url = (
             lav.get("foto")
             if lav.get("foto")
@@ -388,7 +413,7 @@ elif st.session_state.vista_corrente == "Area Aziende":
 
 
 # ==========================================
-# 👤 3. AREA LAVORATORE (FORM COMPLETO)
+# 👤 3. AREA LAVORATORE
 # ==========================================
 else:
   st.subheader("👤 Registrazione e Schedulazione Profilo")
@@ -449,7 +474,6 @@ else:
 
     if salva_profilo:
       if nome_lav and telefono_lav and email_lav and residenza_lav:
-        # Gestione foto predefinita se non inserita
         foto_finale = (
             foto_lav
             if foto_lav
