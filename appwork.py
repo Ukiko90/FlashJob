@@ -10,19 +10,19 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# --- STILE CSS "STARTUP MOBILE-FIRST" (UI/UX) ---
+# --- STILE CSS CORRETTO (Spaziature e Pulizia UI) ---
 st.markdown(
     """
     <style>
     .main { background-color: #f8fafc; }
     .block-container { 
-        padding-top: 1rem !important; 
+        padding-top: 2rem !important; /* Stacca tutto dal bordo superiore della pagina */
         padding-bottom: 5rem !important; 
         max-width: 720px; 
     }
     div.block-container { padding-left: 1rem; padding-right: 1rem; }
 
-    /* Hero section ottimizzata smartphone */
+    /* Hero section */
     .hero-container {
         text-align: center;
         padding: 24px 14px;
@@ -66,7 +66,7 @@ st.markdown(
         border-bottom: 1px solid #f1f5f9;
     }
 
-    /* Pulsanti personalizzati grandi per mobile */
+    /* Pulsanti personalizzati */
     .stButton > button {
         border-radius: 12px;
         font-weight: 700;
@@ -96,14 +96,16 @@ st.markdown(
     .badge-milano { 
         background-color: #eff6ff; 
         color: #1e40af; 
-        padding: 5px 12px; 
+        padding: 6px 14px; 
         border-radius: 20px; 
-        font-size: 0.8rem; 
+        font-size: 0.85rem; 
         font-weight: 700; 
         display: inline-flex;
         align-items: center;
         gap: 6px;
         border: 1px solid #bfdbfe;
+        margin-top: 10px;
+        margin-bottom: 22px;
     }
     .badge-verified {
         background-color: #f0fdf4;
@@ -151,16 +153,16 @@ if "lavoratori_schedulati" not in st.session_state:
   ]
 
 if "azienda_pro" not in st.session_state:
-  st.session_state.azienda_pro = False  # Stato abbonamento azienda
+  st.session_state.azienda_pro = False
 
 if "vista_corrente" not in st.session_state:
   st.session_state.vista_corrente = "Landing Page"
 
-# --- HEADER & LOGO ---
+# --- HEADER & LOGO (ABBASSATO E CORRETTO NELLA GRAFICA) ---
 logo_html = """
-<div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
-    <div style="width: 100%; max-width: 280px;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 115" style="width: 100%; height: auto; display: block; filter: drop-shadow(0px 4px 12px rgba(15,23,42,0.08));">
+<div style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 15px; margin-bottom: 15px;">
+    <div style="width: 100%; max-width: 320px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 115" style="width: 100%; height: auto; display: block; filter: drop-shadow(0px 6px 16px rgba(15,23,42,0.12));">
           <defs>
             <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#0f172a" />
@@ -174,23 +176,17 @@ logo_html = """
           <rect width="512" height="115" rx="24" fill="url(#bgGrad)" />
           <path d="M 70 18 L 38 68 H 58 L 48 98 L 94 56 H 74 L 84 18 Z" fill="url(#boltGrad)" />
           <text x="122" y="55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="42" font-weight="900" fill="#ffffff">FlashJob</text>
-          <text x="125" y="83" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="500" fill="#94a3b8">Milano Talent Hub</text>
+          <text x="125" y="83" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" fill="#facc15">MILANO &bull; HOTEL & RESTAURANT HUB</text>
         </svg>
+    </div>
+    <div style='text-align: center;'>
+        <span class='badge-milano'>⚡ Assunzioni rapide nel settore H&R &bull; Solo a Milano</span>
     </div>
 </div>
 """
 st.markdown(logo_html, unsafe_allow_html=True)
 
-st.markdown(
-    """
-    <div style='text-align: center; margin-bottom: 20px;'>
-        <span class='badge-milano'>📍 Personale H&R Immediato &bull; Esclusiva Milano</span>
-    </div>
-""",
-    unsafe_allow_html=True,
-)
-
-# --- BARRA DI NAVIGAZIONE RAPIDA TRAMITE PULSANTI (Ottimizzata Mobile) ---
+# --- BARRA DI NAVIGAZIONE RAPIDA ---
 col_nav1, col_nav2, col_nav3 = st.columns(3)
 with col_nav1:
   if st.button("🚀 Home"):
@@ -212,7 +208,7 @@ st.markdown(
 
 
 # ==========================================
-# 🚀 1. LA LANDING PAGE (VISTA DI DEFAULT DA CELLULARE)
+# 🚀 1. LA LANDING PAGE
 # ==========================================
 if st.session_state.vista_corrente == "Landing Page":
 
@@ -226,7 +222,6 @@ if st.session_state.vista_corrente == "Landing Page":
       unsafe_allow_html=True,
   )
 
-  # Pulsanti di conversione rapida sotto la hero (perfetti per chi apre da smartphone)
   col_btn1, col_btn2 = st.columns(2)
   with col_btn1:
     if st.button("⭐ SONO UN LOCALE\n(Accedi / 30€)"):
@@ -282,7 +277,7 @@ if st.session_state.vista_corrente == "Landing Page":
 
 
 # ==========================================
-# ⭐ 2. AREA AZIENDA PRO (ABBONAMENTO & DATABASE)
+# ⭐ 2. AREA AZIENDA PRO
 # ==========================================
 elif st.session_state.vista_corrente == "Area Aziende":
   st.subheader("⭐ FlashJob PRO - Accesso Aziende (Milano)")
