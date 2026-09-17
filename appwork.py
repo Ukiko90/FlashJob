@@ -7,7 +7,7 @@ st.set_page_config(
     layout="centered",
 )
 
-# Stile CSS avanzato con sfondi e grafica curata
+# Stile CSS avanzato per l'interfaccia
 st.markdown(
     """
     <style>
@@ -31,10 +31,6 @@ st.markdown(
         box-shadow: 0 4px 15px rgba(0,0,0,0.04);
         margin-bottom: 18px;
         border: 1px solid #e2e8f0;
-        transition: transform 0.2s ease;
-    }
-    .feature-card:hover {
-        transform: translateY(-2px);
     }
     .badge-tag {
         background-color: #fef08a;
@@ -46,12 +42,30 @@ st.markdown(
         display: inline-block;
         margin-bottom: 8px;
     }
+    .gallery-img {
+        width: 100%;
+        border-radius: 16px;
+        margin-bottom: 15px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        object-fit: cover;
+        max-height: 450px;
+    }
+    .legal-footer {
+        background-color: #1e293b;
+        color: #94a3b8;
+        padding: 20px;
+        border-radius: 14px;
+        font-size: 0.75rem;
+        line-height: 1.5;
+        margin-top: 40px;
+        border: 1px solid #334155;
+    }
     </style>
 """,
     unsafe_allow_html=True,
 )
 
-# Header principale con grafica
+# Header principale
 st.markdown(
     """
     <div class="hero-box">
@@ -83,28 +97,25 @@ if "lavoratori" not in st.session_state:
 # Menu di navigazione
 scelta = st.radio(
     "Navigazione rapida:",
-    ["🏠 Chi Siamo & Vantaggi", "⭐ Area Aziende (Database)", "👤 Area Lavoratori"],
+    ["🏠 Chi Siamo & Atmosfera", "⭐ Area Aziende (Database)", "👤 Area Lavoratori"],
     horizontal=True,
 )
 
 st.markdown("---")
 
 # ==========================================
-# 🏠 HOME PAGE: CHI SIAMO, COSA FACCIAMO E VANTAGGI
+# 🏠 HOME PAGE: CHI SIAMO, VANTAGGI E FOTO VERTICALI
 # ==========================================
-if scelta == "🏠 Chi Siamo & Vantaggi":
+if scelta == "🏠 Chi Siamo & Atmosfera":
 
   st.markdown("### 🎯 Chi Siamo e Cosa Facciamo")
   st.write(
-      "**FlashJob Milano** nasce per risolvere il problema numero uno della"
-      " ristorazione e dell'hotellerie milanese: trovare o offrire personale"
-      " qualificato **subito**, senza perdite di tempo, intermediari"
-      " farraginosi o il caos dei gruppi social."
-  )
-  st.write(
-      "Mettiamo a disposizione una piattaforma pulita, immediata e strutturata"
-      " dove i locali possono attingere a un database profilato di camerieri,"
-      " baristi e cuochi pronti a lavorare in città."
+      "**FlashJob Milano** nasce per sradicare il caos dei gruppi di messaggistica"
+      " disordinati e dare una svolta professionale al mondo dell'hotellerie e"
+      " della ristorazione (H&R) sotto la Madonnina. Siamo il punto di incontro"
+      " ideale tra i locali milanesi che hanno bisogno di coprire turni o"
+      " emergenze all'ultimo minuto e i professionisti del settore che cercano"
+      " visibilità e opportunità concrete."
   )
 
   st.markdown("<br>", unsafe_allow_html=True)
@@ -116,12 +127,12 @@ if scelta == "🏠 Chi Siamo & Vantaggi":
         """
         <div class="feature-card">
             <span class="badge-tag">PER LE AZIENDE 🏢</span>
-            <h4 style="color: #0f172a; margin-top:5px;">Risolvi le emergenze in 2 minuti</h4>
+            <h4 style="color: #0f172a; margin-top:5px;">Perché sceglierci</h4>
             <ul style="padding-left: 18px; color: #475569; font-size: 0.9rem; line-height: 1.6;">
-                <li><b>Zero commissioni</b> sulle ore lavorate.</li>
-                <li><b>Contatto diretto WhatsApp</b> immediato con il candidato.</li>
-                <li><b>Filtri avanzati</b> per mansione, zona ed esperienza.</li>
-                <li><b>Copertura rapida</b> dei turni di sala, bar e cucina.</li>
+                <li><b>Zero commissioni</b> sulle ore lavorate o sulle selezioni.</li>
+                <li><b>Contatto diretto immediato</b> via WhatsApp con i candidati.</li>
+                <li><b>Filtri mirati</b> per mansione, zona ed esperienza specifica.</li>
+                <li><b>Copertura rapida</b> dei turni di sala, bar e cucina in 2 minuti.</li>
             </ul>
         </div>
         """,
@@ -133,12 +144,12 @@ if scelta == "🏠 Chi Siamo & Vantaggi":
         """
         <div class="feature-card">
             <span class="badge-tag" style="background-color: #bbf7d0; color: #166534;">PER I LAVORATORI 👤</span>
-            <h4 style="color: #0f172a; margin-top:5px;">Il tuo lavoro a Milano senza filtri</h4>
+            <h4 style="color: #0f172a; margin-top:5px;">I tuoi vantaggi</h4>
             <ul style="padding-left: 18px; color: #475569; font-size: 0.9rem; line-height: 1.6;">
-                <li><b>100% Gratuito</b> per chi cerca lavoro.</li>
-                <li><b>Visibilità massima</b> davanti ai migliori locali milanesi.</li>
-                <li><b>Gestione autonoma</b> delle tue disponibilità orarie.</li>
-                <li><b>Contatti diretti</b> gestiti in totale autonomia.</li>
+                <li><b>100% Gratuito</b> per camerieri, baristi, cuochi e staff.</li>
+                <li><b>Vetrina d'eccellenza</b> davanti ai migliori locali di Milano.</li>
+                <li><b>Gestione autonoma</b> delle proprie disponibilità e turni.</li>
+                <li><b>Zero intermediari</b>, gestisci il colloquio direttamente tu.</li>
             </ul>
         </div>
         """,
@@ -146,9 +157,42 @@ if scelta == "🏠 Chi Siamo & Vantaggi":
     )
 
   st.markdown("<br>", unsafe_allow_html=True)
+  st.markdown(
+      "### ✨ L'atmosfera e la qualità della ristorazione milanese"
+  )
+  st.write(
+      "Ecco un assaggio del contesto in cui operiamo: locali di alto livello,"
+      " drink ricercati, cura dei dettagli e professionisti appassionati."
+  )
+
+  # Galleria fotografica verticale (le immagini caricate)
+  st.image(
+      "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800",
+      caption="FlashJob Milano - Cocktail e pairing di qualità",
+      use_container_width=True,
+  )
+  st.image(
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+      caption=(
+          "FlashJob Milano - Cura meticolosa della cucina e del servizio"
+      ),
+      use_container_width=True,
+  )
+  st.image(
+      "https://images.unsplash.com/photo-1574096079513-d8259312b785?w=800",
+      caption="FlashJob Milano - Mood serale e intrattenimento nei locali",
+      use_container_width=True,
+  )
+  st.image(
+      "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=800",
+      caption="FlashJob Milano - Professionalità e servizio di sala impeccabile",
+      use_container_width=True,
+  )
+
+  st.markdown("<br>", unsafe_allow_html=True)
   c1, c2 = st.columns(2)
   with c1:
-    if st.button("⭐ VAI AL DATABASE AZIENDE (30€)"):
+    if st.button("⭐ ACCEDI AL DATABASE AZIENDE (30€)"):
       st.info("Seleziona 'Area Aziende' dal menu in alto.")
   with c2:
     if st.button("👤 REGISTRATI COME LAVORATORE"):
@@ -207,3 +251,18 @@ else:
         st.warning(
             "Per favore inserisci almeno il nome e il numero di telefono."
         )
+
+# ==========================================
+# ⚖️ TERMINI LEGALI E NOTE IN FONDO ALLA PAGINA
+# ==========================================
+st.markdown(
+    """
+    <div class="legal-footer">
+        <b style="color: #f8fafc; font-size: 0.8rem;">⚖️ Note Legali e Condizioni di Utilizzo - FlashJob Milano</b><br><br>
+        <b>1. Natura del Servizio:</b> FlashJob Milano opera esclusivamente come bacheca digitale e directory di contatto B2B/B2C per il settore Hotellerie & Restaurant (H&R). La piattaforma non costituisce un'agenzia di somministrazione di lavoro di cui al D.Lgs. 276/2003, né agisce in qualità di intermediario o datore di lavoro.<br><br>
+        <b>2. Autonomia delle Parti:</b> Tutti gli accordi lavorativi, contrattuali, di ingaggio o di corresponsione economica avvengono direttamente e autonomamente tra i locali/aziende e i singoli lavoratori. FlashJob Milano è totalmente estranea ai rapporti contrattuali instaurati e declina ogni responsabilità civile e penale derivante dalle prestazioni lavorative.<br><br>
+        <b>3. Trattamento Dati e Privacy:</b> I dati inseriti volontariamente dagli utenti vengono trattati nel pieno rispetto del GDPR (Regolamento UE 2016/679). La pubblicazione dei contatti all'interno dell'area riservata è subordinata all'accettazione delle presenti condizioni d'uso.
+    </div>
+""",
+    unsafe_allow_html=True,
+)
