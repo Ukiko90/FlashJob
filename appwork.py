@@ -168,72 +168,6 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     font-size: .94rem;
 }
 
-/* FULL BLEED HORIZONTAL SCROLL GALLERY */
-.full-bleed-container {
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    padding: 10px 4vw 25px 4vw;
-    overflow-x: auto;
-    display: flex;
-    gap: 12px;
-    scrollbar-width: thin;
-    scroll-snap-type: x mandatory;
-    scroll-padding-left: 4vw;
-}
-
-.full-bleed-container::-webkit-scrollbar { height: 6px; }
-.full-bleed-container::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.25);
-    border-radius: 3px;
-}
-
-.full-bleed-item {
-    flex: 0 0 420px;
-    height: 280px;
-    scroll-snap-align: start;
-    border-radius: 14px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    background: #2a2a2a;
-    border: 1px solid rgba(255,255,255,0.15);
-}
-
-@media (max-width: 768px) {
-    .full-bleed-item {
-        flex: 0 0 280px;
-        height: 200px;
-    }
-}
-
-.full-bleed-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-.full-bleed-item:hover img {
-    transform: scale(1.03);
-}
-
-.full-bleed-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 18px 20px;
-    background: linear-gradient(transparent, rgba(0,0,0,0.85));
-    color: #fff;
-    font-size: 0.88rem;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-}
-
 /* CARD */
 .card {
     background: var(--surface);
@@ -451,52 +385,6 @@ un database operativo con profili, disponibilità, storico e referenze.
     </ul>
 </div>
 """, unsafe_allow_html=True)
-
-    st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
-
-    st.markdown("""
-<div class="section-title">Standard Visivo & Atmosfera</div>
-<div class="section-subtitle">
-Esplora la galleria full-bleed a scorrimento orizzontale con i momenti chiave del servizio hospitality.
-</div>
-""", unsafe_allow_html=True)
-
-    img_url_1 = (
-        "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80"
-    )
-    img_url_2 = (
-        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&q=80"
-    )
-    img_url_3 = (
-        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80"
-    )
-    img_url_4 = (
-        "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80"
-    )
-
-    st.markdown(
-        f"""
-<div class="full-bleed-container">
-    <div class="full-bleed-item">
-        <img src="{img_url_1}" alt="Cura del piatto">
-        <div class="full-bleed-caption">Presentazione e cura sartoriale del piatto</div>
-    </div>
-    <div class="full-bleed-item">
-        <img src="{img_url_2}" alt="Cocktail & Sound">
-        <div class="full-bleed-caption">Atmosfera unica tra mixology e design</div>
-    </div>
-    <div class="full-bleed-item">
-        <img src="{img_url_3}" alt="Servizio di sala">
-        <div class="full-bleed-caption">Accoglienza e servizio impeccabile in sala</div>
-    </div>
-    <div class="full-bleed-item">
-        <img src="{img_url_4}" alt="Food & Drink pairing">
-        <div class="full-bleed-caption">Food pairing di alto livello per ogni evento</div>
-    </div>
-</div>
-""",
-        unsafe_allow_html=True,
-    )
 
 # ============================================================
 # DATABASE AZIENDALE
