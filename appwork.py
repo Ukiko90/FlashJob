@@ -1,6 +1,4 @@
-import base64
 import html
-import os
 import re
 import streamlit as st
 
@@ -12,21 +10,13 @@ st.set_page_config(
 )
 
 # ============================================================
-# CARICAMENTO AUTOMATICO IMMAGINI IN BASE64
+# URL DELLE IMMAGINI CARICATE (OTTIMIZZATI PER STREAMLIT)
 # ============================================================
-@st.cache_data
-def get_img_as_base64(file_path):
-    if os.path.exists(file_path):
-        with open(file_path, "rb") as f:
-            data = f.read()
-        return base64.b64encode(data).decode()
-    return ""
-
-BG_BASE64 = get_img_as_base64("image.png")
-img3_b64 = get_img_as_base64("image_3.png")
-img4_b64 = get_img_as_base64("image_4.png")
-img5_b64 = get_img_as_base64("image_5.png")
-img6_b64 = get_img_as_base64("image_6.png")
+BG_URL = "image.png"  # Sfondo sabbia
+IMG_3 = "image_3.png"
+IMG_4 = "image_4.png"
+IMG_5 = "image_5.png"
+IMG_6 = "image_6.png"
 
 # ============================================================
 # DATA
@@ -64,16 +54,16 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM CON SFONDO SABBIA TEXTURIZZATO
+# DESIGN SYSTEM CON SFONDO SABBIA
 # ============================================================
 bg_css = f"""
     background: 
         linear-gradient(rgba(240, 235, 227, 0.92), rgba(240, 235, 227, 0.92)),
-        url("data:image/jpeg;base64,{BG_BASE64}");
+        url("{BG_URL}");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-""" if BG_BASE64 else "background: #f0ebe3;"
+"""
 
 st.markdown(f"""
 <style>
@@ -560,23 +550,23 @@ Esplora la galleria full-bleed a scorrimento orizzontale con i momenti chiave de
 </div>
 """, unsafe_allow_html=True)
 
-    # Galleria Full-Bleed a scorrimento con layout rettangolare ravvicinato
+    # Galleria Full-Bleed a scorrimento orizzontale con le immagini rettangolari affiancate
     st.markdown(f"""
 <div class="full-bleed-container">
     <div class="full-bleed-item">
-        <img src="data:image/jpeg;base64,{img3_b64}" alt="Cura del piatto">
+        <img src="{IMG_3}" alt="Cura del piatto">
         <div class="full-bleed-caption">Presentazione e cura sartoriale del piatto</div>
     </div>
     <div class="full-bleed-item">
-        <img src="data:image/jpeg;base64,{img4_b64}" alt="Cocktail & Sound">
+        <img src="{IMG_4}" alt="Cocktail & Sound">
         <div class="full-bleed-caption">Atmosfera unica tra mixology e design</div>
     </div>
     <div class="full-bleed-item">
-        <img src="data:image/jpeg;base64,{img5_b64}" alt="Servizio di sala">
+        <img src="{IMG_5}" alt="Servizio di sala">
         <div class="full-bleed-caption">Accoglienza e servizio impeccabile in sala</div>
     </div>
     <div class="full-bleed-item">
-        <img src="data:image/jpeg;base64,{img6_b64}" alt="Food & Drink pairing">
+        <img src="{IMG_6}" alt="Food & Drink pairing">
         <div class="full-bleed-caption">Food pairing di alto livello per ogni evento</div>
     </div>
 </div>
