@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Flashjob &bull; Enterprise Hub", page_icon="⚡", layout="wide"
+    page_title="Flashjob • Enterprise Hub", page_icon="⚡", layout="wide"
 )
 
 st.markdown(
@@ -9,7 +9,6 @@ st.markdown(
     <style>
     .block-container { padding: 0rem 3rem 3rem 3rem; max-width: 100% !important; }
     
-    /* SFONDO MINIMAL STILE APPLE (CLEAN & WARM) */
     .stApp {
         background-color: #f5f2eb;
         background-image: linear-gradient(135deg, #f7f4ed 0%, #eae3d5 100%);
@@ -18,7 +17,6 @@ st.markdown(
         font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
-    /* MENU DI NAVIGAZIONE RAPIDA STILE SEGMENTED CONTROL APPLE */
     .stRadio > label {
         color: #86868b !important;
         font-weight: 500;
@@ -46,7 +44,6 @@ st.markdown(
 
     .content-wrapper { max-width: 980px; margin: 0 auto; }
     
-    /* HERO BANNER CRISTALLINO (ALTA LEGGIBILITÀ) */
     .apple-hero { 
         width: 100vw; 
         position: relative; 
@@ -69,14 +66,13 @@ st.markdown(
         margin-bottom: 12px;
     }
     
-    /* CARD STILE GLASSMORPHISM ELEGANTE */
     .feature-card { 
         background: rgba(255, 255, 255, 0.8); 
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
-        padding: 35px; 
+        padding: 30px; 
         border-radius: 20px; 
-        margin-bottom: 24px; 
+        margin-bottom: 20px; 
         border: 1px solid rgba(0, 0, 0, 0.04); 
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
         color: #1d1d1f; 
@@ -92,7 +88,7 @@ st.markdown(
         text-transform: uppercase;
         letter-spacing: 0.1em;
         display: inline-block; 
-        margin-bottom: 18px; 
+        margin-bottom: 15px; 
     }
     
     .profile-container { 
@@ -174,18 +170,32 @@ st.markdown(
 if "lavoratori" not in st.session_state:
   st.session_state.lavoratori = [
       {
-          "nome": "Marco R.",
+          "nome": "Marco Rossi",
           "mansione": "Cameriere / Sala",
-          "zona": "Navigli",
+          "zona": "Navigli, Milano",
           "tel": "+39 333 1234567",
+          "completati": 18,
+          "referenze": (
+              "Ristorante Ceresio 7: 'Puntuale, professionale e con ottime"
+              " capacità di gestione sala anche nei momenti di massimo"
+              " afflusso.'"
+          ),
       },
       {
-          "nome": "Sara B.",
+          "nome": "Sara Bianchi",
           "mansione": "Barista / Bartender",
-          "zona": "Porta Romana",
+          "zona": "Porta Romana, Milano",
           "tel": "+39 340 9876543",
+          "completati": 24,
+          "referenze": (
+              "The Room Milano: 'Eccezionale nella mixology, rapidissima e"
+              " dotata di grande empatia con la clientela.'"
+          ),
       },
   ]
+
+if "selected_candidate" not in st.session_state:
+  st.session_state.selected_candidate = None
 
 # HEADER PRINCIPALE STILE APPLE
 st.markdown(
@@ -213,21 +223,19 @@ if scelta == "Panoramica & Modello":
   st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
   st.markdown(
       "<h3 style='color: #1d1d1f; font-weight: 600; font-size: 1.5rem;"
-      " margin-bottom: 12px; letter-spacing: -0.01em;'>Infrastruttura"
-      " Operativa</h3>",
+      " margin-bottom: 12px;'>Infrastruttura Operativa</h3>",
       unsafe_allow_html=True,
   )
   st.markdown(
       "<p style='color: #515154; line-height: 1.65; font-size: 1.05rem;"
       " margin-bottom: 30px;'>Flashjob ottimizza la gestione del personale"
       " riducendo i tempi di copertura delle turnazioni critiche. I titolari"
-      " possono individuare e contattare direttamente i professionisti"
-      " qualificati per interventi last-minute sul territorio di Milano.</p>",
+      " possono consultare i profili dettagliati con relative referenze ed"
+      " ingaggiare direttamente i candidati.</p>",
       unsafe_allow_html=True,
   )
 
   col_v1, col_v2 = st.columns(2)
-
   with col_v1:
     st.markdown(
         """
@@ -235,16 +243,15 @@ if scelta == "Panoramica & Modello":
             <span class="badge-tag">Area Aziende</span>
             <h4 style="color: #1d1d1f; margin-top:5px; font-weight: 600; font-size: 1.2rem;">Standard di Servizio</h4>
             <ul style="padding-left: 18px; color: #515154; font-size: 0.95rem; line-height: 1.7; margin-top: 12px;">
+                <li>Accesso a profili completi e referenze verificate.</li>
                 <li>Zero commissioni sulle selezioni attive.</li>
-                <li>Canale di comunicazione diretto via WhatsApp.</li>
+                <li>Contatto e prenotazione rapida via WhatsApp.</li>
                 <li>Copertura tempestiva dei turni operativi.</li>
-                <li>Profili verificati e referenziati.</li>
             </ul>
         </div>
         """,
         unsafe_allow_html=True,
     )
-
   with col_v2:
     st.markdown(
         """
@@ -255,7 +262,6 @@ if scelta == "Panoramica & Modello":
                 <li>Piattaforma interamente gratuita per lo staff.</li>
                 <li>Patto di serietà vincolante all'accettazione dell'offerta.</li>
                 <li><b>Policy di affidabilità (3 Strike):</b> Tre assenze ingiustificate comportano la revoca dell'accesso al database.</li>
-                <li>Visibilità prioritaria sui locali partner.</li>
             </ul>
         </div>
         """,
@@ -265,8 +271,7 @@ if scelta == "Panoramica & Modello":
   st.markdown("<br>", unsafe_allow_html=True)
   st.markdown(
       "<h3 style='color: #1d1d1f; font-weight: 600; font-size: 1.5rem;"
-      " margin-bottom: 15px; letter-spacing: -0.01em;'>Standard Visivo e"
-      " Location</h3>",
+      " margin-bottom: 15px;'>Standard Visivo e Location</h3>",
       unsafe_allow_html=True,
   )
   st.markdown("</div>", unsafe_allow_html=True)
@@ -291,29 +296,72 @@ if scelta == "Panoramica & Modello":
 
 elif scelta == "Database Aziendale":
   st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
-  st.markdown(
-      "<h3 style='color: #1d1d1f; font-weight: 600; font-size: 1.5rem;"
-      " margin-bottom: 8px;'>Database Professionisti</h3>",
-      unsafe_allow_html=True,
-  )
-  st.markdown(
-      "<p style='color: #515154; margin-bottom: 25px; font-size: 1.05rem;'>Directory"
-      " attiva del personale disponibile per ingaggi rapidi in area"
-      " metropolitana.</p>",
-      unsafe_allow_html=True,
-  )
 
-  for lav in st.session_state.lavoratori:
+  if st.session_state.selected_candidate is not None:
+    c = st.session_state.selected_candidate
+    if st.button("← Torna all'elenco generale"):
+      st.session_state.selected_candidate = None
+      st.rerun()
+
     st.markdown(
         f"""
-        <div class="feature-card">
-            <h4 style="color: #1d1d1f; margin-top:0; font-weight: 600; font-size: 1.2rem;">{lav['nome']}</h4>
-            <p style="margin: 6px 0; color: #515154; font-size: 0.95rem;"><b>Qualifica:</b> {lav['mansione']} &bull; <b>Area:</b> {lav['zona']}</p>
-            <p style="margin: 6px 0; font-size: 0.95rem;"><b>Contatto Diretto:</b> <a href="https://wa.me/{lav['tel'].replace(' ', '')}" target="_blank" style="color: #0066cc; font-weight: 600; text-decoration: none;">{lav['tel']} &rarr;</a></p>
+        <div class="profile-container" style="text-align: left; max-width: 100%;">
+            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;" />
+                <div>
+                    <h2 style="color: #1d1d1f; margin: 0; font-size: 1.5rem;">{c['nome']}</h2>
+                    <p style="color: #0066cc; font-weight: 600; margin: 4px 0;">{c['mansione']} &bull; {c['zona']}</p>
+                    <p style="color: #86868b; font-size: 0.85rem; margin: 0;">Stato: <b style="color: #34c759;">Disponibile per Turni Urgenti</b></p>
+                </div>
+            </div>
+            
+            <hr style="border: 0; border-top: 1px solid rgba(0,0,0,0.08); margin: 20px 0;">
+            
+            <h4 style="color: #1d1d1f; font-size: 1.1rem; margin-bottom: 8px;">📊 Statistiche e Storico Turni</h4>
+            <p style="color: #515154; font-size: 0.95rem;">Turni completati con successo sulla piattaforma: <b>{c['completati']}</b></p>
+            
+            <h4 style="color: #1d1d1f; font-size: 1.1rem; margin-top: 20px; margin-bottom: 8px;">⭐ Referenze e Valutazioni dai Locali</h4>
+            <div style="background: rgba(245, 242, 235, 0.8); padding: 15px; border-radius: 12px; border-left: 4px solid #0066cc; color: #333; font-style: italic; font-size: 0.95rem;">
+                "{c['referenze']}"
+            </div>
+            
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="https://wa.me/{c['tel'].replace(' ', '')}" target="_blank" style="background-color: #1d1d1f; color: #ffffff; padding: 12px 25px; border-radius: 12px; font-weight: 600; text-decoration: none; display: inline-block;">Contatta e Prenota Subito via WhatsApp &rarr;</a>
+            </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
+  else:
+    st.markdown(
+        "<h3 style='color: #1d1d1f; font-weight: 600; font-size: 1.5rem;"
+        " margin-bottom: 8px;'>Database Professionisti</h3>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        "<p style='color: #515154; margin-bottom: 25px; font-size: 1.05rem;'>Clicca"
+        " sul pulsante sotto ogni candidato per visualizzare il profilo"
+        " completo, le statistiche e le referenze certificate.</p>",
+        unsafe_allow_html=True,
+    )
+
+    for idx, lav in enumerate(st.session_state.lavoratori):
+      st.markdown(
+          f"""
+            <div class="feature-card">
+                <h4 style="color: #1d1d1f; margin-top:0; font-weight: 600; font-size: 1.2rem;">{lav['nome']}</h4>
+                <p style="margin: 4px 0; color: #515154; font-size: 0.95rem;"><b>Qualifica:</b> {lav['mansione']} &bull; <b>Area:</b> {lav['zona']}</p>
+                <p style="margin: 4px 0; font-size: 0.85rem; color: #34c759; font-weight: 600;">Affidabilità Verificata &bull; {lav['completati']} turni completati</p>
+            </div>
+            """,
+          unsafe_allow_html=True,
+      )
+      if st.button(
+          f"Visualizza Profilo e Referenze di {lav['nome']}", key=f"btn_{idx}"
+      ):
+        st.session_state.selected_candidate = lav
+        st.rerun()
+
   st.markdown("</div>", unsafe_allow_html=True)
 
 else:
@@ -329,15 +377,15 @@ else:
         <div class="profile-stats-row">
             <div>
                 <div style="font-size: 1.3rem; font-weight: 700; color: #1d1d1f;">03</div>
-                <div style="font-size: 0.7rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em;">In Attesa</div>
+                <div style="font-size: 0.7rem; color: #86868b; text-transform: uppercase;">In Attesa</div>
             </div>
             <div>
                 <div style="font-size: 1.3rem; font-weight: 700; color: #0066cc;">02</div>
-                <div style="font-size: 0.7rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em;">In Corso</div>
+                <div style="font-size: 0.7rem; color: #86868b; text-transform: uppercase;">In Corso</div>
             </div>
             <div>
                 <div style="font-size: 1.3rem; font-weight: 700; color: #34c759;">18</div>
-                <div style="font-size: 0.7rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em;">Completati</div>
+                <div style="font-size: 0.7rem; color: #86868b; text-transform: uppercase;">Completati</div>
             </div>
         </div>
 
