@@ -76,7 +76,6 @@ st.markdown(
         text-align: center; 
     }
     
-    /* BORDO FOTO PROFILO BIANCO */
     .profile-img { 
         width: 90px; 
         height: 90px; 
@@ -165,25 +164,26 @@ st.markdown("</div>", unsafe_allow_html=True)
 if scelta == "🏠 Chi Siamo & Atmosfera":
   st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
   st.markdown(
-      "<h3 style='color: white;'>🎯 Chi Siamo e Cosa Facciamo</h3>",
+      "<h3 style='color: white;'>🎯 Chi Siamo e Come Funziona</h3>",
       unsafe_allow_html=True,
   )
   st.markdown(
-      "<p style='color: #f1f5f9;'><b>Flashjob⚡</b> nasce per superare la"
-      " confusione dei gruppi di messaggistica e dare una svolta"
-      " professionale e ordinata al settore H&R milanese.</p>",
+      "<p style='color: #f1f5f9;'><b>Flashjob⚡</b> azzera i tempi di attesa:"
+      " il titolare apre l'app, individua il professionista disponibile e lo"
+      " contatta o prenota all'ultimo momento per coprire un'emergenza in"
+      " sala o al bar.</p>",
       unsafe_allow_html=True,
   )
 
   col_v1, col_v2 = st.columns(2)
   with col_v1:
     st.markdown(
-        """<div class="feature-card"><span class="badge-tag">PER LE AZIENDE 🏢</span><h4 style="color: #fff;">Perché sceglierci</h4><ul style="color: #f1f5f9;"><li>Zero commissioni sulle selezioni</li><li>Contatto diretto via WhatsApp</li><li>Copertura rapida turni in 2 minuti</li></ul></div>""",
+        """<div class="feature-card"><span class="badge-tag">PER LE AZIENDE 🏢</span><h4 style="color: #fff;">Vantaggi e Regole</h4><ul style="color: #f1f5f9;"><li>Zero commissioni sulle selezioni.</li><li>Contatto e prenotazione rapida via WhatsApp.</li><li>Garanzia di copertura turni in 2 minuti.</li><li>Profili verificati e affidabili.</li></ul></div>""",
         unsafe_allow_html=True,
     )
   with col_v2:
     st.markdown(
-        """<div class="feature-card"><span class="badge-tag" style="background:#e2e8f0;color:#0f172a;">PER I LAVORATORI 👤</span><h4 style="color: #fff;">I tuoi vantaggi</h4><ul style="color: #f1f5f9;"><li>Servizio 100% gratuito</li><li>Vetrina d'eccellenza a Milano</li><li>Nessun intermediario</li></ul></div>""",
+        """<div class="feature-card"><span class="badge-tag" style="background:#e2e8f0;color:#0f172a;">PER I LAVORATORI 👤</span><h4 style="color: #fff;">Vantaggi e Regole d'Oro</h4><ul style="color: #f1f5f9;"><li>Servizio 100% gratuito.</li><li>Vetrina d'eccellenza a Milano.</li><li><b>Patto di serietà:</b> L'accettazione dell'offerta vincola alla presenza.</li><li><b>Regola dei 3 strike:</b> Dopo 3 assenze ingiustificate, il profilo viene rimosso dalla bacheca.</li></ul></div>""",
         unsafe_allow_html=True,
     )
   st.markdown("</div>", unsafe_allow_html=True)
@@ -208,13 +208,13 @@ elif scelta == "⭐ Area Aziende (Database)":
       unsafe_allow_html=True,
   )
   st.markdown(
-      "<p style='color: #f1f5f9;'>Elenco aggiornato dei professionisti"
-      " dell'accoglienza pronti a iniziare.</p>",
+      "<p style='color: #f1f5f9;'>Scegli il professionista che ti serve e"
+      " contattalo subito per un turno urgente.</p>",
       unsafe_allow_html=True,
   )
   for lav in st.session_state.lavoratori:
     st.markdown(
-        f"""<div class="feature-card"><h4 style="color: white; margin-top:0;">👤 {lav['nome']}</h4><p style="color: #f1f5f9;">Mansione: {lav['mansione']} | Zona: {lav['zona']}</p><p>📞 Contatto diretto WhatsApp: <a href="https://wa.me/{lav['tel'].replace(' ', '')}" target="_blank" style="color: #ffffff; font-weight: 600; text-decoration: underline;">{lav['tel']}</a></p></div>""",
+        f"""<div class="feature-card"><h4 style="color: white; margin-top:0;">👤 {lav['nome']}</h4><p style="color: #f1f5f9;">Mansione: {lav['mansione']} | Zona: {lav['zona']}</p><p>📞 Contatto rapido WhatsApp: <a href="https://wa.me/{lav['tel'].replace(' ', '')}" target="_blank" style="color: #ffffff; font-weight: 600; text-decoration: underline;">{lav['tel']}</a></p></div>""",
         unsafe_allow_html=True,
     )
   st.markdown("</div>", unsafe_allow_html=True)
@@ -246,7 +246,7 @@ else:
 
 st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
 st.markdown(
-    """<div class="legal-footer"><b style="color: #ffffff;">⚖️ Note Legali e Condizioni - Flashjob⚡</b><br>Piattaforma digitale indipendente per il settore H&R. Non costituisce agenzia di somministrazione o intermediazione di lavoro.</div>""",
+    """<div class="legal-footer"><b style="color: #ffffff;">⚖️ Note Legali e Regole della Piattaforma - Flashjob⚡</b><br>Piattaforma digitale indipendente per il settore H&R. <b>Patto di Serietà:</b> L'accettazione di un'offerta comporta l'obbligo di presenza. Tre assenze ingiustificate comportano la rimozione definitiva dal database. Non costituisce agenzia di somministrazione o intermediazione di lavoro.</div>""",
     unsafe_allow_html=True,
 )
 st.markdown("</div>", unsafe_allow_html=True)
