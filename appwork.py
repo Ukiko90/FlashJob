@@ -7,7 +7,7 @@ st.set_page_config(
     layout="wide",
 )
 
-# Stile CSS personalizzato: Sfondo nero, scritte bianche e logo compatto
+# Stile CSS personalizzato ispirato al design del profilo mobile
 st.markdown(
     """
     <style>
@@ -62,7 +62,7 @@ st.markdown(
         letter-spacing: -3px;
     }
 
-    /* CARD CON SFONDO SCURO/ NERO E BORDO ELEGANTE */
+    /* CARD CON SFONDO SCURO E BORDO ELEGANTE */
     .feature-card {
         background: #111111;
         padding: 25px;
@@ -84,17 +84,60 @@ st.markdown(
         margin-bottom: 10px;
     }
 
-    /* --- GALLERIA FULL BLEED FLUIDA ORIZZONTALE --- */
-    .fluid-gallery {
-        width: 100vw;
-        position: relative;
-        left: 50%;
-        right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
-        margin-top: 40px;
-        margin-bottom: 40px;
-        background: #000000;
+    /* --- STILE PROFILO LAVORATORE --- */
+    .profile-container {
+        background: #111111;
+        border: 1px solid #333333;
+        border-radius: 24px;
+        padding: 30px;
+        max-width: 700px;
+        margin: 0 auto 30px auto;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        text-align: center;
+    }
+
+    .profile-img {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #4ade80;
+        margin: 0 auto 15px auto;
+    }
+
+    .profile-stats-row {
+        display: flex;
+        justify-content: space-around;
+        background: #18181b;
+        border: 1px solid #27272a;
+        border-radius: 16px;
+        padding: 15px;
+        margin: 20px 0;
+    }
+
+    .menu-item-card {
+        background: #18181b;
+        border: 1px solid #27272a;
+        border-radius: 14px;
+        padding: 16px 20px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #f8fafc;
+        text-align: left;
+    }
+
+    /* --- GALLERIA INCORNICIATA --- */
+    .framed-gallery-container {
+        width: 100%;
+        max-width: 950px;
+        margin: 40px auto;
+        background: #161616;
+        border-radius: 20px;
+        border: 1px solid #333333;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        overflow: hidden;
     }
 
     .image-strip {
@@ -114,9 +157,9 @@ st.markdown(
     }
 
     .fluid-slide {
-        flex: 0 0 100vw;
-        width: 100vw;
-        height: 550px;
+        flex: 0 0 100%;
+        width: 100%;
+        height: 500px;
         scroll-snap-align: start;
         position: relative;
     }
@@ -133,13 +176,15 @@ st.markdown(
         bottom: 0;
         left: 0;
         right: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.2));
+        background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.4));
         color: #f8fafc;
-        padding: 30px 20px 20px 20px;
-        font-size: 1.15rem;
+        padding: 25px 20px 20px 20px;
+        font-size: 1.1rem;
         font-weight: 600;
         text-align: center;
         letter-spacing: 0.5px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
     }
 
     .legal-footer {
@@ -175,9 +220,7 @@ if "lavoratori" not in st.session_state:
       },
   ]
 
-# ==========================================
-# BANNER FULL BLEED CON LOGO COMPATTO (Fla⚡️hJob)
-# ==========================================
+# BANNER FULL BLEED CON LOGO COMPATTO
 st.markdown(
     """
     <div class="hero-full-bleed">
@@ -190,40 +233,31 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Contenitore centrale per il menu e le sezioni
 st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
-
-# Menu di navigazione
 scelta = st.radio(
     "Navigazione rapida:",
     ["🏠 Chi Siamo & Atmosfera", "⭐ Area Aziende (Database)", "👤 Area Lavoratori"],
     horizontal=True,
 )
-
 st.markdown("---")
 st.markdown("</div>", unsafe_allow_html=True)
 
-# ==========================================
-# 🏠 HOME PAGE: CHI SIAMO, VANTAGGI E GALLERIA FULL BLEED
-# ==========================================
+# 🏠 HOME PAGE
 if scelta == "🏠 Chi Siamo & Atmosfera":
-
   st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
-  st.markdown("<h3 style='color: white;'>🎯 Chi Siamo e Cosa Facciamo</h3>", unsafe_allow_html=True)
   st.markdown(
-      "<p style='color: #cbd5e1;'><b>Fla⚡️hJob</b> nasce per sradicare il caos dei gruppi di"
-      " messaggistica disordinati e dare una svolta professionale al mondo"
-      " dell'hotellerie e della ristorazione (H&R) sotto la Madonnina. Siamo il"
-      " punto di incontro ideale tra i locali milanesi che hanno bisogno di"
-      " coprire turni o emergenze all'ultimo minuto e i professionisti del"
-      " settore che cercano visibilità e opportunità concrete.</p>",
+      "<h3 style='color: white;'>🎯 Chi Siamo e Cosa Facciamo</h3>",
+      unsafe_allow_html=True,
+  )
+  st.markdown(
+      "<p style='color: #cbd5e1;'><b>Fla⚡️hJob</b> nasce per sradicare il caos"
+      " dei gruppi di messaggistica disordinati e dare una svolta professionale"
+      " al mondo dell'hotellerie e della ristorazione (H&R) sotto la Madonnina."
+      "</p>",
       unsafe_allow_html=True,
   )
 
-  st.markdown("<br>", unsafe_allow_html=True)
-
   col_v1, col_v2 = st.columns(2)
-
   with col_v1:
     st.markdown(
         """
@@ -234,13 +268,11 @@ if scelta == "🏠 Chi Siamo & Atmosfera":
                 <li><b>Zero commissioni</b> sulle ore lavorate o sulle selezioni.</li>
                 <li><b>Contatto diretto immediato</b> via WhatsApp con i candidati.</li>
                 <li><b>Filtri mirati</b> per mansione, zona ed esperienza specifica.</li>
-                <li><b>Copertura rapida</b> dei turni di sala, bar e cucina in 2 minuti.</li>
             </ul>
         </div>
         """,
         unsafe_allow_html=True,
     )
-
   with col_v2:
     st.markdown(
         """
@@ -250,27 +282,18 @@ if scelta == "🏠 Chi Siamo & Atmosfera":
             <ul style="padding-left: 18px; color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
                 <li><b>100% Gratuito</b> per camerieri, baristi, cuochi e staff.</li>
                 <li><b>Vetrina d'eccellenza</b> davanti ai migliori locali di Milano.</li>
-                <li><b>Gestione autonoma</b> delle proprie disponibilità e turni.</li>
                 <li><b>Zero intermediari</b>, gestisci il colloquio direttamente tu.</li>
             </ul>
         </div>
         """,
         unsafe_allow_html=True,
     )
-
-  st.markdown("<br>", unsafe_allow_html=True)
-  st.markdown("<h3 style='color: white;'>✨ L'atmosfera e lo stile della movida milanese</h3>", unsafe_allow_html=True)
-  st.markdown(
-      "<p style='color: #cbd5e1;'>Scorri la galleria fotografica per esplorare il livello e lo stile dei"
-      " locali in cui operano i nostri professionisti.</p>",
-      unsafe_allow_html=True,
-  )
   st.markdown("</div>", unsafe_allow_html=True)
 
-  # --- GALLERIA FULL BLEED ORIZZONTALE ---
+  # GALLERIA
   st.markdown(
       """
-    <div class="fluid-gallery">
+    <div class="framed-gallery-container">
         <div class="image-strip">
             <div class="fluid-slide">
                 <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1600" />
@@ -284,47 +307,20 @@ if scelta == "🏠 Chi Siamo & Atmosfera":
                 <img src="https://images.unsplash.com/photo-1574096079513-d8259312b785?w=1600" />
                 <div class="slide-caption">🎧 Fla⚡️hJob &bull; Mood serale, eventi e intrattenimento nei locali</div>
             </div>
-            <div class="fluid-slide">
-                <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=1600" />
-                <div class="slide-caption">🛎️ Fla⚡️hJob &bull; Professionalità e servizio di sala impeccabile</div>
-            </div>
-            <div class="fluid-slide">
-                <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?w=1600" />
-                <div class="slide-caption">🍷 Fla⚡️hJob &bull; Wine tasting e atmosfere esclusive in centro</div>
-            </div>
-            <div class="fluid-slide">
-                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600" />
-                <div class="slide-caption">✨ Fla⚡️hJob &bull; Ristoranti, bistrot e design milanese</div>
-            </div>
         </div>
     </div>
     """,
       unsafe_allow_html=True,
   )
 
-  st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
-  st.markdown("<br>", unsafe_allow_html=True)
-  c1, c2 = st.columns(2)
-  with c1:
-    if st.button("⭐ ACCEDI AL DATABASE AZIENDE (30€)"):
-      st.info("Seleziona 'Area Aziende' dal menu in alto.")
-  with c2:
-    if st.button("👤 REGISTRATI COME LAVORATORE"):
-      st.info("Seleziona 'Area Lavoratori' dal menu in alto.")
-  st.markdown("</div>", unsafe_allow_html=True)
-
-# ==========================================
 # ⭐ AREA AZIENDE
-# ==========================================
 elif scelta == "⭐ Area Aziende (Database)":
   st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
-  st.markdown("<h3 style='color: white;'>⭐ Database Lavoratori Disponibili a Milano</h3>", unsafe_allow_html=True)
   st.markdown(
-      "<p style='color: #cbd5e1;'>Accedi ai profili completi di camerieri, baristi e cuochi"
-      " schedulati.</p>",
+      "<h3 style='color: white;'>⭐ Database Lavoratori Disponibili a"
+      " Milano</h3>",
       unsafe_allow_html=True,
   )
-
   for lav in st.session_state.lavoratori:
     st.markdown(
         f"""
@@ -338,54 +334,45 @@ elif scelta == "⭐ Area Aziende (Database)":
     )
   st.markdown("</div>", unsafe_allow_html=True)
 
-# ==========================================
 # 👤 AREA LAVORATORI
-# ==========================================
 else:
   st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
-  st.markdown("<h3 style='color: white;'>👤 Registrazione Gratuita Lavoratore</h3>", unsafe_allow_html=True)
   st.markdown(
-      "<p style='color: #cbd5e1;'>Inserisci i tuoi dati per entrare nel database ufficiale di"
-      " Milano.</p>",
+      """
+    <div class="profile-container">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400" class="profile-img" />
+        <h2 style="color: white; margin-bottom: 2px; font-size: 1.5rem;">Hello, Giulia Rossi</h2>
+        <p style="color: #4ade80; font-size: 0.95rem; font-weight: 600; margin-bottom: 4px;">+39 334 5678901</p>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 0;">H&R Professional &bull; Milano Centro</p>
+        
+        <div class="profile-stats-row">
+            <div>
+                <div style="font-size: 1.25rem; font-weight: bold; color: #fef08a;">03</div>
+                <div style="font-size: 0.75rem; color: #94a3b8;">Turni in Attesa</div>
+            </div>
+            <div>
+                <div style="font-size: 1.25rem; font-weight: bold; color: #38bdf8;">02</div>
+                <div style="font-size: 0.75rem; color: #94a3b8;">In Corso</div>
+            </div>
+            <div>
+                <div style="font-size: 1.25rem; font-weight: bold; color: #4ade80;">18</div>
+                <div style="font-size: 0.75rem; color: #94a3b8;">Completati</div>
+            </div>
+        </div>
+    </div>
+    """,
       unsafe_allow_html=True,
   )
-
-  with st.form("form_lav"):
-    nome = st.text_input("Nome e Cognome / Nome d'arte")
-    mansione = st.selectbox(
-        "Mansione Principale",
-        ["Cameriere / Sala", "Barista / Bartender", "Cuoco / Aiuto Cuoco"],
-    )
-    zona = st.text_input("Zona di Milano (es. Navigli, Brera, Duomo)")
-    tel = st.text_input("Numero WhatsApp (es. 3331234567)")
-    invia = st.form_submit_button("🚀 Registrati Subito (Gratis)")
-
-    if invia:
-      if nome and tel:
-        st.session_state.lavoratori.append(
-            {"nome": nome, "mansione": mansione, "zona": zona, "tel": tel}
-        )
-        st.success(
-            "Registrazione completata con successo! Ora compari nel database"
-            " per i locali di Milano."
-        )
-      else:
-        st.warning(
-            "Per favore inserisci almeno il nome e il telefono di contatto."
-        )
   st.markdown("</div>", unsafe_allow_html=True)
 
-# ==========================================
-# ⚖️ TERMINI LEGALI E NOTE IN FONDO ALLA PAGINA
-# ==========================================
+# NOTE LEGALI
 st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
 st.markdown(
     """
     <div class="legal-footer">
         <b style="color: #ffffff; font-size: 0.85rem;">⚖️ Note Legali e Condizioni di Utilizzo - Fla⚡️hJob</b><br><br>
-        <b>1. Natura del Servizio:</b> Fla⚡️hJob opera esclusivamente come bacheca digitale e directory di contatto B2B/B2C per il settore Hotellerie & Restaurant (H&R). La piattaforma non costituisce un'agenzia di somministrazione di lavoro di cui al D.Lgs. 276/2003, né agisce in qualità di intermediario o datore di lavoro.<br><br>
-        <b>2. Autonomia delle Parti:</b> Tutti gli accordi lavorativi, contrattuali, di ingaggio o di corresponsione economica avvengono direttamente e autonomamente tra i locali/aziende e i singoli lavoratori. Fla⚡️hJob è totalmente estranea ai rapporti contrattuali instaurati e declina ogni responsabilità civile e penale derivante dalle prestazioni lavorative.<br><br>
-        <b>3. Trattamento Dati e Privacy:</b> I dati inseriti volontariamente dagli utenti vengono trattati nel pieno rispetto del GDPR (Regolamento UE 2016/679). La pubblicazione dei contatti all'interno dell'area riservata è subordinata all'accettazione delle presenti condizioni d'uso.
+        <b>1. Natura del Servizio:</b> Fla⚡️hJob opera esclusivamente come bacheca digitale e directory di contatto B2B/B2C per il settore Hotellerie & Restaurant (H&R).<br>
+        <b>2. Autonomia delle Parti:</b> Tutti gli accordi lavorativi avvengono direttamente e autonomamente tra i locali e i singoli lavoratori.
     </div>
 """,
     unsafe_allow_html=True,
