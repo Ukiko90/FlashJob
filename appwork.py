@@ -45,9 +45,10 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM & STYLING
+# DESIGN SYSTEM & STYLING (Nasconde menu, header e footer di Streamlit/GitHub)
 # ============================================================
-st.markdown("""
+st.markdown(
+    """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
@@ -80,9 +81,11 @@ html, body, [class*="css"] {
     padding: 0 28px 60px !important;
 }
 
-[data-testid="stHeader"] { background: transparent; }
-[data-testid="stToolbar"] { display: none; }
-footer { visibility: hidden; }
+/* Nasconde elementi nativi Streamlit e GitHub */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+[data-testid="stHeader"] { display: none !important; }
+[data-testid="stToolbar"] { display: none !important; }
 
 /* HERO */
 .hero {
@@ -317,12 +320,15 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     border-color: var(--line);
 }
 </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 # ============================================================
 # HERO SECTION
 # ============================================================
-st.markdown("""
+st.markdown(
+    """
 <div class="hero">
     <div class="logo-mark">⚡</div>
     <h1>Flashjob</h1>
@@ -331,7 +337,9 @@ st.markdown("""
         Trova professionisti disponibili e copri i turni critici in pochi minuti.
     </p>
 </div>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 scelta = st.radio(
     "Navigazione",
@@ -348,18 +356,22 @@ scelta = st.radio(
 # PANORAMICA & MODELLO
 # ============================================================
 if scelta == "Panoramica & Modello":
-    st.markdown("""
+    st.markdown(
+        """
 <div class="section-title">Infrastruttura Operativa</div>
 <div class="section-subtitle">
 Flashjob mette in contatto aziende e professionisti hospitality attraverso
 un database operativo con profili, disponibilità, storico e referenze.
 </div>
-""", unsafe_allow_html=True)
+""",
+        unsafe_allow_html=True,
+    )
 
     col1, col2 = st.columns(2, gap="large")
 
     with col1:
-        st.markdown("""
+        st.markdown(
+            """
 <div class="card">
     <span class="badge blue">Area Aziende</span>
     <h3>Standard di Servizio</h3>
@@ -370,10 +382,13 @@ un database operativo con profili, disponibilità, storico e referenze.
         <li>Processo semplice, pensato per le esigenze operative.</li>
     </ul>
 </div>
-""", unsafe_allow_html=True)
+""",
+            unsafe_allow_html=True,
+        )
 
     with col2:
-        st.markdown("""
+        st.markdown(
+            """
 <div class="card">
     <span class="badge green">Area Lavoratori</span>
     <h3>Affidabilità & Compliance</h3>
@@ -384,7 +399,9 @@ un database operativo con profili, disponibilità, storico e referenze.
         <li>Policy di affidabilità e gestione delle assenze.</li>
     </ul>
 </div>
-""", unsafe_allow_html=True)
+""",
+            unsafe_allow_html=True,
+        )
 
 # ============================================================
 # DATABASE AZIENDALE
@@ -441,12 +458,15 @@ elif scelta == "Database Aziendale":
         )
 
     else:
-        st.markdown("""
+        st.markdown(
+            """
 <div class="section-title">Database Professionisti</div>
 <div class="section-subtitle">
 Seleziona un professionista per visualizzare profilo, storico e referenze.
 </div>
-""", unsafe_allow_html=True)
+""",
+            unsafe_allow_html=True,
+        )
 
         for idx, lav in enumerate(st.session_state.lavoratori):
             left, right = st.columns([5, 1.7], gap="large")
@@ -482,12 +502,15 @@ Seleziona un professionista per visualizzare profilo, storico e referenze.
 # AREA LAVORATORE
 # ============================================================
 elif scelta == "Area Personale Lavoratore":
-    st.markdown("""
+    st.markdown(
+        """
 <div class="section-title">Area Personale</div>
 <div class="section-subtitle">
 Gestisci il tuo profilo, monitora i turni e consulta lo storico delle attività.
 </div>
-""", unsafe_allow_html=True)
+""",
+        unsafe_allow_html=True,
+    )
 
     area_html = """<div class="profile">
 <div class="profile-head">
@@ -532,17 +555,21 @@ Gestisci il tuo profilo, monitora i turni e consulta lo storico delle attività.
 # PIANI & ABBONAMENTI
 # ============================================================
 else:
-    st.markdown("""
+    st.markdown(
+        """
 <div class="section-title">Listino Piani & Abbonamenti ⚡</div>
 <div class="section-subtitle">
 Scegli la soluzione su misura per la tua attività o per accelerare le tue opportunità di lavoro.
 </div>
-""", unsafe_allow_html=True)
+""",
+        unsafe_allow_html=True,
+    )
 
     col_a, col_b = st.columns(2, gap="large")
 
     with col_a:
-        st.markdown("""
+        st.markdown(
+            """
 <div class="card">
     <span class="badge blue">Aziende & Locali</span>
     <h3>Abbonamento Mensile Standard</h3>
@@ -555,7 +582,9 @@ Scegli la soluzione su misura per la tua attività o per accelerare le tue oppor
     </ul>
     <div style="margin-top: 22px;"></div>
 </div>
-""", unsafe_allow_html=True)
+""",
+            unsafe_allow_html=True,
+        )
         if st.button("Attiva Abbonamento Azienda (20€/mo)"):
             st.success(
                 "Richiesta di attivazione abbonamento aziendale registrata con successo!"
@@ -563,7 +592,8 @@ Scegli la soluzione su misura per la tua attività o per accelerare le tue oppor
 
         st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
 
-        st.markdown("""
+        st.markdown(
+            """
 <div class="card">
     <span class="badge blue">Add-on Urgenze</span>
     <h3>Job Boosting Urgente</h3>
@@ -576,14 +606,17 @@ Scegli la soluzione su misura per la tua attività o per accelerare le tue oppor
     </ul>
     <div style="margin-top: 22px;"></div>
 </div>
-""", unsafe_allow_html=True)
+""",
+            unsafe_allow_html=True,
+        )
         if st.button("Lancia Job Boosting (5€/sett)"):
             st.success(
                 "Job Boosting attivato! La tua richiesta è ora in evidenza tra i lavoratori."
             )
 
     with col_b:
-        st.markdown("""
+        st.markdown(
+            """
 <div class="card">
     <span class="badge green">Professionisti & Lavoratori</span>
     <h3>Piano Lavoratore Premium</h3>
@@ -597,7 +630,9 @@ Scegli la soluzione su misura per la tua attività o per accelerare le tue oppor
     </ul>
     <div style="margin-top: 22px;"></div>
 </div>
-""", unsafe_allow_html=True)
+""",
+            unsafe_allow_html=True,
+        )
         if st.button("Passa a Lavoratore Premium (10€/mo)"):
             st.success(
                 "Ottimo! Il tuo account è stato aggiornato allo status Premium."
@@ -606,7 +641,8 @@ Scegli la soluzione su misura per la tua attività o per accelerare le tue oppor
 # ============================================================
 # LEGAL
 # ============================================================
-st.markdown("""
+st.markdown(
+    """
 <div class="legal">
     <b>Note legali e regolamento Enterprise — Flashjob</b><br><br>
     La piattaforma è progettata come directory e bacheca di contatto B2B
@@ -616,4 +652,6 @@ st.markdown("""
     può prevedere la sospensione dell'accesso in caso di assenze ingiustificate
     reiterate.
 </div>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
