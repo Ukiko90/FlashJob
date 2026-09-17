@@ -7,7 +7,7 @@ st.set_page_config(
     layout="centered",
 )
 
-# Stile CSS avanzato per l'interfaccia
+# Stile CSS avanzato per il Full Bleed e l'interfaccia
 st.markdown(
     """
     <style>
@@ -42,14 +42,32 @@ st.markdown(
         display: inline-block;
         margin-bottom: 8px;
     }
-    .gallery-img {
-        width: 100%;
-        border-radius: 16px;
-        margin-bottom: 15px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-        object-fit: cover;
-        max-height: 450px;
+    
+    /* STILE FULL BLEED (Da bordo a bordo dello schermo) */
+    .full-bleed-container {
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
+    .full-bleed-img {
+        width: 100%;
+        height: 450px;
+        object-fit: cover;
+        display: block;
+    }
+    .img-caption {
+        text-align: center;
+        font-size: 0.8rem;
+        color: #64748b;
+        margin-top: 6px;
+        font-style: italic;
+    }
+
     .legal-footer {
         background-color: #1e293b;
         color: #94a3b8;
@@ -104,7 +122,7 @@ scelta = st.radio(
 st.markdown("---")
 
 # ==========================================
-# 🏠 HOME PAGE: CHI SIAMO, VANTAGGI E FOTO VERTICALI
+# 🏠 HOME PAGE: CHI SIAMO, VANTAGGI E FOTO FULL BLEED VERTICALI
 # ==========================================
 if scelta == "🏠 Chi Siamo & Atmosfera":
 
@@ -161,32 +179,35 @@ if scelta == "🏠 Chi Siamo & Atmosfera":
       "### ✨ L'atmosfera e la qualità della ristorazione milanese"
   )
   st.write(
-      "Ecco un assaggio del contesto in cui operiamo: locali di alto livello,"
-      " drink ricercati, cura dei dettagli e professionisti appassionati."
+      "Scorri per scoprire il contesto visivo ed emozionale in cui operiamo:"
+      " cocktail di ricerca, impiattamenti d'autore, mixology e sala di alto"
+      " livello."
   )
 
-  # Galleria fotografica verticale (le immagini caricate)
-  st.image(
-      "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800",
-      caption="FlashJob Milano - Cocktail e pairing di qualità",
-      use_container_width=True,
-  )
-  st.image(
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
-      caption=(
-          "FlashJob Milano - Cura meticolosa della cucina e del servizio"
-      ),
-      use_container_width=True,
-  )
-  st.image(
-      "https://images.unsplash.com/photo-1574096079513-d8259312b785?w=800",
-      caption="FlashJob Milano - Mood serale e intrattenimento nei locali",
-      use_container_width=True,
-  )
-  st.image(
-      "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=800",
-      caption="FlashJob Milano - Professionalità e servizio di sala impeccabile",
-      use_container_width=True,
+  # --- IMMAGINI FULL BLEED VERTICALI (Da bordo a bordo dello schermo) ---
+  st.markdown(
+      """
+        <div class="full-bleed-container">
+            <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1200" class="full-bleed-img" />
+            <div class="img-caption">FlashJob Milano &bull; Cocktail e pairing di qualità</div>
+        </div>
+        
+        <div class="full-bleed-container">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200" class="full-bleed-img" />
+            <div class="img-caption">FlashJob Milano &bull; Cura meticolosa della cucina e del servizio</div>
+        </div>
+        
+        <div class="full-bleed-container">
+            <img src="https://images.unsplash.com/photo-1574096079513-d8259312b785?w=1200" class="full-bleed-img" />
+            <div class="img-caption">FlashJob Milano &bull; Mood serale e intrattenimento nei locali</div>
+        </div>
+        
+        <div class="full-bleed-container">
+            <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=1200" class="full-bleed-img" />
+            <div class="img-caption">FlashJob Milano &bull; Professionalità e servizio di sala impeccabile</div>
+        </div>
+        """,
+      unsafe_allow_html=True,
   )
 
   st.markdown("<br>", unsafe_allow_html=True)
