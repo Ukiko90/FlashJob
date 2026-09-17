@@ -76,7 +76,7 @@ st.markdown(
         text-align: center; 
     }
     
-    /* BORDO FOTO PROFILO BIANCO INVECE DI VERDE */
+    /* BORDO FOTO PROFILO BIANCO */
     .profile-img { 
         width: 90px; 
         height: 90px; 
@@ -136,7 +136,7 @@ if "lavoratori" not in st.session_state:
       },
   ]
 
-# LOGO PRINCIPALE CON LA "F" MAIUSCOLA (Flashjob⚡)
+# BANNER PRINCIPALE
 st.markdown(
     """
     <div class="hero-full-bleed">
@@ -152,7 +152,11 @@ st.markdown(
 st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
 scelta = st.radio(
     "Navigazione rapida:",
-    ["🏠 Chi Siamo & Atmosfera", "⭐ Area Aziende (Database)", "👤 Area Lavoratori"],
+    [
+        "🏠 Chi Siamo & Atmosfera",
+        "⭐ Area Aziende (Database)",
+        "👤 Area Lavoratori",
+    ],
     horizontal=True,
 )
 st.markdown("---")
@@ -165,21 +169,21 @@ if scelta == "🏠 Chi Siamo & Atmosfera":
       unsafe_allow_html=True,
   )
   st.markdown(
-      "<p style='color: #f1f5f9;'><b>Flashjob⚡</b> nasce per sradicare il caos"
-      " dei gruppi di messaggistica e dare una svolta professionale"
-      " all'H&R milanese.</p>",
+      "<p style='color: #f1f5f9;'><b>Flashjob⚡</b> nasce per superare la"
+      " confusione dei gruppi di messaggistica e dare una svolta"
+      " professionale e ordinata al settore H&R milanese.</p>",
       unsafe_allow_html=True,
   )
 
   col_v1, col_v2 = st.columns(2)
   with col_v1:
     st.markdown(
-        """<div class="feature-card"><span class="badge-tag">PER LE AZIENDE 🏢</span><h4 style="color: #fff;">Perché sceglierci</h4><ul style="color: #f1f5f9;"><li>Zero commissioni</li><li>Contatto diretto WhatsApp</li><li>Copertura turni in 2 min</li></ul></div>""",
+        """<div class="feature-card"><span class="badge-tag">PER LE AZIENDE 🏢</span><h4 style="color: #fff;">Perché sceglierci</h4><ul style="color: #f1f5f9;"><li>Zero commissioni sulle selezioni</li><li>Contatto diretto via WhatsApp</li><li>Copertura rapida turni in 2 minuti</li></ul></div>""",
         unsafe_allow_html=True,
     )
   with col_v2:
     st.markdown(
-        """<div class="feature-card"><span class="badge-tag" style="background:#e2e8f0;color:#0f172a;">PER I LAVORATORI 👤</span><h4 style="color: #fff;">I tuoi vantaggi</h4><ul style="color: #f1f5f9;"><li>100% Gratuito</li><li>Vetrina d'eccellenza</li><li>Zero intermediari</li></ul></div>""",
+        """<div class="feature-card"><span class="badge-tag" style="background:#e2e8f0;color:#0f172a;">PER I LAVORATORI 👤</span><h4 style="color: #fff;">I tuoi vantaggi</h4><ul style="color: #f1f5f9;"><li>Servizio 100% gratuito</li><li>Vetrina d'eccellenza a Milano</li><li>Nessun intermediario</li></ul></div>""",
         unsafe_allow_html=True,
     )
   st.markdown("</div>", unsafe_allow_html=True)
@@ -189,7 +193,7 @@ if scelta == "🏠 Chi Siamo & Atmosfera":
     <div class="framed-gallery-container">
         <div class="image-strip">
             <div class="fluid-slide"><img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1600" /><div class="slide-caption">🍸 Flashjob⚡ &bull; Mixology d'eccellenza</div></div>
-            <div class="fluid-slide"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600" /><div class="slide-caption">🍽️ Flashjob⚡ &bull; Cucina e servizio</div></div>
+            <div class="fluid-slide"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600" /><div class="slide-caption">🍽️ Flashjob⚡ &bull; Cucina e servizio di sala</div></div>
         </div>
     </div>
     """,
@@ -203,9 +207,14 @@ elif scelta == "⭐ Area Aziende (Database)":
       " Milano</h3>",
       unsafe_allow_html=True,
   )
+  st.markdown(
+      "<p style='color: #f1f5f9;'>Elenco aggiornato dei professionisti"
+      " dell'accoglienza pronti a iniziare.</p>",
+      unsafe_allow_html=True,
+  )
   for lav in st.session_state.lavoratori:
     st.markdown(
-        f"""<div class="feature-card"><h4 style="color: white; margin-top:0;">👤 {lav['nome']}</h4><p style="color: #f1f5f9;">Mansione: {lav['mansione']} | Zona: {lav['zona']}</p><p>📞 <a href="https://wa.me/{lav['tel'].replace(' ', '')}" target="_blank" style="color: #ffffff; font-weight: 600;">{lav['tel']}</a></p></div>""",
+        f"""<div class="feature-card"><h4 style="color: white; margin-top:0;">👤 {lav['nome']}</h4><p style="color: #f1f5f9;">Mansione: {lav['mansione']} | Zona: {lav['zona']}</p><p>📞 Contatto diretto WhatsApp: <a href="https://wa.me/{lav['tel'].replace(' ', '')}" target="_blank" style="color: #ffffff; font-weight: 600; text-decoration: underline;">{lav['tel']}</a></p></div>""",
         unsafe_allow_html=True,
     )
   st.markdown("</div>", unsafe_allow_html=True)
@@ -216,16 +225,17 @@ else:
       """
     <div class="profile-container">
         <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400" class="profile-img" />
-        <h2 style="color: white; margin-bottom: 2px;">Hello, Giulia Rossi</h2>
+        <h2 style="color: white; margin-bottom: 2px;">Giulia Rossi</h2>
         <p style="color: #ffffff; font-weight: 600;">+39 334 5678901</p>
-        <p style="color: #cbd5e1; font-size: 0.85rem;">H&R Professional &bull; Milano Centro</p>
+        <p style="color: #cbd5e1; font-size: 0.85rem;">Professionista H&R &bull; Milano Centro</p>
         <div class="profile-stats-row">
             <div><div style="font-size: 1.25rem; font-weight: bold; color: #fef08a;">03</div><div style="font-size: 0.75rem; color: #cbd5e1;">In Attesa</div></div>
             <div><div style="font-size: 1.25rem; font-weight: bold; color: #38bdf8;">02</div><div style="font-size: 0.75rem; color: #cbd5e1;">In Corso</div></div>
             <div><div style="font-size: 1.25rem; font-weight: bold; color: #ffffff;">18</div><div style="font-size: 0.75rem; color: #cbd5e1;">Completati</div></div>
         </div>
         <div style="text-align: left; margin-top: 20px;">
-            <div class="menu-item-card"><span>🌐 Lingua (IT / EN)</span><span style="color: #ffffff; font-weight: bold;">EN</span></div>
+            <p style="color: #cbd5e1; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; margin-bottom: 10px;">Impostazioni</p>
+            <div class="menu-item-card"><span>🌐 Lingua (Italiano / Inglese)</span><span style="color: #ffffff; font-weight: bold;">IT</span></div>
             <div class="menu-item-card"><span>🔒 Modifica Password</span><span style="color: #cbd5e1;">&gt;</span></div>
         </div>
     </div>
@@ -236,7 +246,7 @@ else:
 
 st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
 st.markdown(
-    """<div class="legal-footer"><b style="color: #ffffff;">⚖️ Note Legali - Flashjob⚡</b><br>Bacheca digitale B2B/B2C per il settore H&R. Nessun rapporto di agenzia o intermediazione lavorativa.</div>""",
+    """<div class="legal-footer"><b style="color: #ffffff;">⚖️ Note Legali e Condizioni - Flashjob⚡</b><br>Piattaforma digitale indipendente per il settore H&R. Non costituisce agenzia di somministrazione o intermediazione di lavoro.</div>""",
     unsafe_allow_html=True,
 )
 st.markdown("</div>", unsafe_allow_html=True)
