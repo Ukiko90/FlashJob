@@ -1,17 +1,16 @@
 import streamlit as st
 
-# Configurazione della pagina in modalità 'wide' per sfruttare tutta la larghezza dello schermo
+# Configurazione della pagina
 st.set_page_config(
     page_title="FlashJob Milano - H&R Hub",
     page_icon="⚡",
     layout="wide",
 )
 
-# Stile CSS avanzato per eliminare i margini di Streamlit e creare l'effetto Full Bleed fluido
+# Stile CSS corretto: sfondi chiari/a contrasto per la massima leggibilità dei testi
 st.markdown(
     """
     <style>
-    /* Rimuove i margini e i padding standard di Streamlit per coprire tutto lo schermo */
     .block-container {
         padding-top: 2rem;
         padding-bottom: 2rem;
@@ -21,34 +20,32 @@ st.markdown(
     }
     
     .stApp {
-        background: #0f172a;
-        color: #f8fafc;
+        background: #f8fafc;
+        color: #1e293b;
     }
 
-    /* Contenitore principale ristretto per i testi (per una lettura elegante) */
     .content-wrapper {
-        max-width: 900px;
+        max-width: 950px;
         margin: 0 auto;
     }
 
     .hero-box {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
         color: white;
-        padding: 40px 30px;
+        padding: 45px 30px;
         border-radius: 20px;
         text-align: center;
         margin-bottom: 30px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        border: 1px solid #334155;
+        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
     }
 
     .feature-card {
-        background: #1e293b;
+        background: #ffffff;
         padding: 25px;
         border-radius: 16px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
         margin-bottom: 20px;
-        border: 1px solid #334155;
+        border: 1px solid #cbd5e1;
     }
 
     .badge-tag {
@@ -62,7 +59,7 @@ st.markdown(
         margin-bottom: 10px;
     }
 
-    /* --- FLUID FULL BLEED IMMAGINI (Da bordo a bordo senza interruzioni) --- */
+    /* --- GALLERIA FULL BLEED FLUIDA CON PIÙ FOTO --- */
     .fluid-gallery {
         width: 100vw;
         position: relative;
@@ -72,7 +69,7 @@ st.markdown(
         margin-right: -50vw;
         margin-top: 40px;
         margin-bottom: 40px;
-        background: #000;
+        background: #0f172a;
     }
 
     .image-strip {
@@ -80,17 +77,21 @@ st.markdown(
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         gap: 0px;
-        scrollbar-width: none; /* Nasconde la barra di scorrimento su Firefox */
+        scrollbar-width: thin;
     }
 
     .image-strip::-webkit-scrollbar {
-        display: none; /* Nasconde la barra di scorrimento su Chrome/Safari */
+        height: 8px;
+    }
+    .image-strip::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
     }
 
     .fluid-slide {
         flex: 0 0 100vw;
         width: 100vw;
-        height: 600px;
+        height: 550px;
         scroll-snap-align: start;
         position: relative;
     }
@@ -100,7 +101,6 @@ st.markdown(
         height: 100%;
         object-fit: cover;
         display: block;
-        filter: brightness(0.9);
     }
 
     .slide-caption {
@@ -108,23 +108,25 @@ st.markdown(
         bottom: 0;
         left: 0;
         right: 0;
-        background: linear-gradient(to top, rgba(15,23,42,0.9), transparent);
+        background: linear-gradient(to top, rgba(15,23,42,0.95), rgba(15,23,42,0.2));
         color: #f8fafc;
         padding: 30px 20px 20px 20px;
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         font-weight: 600;
         text-align: center;
+        letter-spacing: 0.5px;
     }
 
     .legal-footer {
-        background-color: #1e293b;
-        color: #94a3b8;
+        background-color: #ffffff;
+        color: #475569;
         padding: 25px;
         border-radius: 14px;
         font-size: 0.75rem;
         line-height: 1.6;
         margin-top: 50px;
-        border: 1px solid #334155;
+        border: 1px solid #cbd5e1;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
     }
     </style>
 """,
@@ -157,7 +159,7 @@ st.markdown(
     <div class="hero-box">
         <div style="font-size: 2.8rem; margin-bottom: 10px;">⚡ 🍸 🍳 🛎️</div>
         <h1 style="color: white; margin-bottom: 10px; font-weight: 800;">FlashJob Milano</h1>
-        <p style="color: #94a3b8; font-size: 1.2rem; max-width: 650px; margin: 0 auto;">Il primo hub digitale che unisce i locali della ristorazione milanese con i migliori professionisti dell'accoglienza in tempo reale.</p>
+        <p style="color: #cbd5e1; font-size: 1.2rem; max-width: 650px; margin: 0 auto;">Il primo hub digitale che unisce i locali della ristorazione milanese con i migliori professionisti dell'accoglienza in tempo reale.</p>
     </div>
 """,
     unsafe_allow_html=True,
@@ -171,10 +173,10 @@ scelta = st.radio(
 )
 
 st.markdown("---")
-st.markdown("</div>", unsafe_allow_html=True)  # Chiude content-wrapper
+st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
-# 🏠 HOME PAGE: CHI SIAMO, VANTAGGI E STRiscia FULL BLEED FLUIDA
+# 🏠 HOME PAGE: CHI SIAMO, VANTAGGI E GALLERIA FULL BLEED AMPLIATA
 # ==========================================
 if scelta == "🏠 Chi Siamo & Atmosfera":
 
@@ -198,8 +200,8 @@ if scelta == "🏠 Chi Siamo & Atmosfera":
         """
         <div class="feature-card">
             <span class="badge-tag">PER LE AZIENDE 🏢</span>
-            <h4 style="color: #f8fafc; margin-top:5px;">Perché sceglierci</h4>
-            <ul style="padding-left: 18px; color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+            <h4 style="color: #0f172a; margin-top:5px;">Perché sceglierci</h4>
+            <ul style="padding-left: 18px; color: #334155; font-size: 0.95rem; line-height: 1.6;">
                 <li><b>Zero commissioni</b> sulle ore lavorate o sulle selezioni.</li>
                 <li><b>Contatto diretto immediato</b> via WhatsApp con i candidati.</li>
                 <li><b>Filtri mirati</b> per mansione, zona ed esperienza specifica.</li>
@@ -215,8 +217,8 @@ if scelta == "🏠 Chi Siamo & Atmosfera":
         """
         <div class="feature-card">
             <span class="badge-tag" style="background-color: #bbf7d0; color: #166534;">PER I LAVORATORI 👤</span>
-            <h4 style="color: #f8fafc; margin-top:5px;">I tuoi vantaggi</h4>
-            <ul style="padding-left: 18px; color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+            <h4 style="color: #0f172a; margin-top:5px;">I tuoi vantaggi</h4>
+            <ul style="padding-left: 18px; color: #334155; font-size: 0.95rem; line-height: 1.6;">
                 <li><b>100% Gratuito</b> per camerieri, baristi, cuochi e staff.</li>
                 <li><b>Vetrina d'eccellenza</b> davanti ai migliori locali di Milano.</li>
                 <li><b>Gestione autonoma</b> delle proprie disponibilità e turni.</li>
@@ -230,12 +232,12 @@ if scelta == "🏠 Chi Siamo & Atmosfera":
   st.markdown("<br>", unsafe_allow_html=True)
   st.markdown("### ✨ L'atmosfera e lo stile della movida milanese")
   st.write(
-      "Scorri orizzontalmente o esplora le immagini evocative che descrivono il"
-      " livello dei locali in cui i nostri professionisti operano ogni giorno."
+      "Scorri la galleria fotografica per esplorare il livello e lo stile dei"
+      " locali in cui operano i nostri professionisti."
   )
-  st.markdown("</div>", unsafe_allow_html=True)  # Chiude content-wrapper
+  st.markdown("</div>", unsafe_allow_html=True)
 
-  # --- STRISCIA FOTOGRAFICA FLUIDA A TUTTO SCHERMO (FULL BLEED) ---
+  # --- GALLERIA FULL BLEED AMPLIATA CON PIÙ FOTO (SCORRIMENTO ORIZZONTALE FLUIDO) ---
   st.markdown(
       """
     <div class="fluid-gallery">
@@ -255,6 +257,14 @@ if scelta == "🏠 Chi Siamo & Atmosfera":
             <div class="fluid-slide">
                 <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=1600" />
                 <div class="slide-caption">🛎️ FlashJob Milano &bull; Professionalità e servizio di sala impeccabile</div>
+            </div>
+            <div class="fluid-slide">
+                <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?w=1600" />
+                <div class="slide-caption">🍷 FlashJob Milano &bull; Wine tasting e atmosfere esclusive in centro</div>
+            </div>
+            <div class="fluid-slide">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600" />
+                <div class="slide-caption">✨ FlashJob Milano &bull; Ristoranti, bistrot e design milanese</div>
             </div>
         </div>
     </div>
@@ -288,8 +298,8 @@ elif scelta == "⭐ Area Aziende (Database)":
         f"""
         <div class="feature-card">
             <h4>👤 {lav['nome']}</h4>
-            <p style="margin: 4px 0; color: #cbd5e1;"><b>Mansione:</b> {lav['mansione']} | <b>Zona:</b> {lav['zona']}</p>
-            <p style="margin: 4px 0;">📞 <b>WhatsApp diretto:</b> <a href="https://wa.me/{lav['tel'].replace(' ', '')}" target="_blank" style="color: #4ade80; font-weight: 600;">{lav['tel']}</a></p>
+            <p style="margin: 4px 0; color: #475569;"><b>Mansione:</b> {lav['mansione']} | <b>Zona:</b> {lav['zona']}</p>
+            <p style="margin: 4px 0;">📞 <b>WhatsApp diretto:</b> <a href="https://wa.me/{lav['tel'].replace(' ', '')}" target="_blank" style="color: #16a34a; font-weight: 600;">{lav['tel']}</a></p>
         </div>
         """,
         unsafe_allow_html=True,
@@ -327,7 +337,7 @@ else:
         )
       else:
         st.warning(
-            "Per favore inserisci almeno il nome e il numero di telefono."
+            "Per favore inserisci almeno il nome e il telefono di contatto."
         )
   st.markdown("</div>", unsafe_allow_html=True)
 
@@ -338,7 +348,7 @@ st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
 st.markdown(
     """
     <div class="legal-footer">
-        <b style="color: #f8fafc; font-size: 0.85rem;">⚖️ Note Legali e Condizioni di Utilizzo - FlashJob Milano</b><br><br>
+        <b style="color: #0f172a; font-size: 0.85rem;">⚖️ Note Legali e Condizioni di Utilizzo - FlashJob Milano</b><br><br>
         <b>1. Natura del Servizio:</b> FlashJob Milano opera esclusivamente come bacheca digitale e directory di contatto B2B/B2C per il settore Hotellerie & Restaurant (H&R). La piattaforma non costituisce un'agenzia di somministrazione di lavoro di cui al D.Lgs. 276/2003, né agisce in qualità di intermediario o datore di lavoro.<br><br>
         <b>2. Autonomia delle Parti:</b> Tutti gli accordi lavorativi, contrattuali, di ingaggio o di corresponsione economica avvengono direttamente e autonomamente tra i locali/aziende e i singoli lavoratori. FlashJob Milano è totalmente estranea ai rapporti contrattuali instaurati e declina ogni responsabilità civile e penale derivante dalle prestazioni lavorative.<br><br>
         <b>3. Trattamento Dati e Privacy:</b> I dati inseriti volontariamente dagli utenti vengono trattati nel pieno rispetto del GDPR (Regolamento UE 2016/679). La pubblicazione dei contatti all'interno dell'area riservata è subordinata all'accettazione delle presenti condizioni d'uso.
