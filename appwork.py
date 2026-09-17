@@ -1,5 +1,6 @@
 import base64
 import html
+import os
 import re
 import streamlit as st
 
@@ -11,57 +12,66 @@ st.set_page_config(
 )
 
 # ============================================================
-# SFONDO IN BASE64 (Immagine personalizzata)
+# CARICAMENTO AUTOMATICO SFONDO (image.png)
 # ============================================================
-# Inserisci qui la stringa base64 della tua immagine di sfondo
-BG_BASE64 = "INSERISCI_QUI_LA_STRINGA_BASE64_DELLA_TUA_IMMAGINE"
+@st.cache_data
+def get_img_as_base64(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, "rb") as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
+    return ""
+
+BG_BASE64 = get_img_as_base64("image.png")
 
 # ============================================================
 # DATA
 # ============================================================
 if "lavoratori" not in st.session_state:
-  st.session_state.lavoratori = [
-      {
-          "nome": "Marco Rossi",
-          "mansione": "Cameriere / Sala",
-          "zona": "Navigli, Milano",
-          "tel": "+39 333 1234567",
-          "completati": 18,
-          "referenze": (
-              "Puntuale, professionale e con ottime capacità di gestione sala"
-              " anche nei momenti di massimo afflusso."
-          ),
-      },
-      {
-          "nome": "Sara Bianchi",
-          "mansione": "Barista / Bartender",
-          "zona": "Porta Romana, Milano",
-          "tel": "+39 340 9876543",
-          "completati": 24,
-          "referenze": (
-              "Eccezionale nella mixology, rapidissima e dotata di grande"
-              " empatia con la clientela."
-          ),
-      },
-  ]
+    st.session_state.lavoratori = [
+        {
+            "nome": "Marco Rossi",
+            "mansione": "Cameriere / Sala",
+            "zona": "Navigli, Milano",
+            "tel": "+39 333 1234567",
+            "completati": 18,
+            "referenze": "Puntuale, professionale e con ottime capacità di gestione sala anche nei momenti di massimo afflusso.",
+        },
+        {
+            "nome": "Sara Bianchi",
+            "mansione": "Barista / Bartender",
+            "zona": "Porta Romana, Milano",
+            "tel": "+39 340 9876543",
+            "completati": 24,
+            "referenze": "Eccezionale nella mixology, rapidissima e dotata di grande empatia con la clientela.",
+        },
+    ]
 
 if "selected_candidate" not in st.session_state:
-  st.session_state.selected_candidate = None
+    st.session_state.selected_candidate = None
 
 
 def safe(value):
-  return html.escape(str(value))
+    return html.escape(str(value))
 
 
 def whatsapp_url(phone):
-  return "https://wa.me/" + re.sub(r"\D", "", phone)
+    return "https://wa.me/" + re.sub(r"\D", "", phone)
 
 
 # ============================================================
 # DESIGN SYSTEM CON SFONDO PERSONALIZZATO
 # ============================================================
-st.markdown(
-    f"""
+bg_css = f"""
+    background: 
+        linear-gradient(rgba(245, 246, 248, 0.85), rgba(245, 246, 248, 0.85)),
+        url("data:image/jpeg;base64,{BG_BASE64}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+""" if BG_BASE64 else "background: #f5f6f8;"
+
+st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
@@ -85,12 +95,7 @@ html, body, [class*="css"] {{
 }}
 
 .stApp {{
-    background: 
-        linear-gradient(rgba(245, 246, 248, 0.85), rgba(245, 246, 248, 0.85)),
-        url("data:image/jpeg;base64,{BG_BASE64}");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    {bg_css}
     color: var(--text);
 }}
 
@@ -442,15 +447,12 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     .profile {{ padding: 23px; }}
 }}
 </style>
-""",
-    unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
 
 # ============================================================
 # HERO
 # ============================================================
-st.markdown(
-    """
+st.markdown("""
 <div class="hero">
     <div class="logo-mark">⚡</div>
     <h1>Flashjob</h1>
@@ -459,9 +461,7 @@ st.markdown(
         Trova professionisti disponibili e copri i turni critici in pochi minuti.
     </p>
 </div>
-""",
-    unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
 
 scelta = st.radio(
     "Navigazione",
@@ -473,22 +473,18 @@ scelta = st.radio(
 # PANORAMICA
 # ============================================================
 if scelta == "Panoramica & Modello":
-  st.markdown(
-      """
+    st.markdown("""
 <div class="section-title">Infrastruttura Operativa</div>
 <div class="section-subtitle">
 Flashjob mette in contatto aziende e professionisti hospitality attraverso
 un database operativo con profili, disponibilità, storico e referenze.
 </div>
-""",
-      unsafe_allow_html=True,
-  )
+""", unsafe_allow_html=True)
 
-  col1, col2 = st.columns(2, gap="large")
+    col1, col2 = st.columns(2, gap="large")
 
-  with col1:
-    st.markdown(
-        """
+    with col1:
+        st.markdown("""
 <div class="card">
     <span class="badge blue">Area Aziende</span>
     <h3>Standard di Servizio</h3>
@@ -499,13 +495,10 @@ un database operativo con profili, disponibilità, storico e referenze.
         <li>Processo semplice, pensato per le esigenze operative.</li>
     </ul>
 </div>
-""",
-        unsafe_allow_html=True,
-    )
+""", unsafe_allow_html=True)
 
-  with col2:
-    st.markdown(
-        """
+    with col2:
+        st.markdown("""
 <div class="card">
     <span class="badge green">Area Lavoratori</span>
     <h3>Affidabilità & Compliance</h3>
@@ -516,14 +509,11 @@ un database operativo con profili, disponibilità, storico e referenze.
         <li>Policy di affidabilità e gestione delle assenze.</li>
     </ul>
 </div>
-""",
-        unsafe_allow_html=True,
-    )
+""", unsafe_allow_html=True)
 
-  st.markdown("<div style='height:22px'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height:22px'></div>", unsafe_allow_html=True)
 
-  st.markdown(
-      """
+    st.markdown("""
 <div class="section-title">Standard Visivo & Location</div>
 <div class="section-subtitle">
 Un'esperienza digitale pulita e professionale, coerente con il posizionamento
@@ -532,42 +522,35 @@ premium del settore hospitality milanese.
 
 <div class="gallery">
     <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1400"
-             alt="Cocktail bar">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1400" alt="Cocktail bar">
         <div class="gallery-caption">Mixology e servizio premium</div>
     </div>
     <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400"
-             alt="Restaurant">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400" alt="Restaurant">
         <div class="gallery-caption">Organizzazione professionale di sala e cucina</div>
     </div>
 </div>
-""",
-      unsafe_allow_html=True,
-  )
+""", unsafe_allow_html=True)
 
 # ============================================================
 # DATABASE AZIENDALE
 # ============================================================
 elif scelta == "Database Aziendale":
-  selected = st.session_state.selected_candidate
+    selected = st.session_state.selected_candidate
 
-  if selected is not None:
-    st.markdown('<div class="back-button">', unsafe_allow_html=True)
-    if st.button("← Torna al database"):
-      st.session_state.selected_candidate = None
-      st.rerun()
-    st.markdown("</div>", unsafe_allow_html=True)
+    if selected is not None:
+        st.markdown('<div class="back-button">', unsafe_allow_html=True)
+        if st.button("← Torna al database"):
+            st.session_state.selected_candidate = None
+            st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
 
-    c = selected
+        c = selected
 
-    st.markdown(
-        f"""
+        st.markdown(f"""
 <div class="profile">
     <div class="profile-head">
-        <img class="avatar"
-             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300"
-             alt="Profilo">
+        <img class="avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Profilo">
         <div>
             <h2>{safe(c["nome"])}</h2>
             <p class="role">{safe(c["mansione"])} · {safe(c["zona"])}</p>
@@ -596,35 +579,29 @@ elif scelta == "Database Aziendale":
     <span class="badge">Referenza</span>
     <div class="quote">“{safe(c["referenze"])}”</div>
 </div>
-""",
-        unsafe_allow_html=True,
-    )
+""", unsafe_allow_html=True)
 
-    st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
 
-    st.link_button(
-        "Contatta e prenota via WhatsApp →",
-        whatsapp_url(c["tel"]),
-        use_container_width=True,
-    )
+        st.link_button(
+            "Contatta e prenota via WhatsApp →",
+            whatsapp_url(c["tel"]),
+            use_container_width=True,
+        )
 
-  else:
-    st.markdown(
-        """
+    else:
+        st.markdown("""
 <div class="section-title">Database Professionisti</div>
 <div class="section-subtitle">
 Seleziona un professionista per visualizzare profilo, storico e referenze.
 </div>
-""",
-        unsafe_allow_html=True,
-    )
+""", unsafe_allow_html=True)
 
-    for idx, lav in enumerate(st.session_state.lavoratori):
-      left, right = st.columns([5, 1.7], gap="large")
+        for idx, lav in enumerate(st.session_state.lavoratori):
+            left, right = st.columns([5, 1.7], gap="large")
 
-      with left:
-        st.markdown(
-            f"""
+            with left:
+                st.markdown(f"""
 <div class="card worker">
     <div class="worker-top">
         <div>
@@ -639,85 +616,73 @@ Seleziona un professionista per visualizzare profilo, storico e referenze.
         {safe(lav["completati"])} turni completati · Profilo verificato
     </div>
 </div>
-""",
-            unsafe_allow_html=True,
-        )
+""", unsafe_allow_html=True)
 
-      with right:
-        st.markdown("<div style='height:42px'></div>", unsafe_allow_html=True)
-        if st.button(
-            "Visualizza profilo", key=f"profile_{idx}", use_container_width=True
-        ):
-          st.session_state.selected_candidate = lav
-          st.rerun()
+            with right:
+                st.markdown("<div style='height:42px'></div>", unsafe_allow_html=True)
+                if st.button(
+                    "Visualizza profilo",
+                    key=f"profile_{idx}",
+                    use_container_width=True,
+                ):
+                    st.session_state.selected_candidate = lav
+                    st.rerun()
 
 # ============================================================
 # AREA LAVORATORE
 # ============================================================
 else:
-  st.markdown(
-      """
+    st.markdown("""
 <div class="section-title">Area Personale</div>
 <div class="section-subtitle">
 Gestisci il tuo profilo, monitora i turni e consulta lo storico delle attività.
 </div>
-""",
-      unsafe_allow_html=True,
-  )
+""", unsafe_allow_html=True)
 
-  st.markdown(
-      """
+    # Nota: stringa non indentata per evitare che Streamlit la legga come blocco di codice markdown
+    st.markdown("""
 <div class="profile">
-    <div class="profile-head">
-        <img class="avatar"
-             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300"
-             alt="Giulia Rossi">
-        <div>
-            <h2>Giulia Rossi</h2>
-            <p class="role">Professionista Hospitality · Milano Centro</p>
-            <p class="meta">● Profilo verificato · +39 334 5678901</p>
-        </div>
-    </div>
-
-    <div class="stats">
-        <div class="stat">
-            <strong>03</strong>
-            <span>In attesa</span>
-        </div>
-        <div class="stat">
-            <strong>02</strong>
-            <span>In corso</span>
-        </div>
-        <div class="stat">
-            <strong>18</strong>
-            <span>Completati</span>
-        </div>
-    </div>
-
-    <span class="badge">Configurazione account</span>
-    <div class="card" style="margin-top:12px; box-shadow:none; background:#fafbfc;">
-        <div style="display:flex;justify-content:space-between;gap:20px;
-                    padding:7px 0;color:#343942;font-size:.88rem;">
-            <span>Lingua di sistema</span>
-            <strong>Italiano</strong>
-        </div>
-        <div style="height:1px;background:#e7e9ed;margin:9px 0;"></div>
-        <div style="display:flex;justify-content:space-between;gap:20px;
-                    padding:7px 0;color:#343942;font-size:.88rem;">
-            <span>Credenziali di sicurezza</span>
-            <span style="color:#8a9099;">›</span>
-        </div>
-    </div>
+<div class="profile-head">
+<img class="avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Giulia Rossi">
+<div>
+<h2>Giulia Rossi</h2>
+<p class="role">Professionista Hospitality · Milano Centro</p>
+<p class="meta">● Profilo verificato · +39 334 5678901</p>
 </div>
-""",
-      unsafe_allow_html=True,
-  )
+</div>
+<div class="stats">
+<div class="stat">
+<strong>03</strong>
+<span>In attesa</span>
+</div>
+<div class="stat">
+<strong>02</strong>
+<span>In corso</span>
+</div>
+<div class="stat">
+<strong>18</strong>
+<span>Completati</span>
+</div>
+</div>
+<span class="badge">Configurazione account</span>
+<div class="card" style="margin-top:12px; box-shadow:none; background:#fafbfc;">
+<div style="display:flex;justify-content:space-between;gap:20px;padding:7px 0;color:#343942;font-size:.88rem;">
+<span>Lingua di sistema</span>
+<strong>Italiano</strong>
+</div>
+<div style="height:1px;background:#e7e9ed;margin:9px 0;"></div>
+<div style="display:flex;justify-content:space-between;gap:20px;padding:7px 0;color:#343942;font-size:.88rem;">
+<span>Credenziali di sicurezza</span>
+<span style="color:#8a9099;">›</span>
+</div>
+</div>
+</div>
+""", unsafe_allow_html=True)
 
 # ============================================================
 # LEGAL
 # ============================================================
-st.markdown(
-    """
+st.markdown("""
 <div class="legal">
     <b>Note legali e regolamento Enterprise — Flashjob</b><br><br>
     La piattaforma è progettata come directory e bacheca di contatto B2B
@@ -727,6 +692,4 @@ st.markdown(
     può prevedere la sospensione dell'accesso in caso di assenze ingiustificate
     reiterate.
 </div>
-""",
-    unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
