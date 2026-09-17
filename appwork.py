@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # ============================================================
-# CARICAMENTO AUTOMATICO SFONDO (image.png)
+# CARICAMENTO AUTOMATICO IMMAGINI IN BASE64
 # ============================================================
 @st.cache_data
 def get_img_as_base64(file_path):
@@ -23,6 +23,10 @@ def get_img_as_base64(file_path):
     return ""
 
 BG_BASE64 = get_img_as_base64("image.png")
+img3_b64 = get_img_as_base64("image_3.png")
+img4_b64 = get_img_as_base64("image_4.png")
+img5_b64 = get_img_as_base64("image_5.png")
+img6_b64 = get_img_as_base64("image_6.png")
 
 # ============================================================
 # DATA
@@ -60,23 +64,23 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM CON SFONDO PERSONALIZZATO
+# DESIGN SYSTEM CON SFONDO SABBIA TEXTURIZZATO
 # ============================================================
 bg_css = f"""
     background: 
-        linear-gradient(rgba(245, 246, 248, 0.85), rgba(245, 246, 248, 0.85)),
+        linear-gradient(rgba(240, 235, 227, 0.90), rgba(240, 235, 227, 0.90)),
         url("data:image/jpeg;base64,{BG_BASE64}");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-""" if BG_BASE64 else "background: #f5f6f8;"
+""" if BG_BASE64 else "background: #f0ebe3;"
 
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {{
-    --bg: #f5f6f8;
+    --bg: #f0ebe3;
     --surface: rgba(255,255,255,.88);
     --surface-strong: #ffffff;
     --text: #17181b;
@@ -198,6 +202,70 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     color: var(--muted);
     line-height: 1.6;
     font-size: .94rem;
+}}
+
+/* FULL BLEED HORIZONTAL SCROLL GALLERY */
+.full-bleed-container {{
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    padding: 20px 0;
+    overflow-x: auto;
+    display: flex;
+    gap: 20px;
+    scrollbar-width: thin;
+    scroll-snap-type: x mandatory;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}}
+
+.full-bleed-container::-webkit-scrollbar {{
+    height: 8px;
+}}
+.full-bleed-container::-webkit-scrollbar-thumb {{
+    background: rgba(0,0,0,0.2);
+    border-radius: 4px;
+}}
+
+.full-bleed-item {{
+    flex: 0 0 85vw;
+    height: 70vh;
+    scroll-snap-align: center;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    background: #111;
+    margin-left: 10px;
+    margin-right: 10px;
+}}
+
+@media (min-width: 1024px) {{
+    .full-bleed-item {{
+        flex: 0 0 45vw;
+        height: 75vh;
+    }}
+}}
+
+.full-bleed-item img {{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}}
+
+.full-bleed-caption {{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px 20px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
 }}
 
 /* CARD */
@@ -363,37 +431,6 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     font-weight: 700;
 }}
 
-/* GALLERY */
-.gallery {{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-top: 28px;
-}}
-.gallery-item {{
-    position: relative;
-    height: 280px;
-    overflow: hidden;
-    border-radius: 18px;
-    background: #ddd;
-}}
-.gallery-item img {{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}}
-.gallery-caption {{
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 40px 18px 16px;
-    color: #fff;
-    background: linear-gradient(transparent, rgba(0,0,0,.78));
-    font-size: .8rem;
-    font-weight: 600;
-}}
-
 /* LEGAL */
 .legal {{
     margin-top: 48px;
@@ -443,7 +480,6 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     div[data-testid="stRadio"] div[role="radiogroup"] label {{
         white-space: nowrap;
     }}
-    .gallery {{ grid-template-columns: 1fr; }}
     .profile {{ padding: 23px; }}
 }}
 </style>
@@ -514,20 +550,30 @@ un database operativo con profili, disponibilità, storico e referenze.
     st.markdown("<div style='height:22px'></div>", unsafe_allow_html=True)
 
     st.markdown("""
-<div class="section-title">Standard Visivo & Location</div>
+<div class="section-title">Standard Visivo & Atmosfera</div>
 <div class="section-subtitle">
-Un'esperienza digitale pulita e professionale, coerente con il posizionamento
-premium del settore hospitality milanese.
+Esplora la galleria full-bleed a scorrimento con i momenti chiave del servizio hospitality.
 </div>
+""", unsafe_allow_html=True)
 
-<div class="gallery">
-    <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1400" alt="Cocktail bar">
-        <div class="gallery-caption">Mixology e servizio premium</div>
+    # Gallerie Full-Bleed a scorrimento orizzontale con le nuove immagini
+    st.markdown(f"""
+<div class="full-bleed-container">
+    <div class="full-bleed-item">
+        <img src="data:image/jpeg;base64,{img3_b64}" alt="Cura del piatto">
+        <div class="full-bleed-caption">Presentazione e cura sartoriale del piatto</div>
     </div>
-    <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400" alt="Restaurant">
-        <div class="gallery-caption">Organizzazione professionale di sala e cucina</div>
+    <div class="full-bleed-item">
+        <img src="data:image/jpeg;base64,{img4_b64}" alt="Cocktail & Sound">
+        <div class="full-bleed-caption">Atmosfera unica tra mixology e design</div>
+    </div>
+    <div class="full-bleed-item">
+        <img src="data:image/jpeg;base64,{img5_b64}" alt="Servizio di sala">
+        <div class="full-bleed-caption">Accoglienza e servizio impeccabile in sala</div>
+    </div>
+    <div class="full-bleed-item">
+        <img src="data:image/jpeg;base64,{img6_b64}" alt="Food & Drink pairing">
+        <div class="full-bleed-caption">Food pairing di alto livello per ogni evento</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -639,7 +685,6 @@ Gestisci il tuo profilo, monitora i turni e consulta lo storico delle attività.
 </div>
 """, unsafe_allow_html=True)
 
-    # Nota: stringa non indentata per evitare che Streamlit la legga come blocco di codice markdown
     st.markdown("""
 <div class="profile">
 <div class="profile-head">
