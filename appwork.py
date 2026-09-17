@@ -9,20 +9,26 @@ st.markdown(
     <style>
     .block-container { padding: 0rem 3rem 2rem 3rem; max-width: 100% !important; }
     
-    /* SFONDO GLOBALE CON I COLORI ESATTI DELLA TUA IMMAGINE (BRONZO, TAUPE, SABBIA CALDA) */
+    /* SFONDO PRINCIPALE MARRONE SCHIARITO E MORBO */
     .stApp {
-        background-color: #382c24;
+        background-color: #5a473a;
         background-image: 
-            radial-gradient(circle at 25% 15%, rgba(170, 145, 125, 0.45) 0%, transparent 55%),
-            radial-gradient(circle at 80% 85%, rgba(60, 44, 34, 0.8) 0%, transparent 70%),
-            linear-gradient(140deg, #251c15 0%, #524134 45%, #1a130f 100%);
+            radial-gradient(circle at 25% 15%, rgba(210, 185, 160, 0.4) 0%, transparent 60%),
+            radial-gradient(circle at 80% 85%, rgba(90, 70, 58, 0.7) 0%, transparent 70%),
+            linear-gradient(140deg, #423328 0%, #6d5747 45%, #35281e 100%);
         background-attachment: fixed;
         color: #f8fafc;
     }
 
+    /* OPZIONI DI NAVIGAZIONE RAPIDA BIANCHE */
+    .stRadio label {
+        color: #ffffff !important;
+        font-weight: 600;
+    }
+
     .content-wrapper { max-width: 950px; margin: 0 auto; }
     
-    /* BANNER HERO SUPERIORE */
+    /* BANNER HERO SUPERIORE SENZA BORDI E SFUMATO */
     .hero-full-bleed { 
         width: 100vw; 
         position: relative; 
@@ -30,13 +36,15 @@ st.markdown(
         right: 50%; 
         margin-left: -50vw; 
         margin-right: -50vw; 
-        background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)), url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=1800'); 
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=1800'); 
         background-size: cover; 
         background-position: center; 
         color: white; 
         padding: 90px 20px; 
         text-align: center; 
         margin-bottom: 40px; 
+        border: none;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     }
     
     /* LOGO CON F MAIUSCOLA E FULMINE VICINO */
@@ -47,21 +55,62 @@ st.markdown(
         letter-spacing: -2px; 
     }
     
-    .feature-card { background: rgba(30, 22, 17, 0.85); backdrop-filter: blur(10px); padding: 25px; border-radius: 16px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.12); color: #f8fafc; }
+    /* CARD SFUMATE SENZA BORDI NETTI */
+    .feature-card { 
+        background: rgba(45, 35, 28, 0.75); 
+        backdrop-filter: blur(12px); 
+        padding: 25px; 
+        border-radius: 20px; 
+        margin-bottom: 20px; 
+        border: none; 
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        color: #f8fafc; 
+    }
     .badge-tag { background-color: #fef08a; color: #713f12; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; margin-bottom: 10px; }
     
-    .profile-container { background: rgba(30, 22, 17, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 24px; padding: 30px; max-width: 700px; margin: 0 auto 30px auto; text-align: center; }
+    .profile-container { 
+        background: rgba(45, 35, 28, 0.75); 
+        backdrop-filter: blur(12px); 
+        border: none; 
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border-radius: 24px; 
+        padding: 30px; 
+        max-width: 700px; 
+        margin: 0 auto 30px auto; 
+        text-align: center; 
+    }
     .profile-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #4ade80; margin: 0 auto 15px auto; }
-    .profile-stats-row { display: flex; justify-content: space-around; background: rgba(45, 33, 26, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 15px; margin: 20px 0; }
-    .menu-item-card { background: rgba(45, 33, 26, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 16px 20px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; color: #f8fafc; text-align: left; }
+    .profile-stats-row { display: flex; justify-content: space-around; background: rgba(35, 27, 21, 0.85); border-radius: 16px; padding: 15px; margin: 20px 0; }
+    .menu-item-card { background: rgba(35, 27, 21, 0.85); border-radius: 14px; padding: 16px 20px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; color: #f8fafc; text-align: left; }
     
-    .framed-gallery-container { width: 100%; max-width: 950px; margin: 40px auto; background: rgba(30, 22, 17, 0.85); backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.12); overflow: hidden; }
+    .framed-gallery-container { 
+        width: 100%; 
+        max-width: 950px; 
+        margin: 40px auto; 
+        background: rgba(45, 35, 28, 0.75); 
+        backdrop-filter: blur(12px); 
+        border-radius: 24px; 
+        border: none; 
+        box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        overflow: hidden; 
+    }
     .image-strip { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; }
     .fluid-slide { flex: 0 0 100%; width: 100%; height: 500px; scroll-snap-align: start; position: relative; }
     .fluid-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .slide-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.4)); color: #f8fafc; padding: 25px; text-align: center; }
     
-    .legal-footer { background-color: rgba(30, 22, 17, 0.85); backdrop-filter: blur(10px); color: #94a3b8; padding: 25px; border-radius: 14px; font-size: 0.75rem; line-height: 1.6; margin-top: 50px; border: 1px solid rgba(255, 255, 255, 0.12); }
+    .legal-footer { 
+        background-color: rgba(45, 35, 28, 0.75); 
+        backdrop-filter: blur(12px); 
+        color: #cbd5e1; 
+        padding: 25px; 
+        border-radius: 20px; 
+        font-size: 0.75rem; 
+        line-height: 1.6; 
+        margin-top: 50px; 
+        border: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
     </style>
 """,
     unsafe_allow_html=True,
