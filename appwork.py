@@ -10,13 +10,18 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# --- STILE CSS CORRETTO (Spaziature e Pulizia UI) ---
+# --- STILE CSS "MODERN SAAS" (Sfondo curato, UI elegante) ---
 st.markdown(
     """
     <style>
-    .main { background-color: #f8fafc; }
+    /* Sfondo carino con gradiente morbido ed elegante */
+    .stApp { 
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+        background-attachment: fixed;
+    }
+    
     .block-container { 
-        padding-top: 2rem !important; /* Stacca tutto dal bordo superiore della pagina */
+        padding-top: 2rem !important; 
         padding-bottom: 5rem !important; 
         max-width: 720px; 
     }
@@ -30,16 +35,16 @@ st.markdown(
         border-radius: 18px;
         color: white;
         margin-bottom: 20px;
-        box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.2);
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
     }
     
-    /* Card standard */
+    /* Card standard per i lavoratori */
     .flash-card {
         background-color: #ffffff;
-        padding: 18px;
-        border-radius: 14px;
-        box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
-        margin-bottom: 14px;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+        margin-bottom: 16px;
         border: 1px solid #e2e8f0;
     }
 
@@ -47,7 +52,7 @@ st.markdown(
     .flash-card-pro {
         background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
         padding: 20px;
-        border-radius: 14px;
+        border-radius: 16px;
         box-shadow: 0 6px 24px -4px rgba(234, 179, 8, 0.15);
         margin-bottom: 18px;
         border: 1.5px solid #fde047;
@@ -58,7 +63,7 @@ st.markdown(
         background-color: #ffffff;
         border-left: 4px solid #ca8a04;
         padding: 14px 16px;
-        border-radius: 0 10px 10px 0;
+        border-radius: 0 12px 12px 0;
         margin-bottom: 12px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         border-top: 1px solid #f1f5f9;
@@ -132,7 +137,11 @@ if "lavoratori_schedulati" not in st.session_state:
           "mansione": "Cameriere / Sala",
           "esperienza": "Oltre 3 anni",
           "disponibilita": "Serali e Weekend",
+          "email": "marco.sala@email.com",
           "telefono": "+39 333 1234567",
+          "residenza": "Milano (Zona Navigli)",
+          "automunito": "Sì 🚗",
+          "foto": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
       },
       {
           "id": 2,
@@ -140,15 +149,11 @@ if "lavoratori_schedulati" not in st.session_state:
           "mansione": "Barista / Bartender",
           "esperienza": "1 - 3 anni",
           "disponibilita": "Flessibile",
+          "email": "sara.bartender@email.com",
           "telefono": "+39 340 9876543",
-      },
-      {
-          "id": 3,
-          "nome": "Davide L.",
-          "mansione": "Cuoco / Aiuto Cuoco",
-          "esperienza": "Oltre 3 anni",
-          "disponibilita": "Pranzo e Sera",
-          "telefono": "+39 347 5551234",
+          "residenza": "Milano (Zona Porta Romana)",
+          "automunita": "No",
+          "foto": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
       },
   ]
 
@@ -158,9 +163,9 @@ if "azienda_pro" not in st.session_state:
 if "vista_corrente" not in st.session_state:
   st.session_state.vista_corrente = "Landing Page"
 
-# --- HEADER & LOGO (ABBASSATO E CORRETTO NELLA GRAFICA) ---
+# --- HEADER & LOGO (FULMINE PIÙ PICCOLO E RAFFINATO) ---
 logo_html = """
-<div style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 15px; margin-bottom: 15px;">
+<div style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 10px; margin-bottom: 15px;">
     <div style="width: 100%; max-width: 320px;">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 115" style="width: 100%; height: auto; display: block; filter: drop-shadow(0px 6px 16px rgba(15,23,42,0.12));">
           <defs>
@@ -174,9 +179,10 @@ logo_html = """
             </linearGradient>
           </defs>
           <rect width="512" height="115" rx="24" fill="url(#bgGrad)" />
-          <path d="M 70 18 L 38 68 H 58 L 48 98 L 94 56 H 74 L 84 18 Z" fill="url(#boltGrad)" />
-          <text x="122" y="55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="42" font-weight="900" fill="#ffffff">FlashJob</text>
-          <text x="125" y="83" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" fill="#facc15">MILANO &bull; HOTEL & RESTAURANT HUB</text>
+          <!-- Fulmine rimpicciolito e centrato meglio (coordinate scalate) -->
+          <path d="M 62 30 L 44 64 H 56 L 48 90 L 82 58 H 68 L 76 30 Z" fill="url(#boltGrad)" />
+          <text x="115" y="55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="42" font-weight="900" fill="#ffffff">FlashJob</text>
+          <text x="118" y="83" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" fill="#facc15">MILANO &bull; HOTEL & RESTAURANT HUB</text>
         </svg>
     </div>
     <div style='text-align: center;'>
@@ -202,7 +208,7 @@ with col_nav3:
     st.rerun()
 
 st.markdown(
-    "<hr style='margin: 15px 0; border: none; border-top: 1px solid #e2e8f0;'>",
+    "<hr style='margin: 15px 0; border: none; border-top: 1px solid #cbd5e1;'>",
     unsafe_allow_html=True,
 )
 
@@ -249,8 +255,8 @@ if st.session_state.vista_corrente == "Landing Page":
             <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: #475569;">Ti serve un bartender con più di 3 anni di esperienza? Filtri con un click e trovi subito chi fa al caso tuo.</p>
         </div>
         <div class="benefit-box">
-            <b style="color: #0f172a; font-size: 0.95rem;">📞 Scrivi direttamente su WhatsApp</b>
-            <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: #475569;">Nessuna commissione sulle ore. Prendi il numero WhatsApp e accordati direttamente con il candidato.</p>
+            <b style="color: #0f172a; font-size: 0.95rem;">📞 Contatti completi (WhatsApp, Email, Residenza)</b>
+            <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: #475569;">Ogni profilo include dati verificati, foto, zona di residenza e se il candidato è automunito.</p>
         </div>
         <div class="benefit-box">
             <b style="color: #0f172a; font-size: 0.95rem;">💰 Un investimento che si ripaga in un turno</b>
@@ -277,7 +283,7 @@ if st.session_state.vista_corrente == "Landing Page":
 
 
 # ==========================================
-# ⭐ 2. AREA AZIENDA PRO
+# ⭐ 2. AREA AZIENDA PRO (PROFILI COMPLETI VISIBILI)
 # ==========================================
 elif st.session_state.vista_corrente == "Area Aziende":
   st.subheader("⭐ FlashJob PRO - Accesso Aziende (Milano)")
@@ -289,7 +295,7 @@ elif st.session_state.vista_corrente == "Area Aziende":
         """
         <div class="flash-card-pro">
             <h4 style="margin-top:0; color:#854d0e; font-size: 1.1rem;">Sblocca il Database Lavoratori di Milano</h4>
-            <p style="font-size:0.85rem; color:#713f12; margin-bottom:12px;">Meno di un'ora di lavoro di un dipendente per risolvere definitivamente le emergenze nel tuo locale.</p>
+            <p style="font-size:0.85rem; color:#713f12; margin-bottom:12px;">Visualizza foto, email, cellulare, residenza e se sono automuniti.</p>
             <div style="font-size: 1.6rem; font-weight: 800; color: #ca8a04; margin-bottom: 15px;">30 € <span style="font-size: 0.8rem; font-weight: normal; color: #713f12;">/ mese</span></div>
         </div>
         """,
@@ -316,7 +322,7 @@ elif st.session_state.vista_corrente == "Area Aziende":
         """
         <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px 16px; border-radius: 10px; margin-bottom: 20px;">
             <b style="color: #166534;">✅ Abbonamento PRO Attivo (30€/mese)</b><br>
-            <span style="font-size: 0.85rem; color: #15803d;">Accesso completo al database e ai contatti diretti di Milano.</span>
+            <span style="font-size: 0.85rem; color: #15803d;">Accesso completo al database e ai dati di contatto di Milano.</span>
         </div>
         """,
         unsafe_allow_html=True,
@@ -346,15 +352,30 @@ elif st.session_state.vista_corrente == "Area Aziende":
       st.info("Nessun lavoratore trovato con questa mansione specifica al momento.")
     else:
       for lav in lavoratori_filtrati:
+        # Layout della card con foto profilo e tutti i campi richiesti
+        foto_url = (
+            lav.get("foto")
+            if lav.get("foto")
+            else "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150"
+        )
         st.markdown(
             f"""
             <div class="flash-card">
-                <span class="badge-verified">VERIFICATO MILANO</span>
-                <h4 style="margin: 0 0 4px 0; color: #0f172a;">👤 {lav['nome']}</h4>
-                <p style="margin: 2px 0; font-size: 0.85rem; font-weight: 600; color: #334155;">Mansione: {lav['mansione']}</p>
-                <p style="margin: 2px 0; font-size: 0.8rem; color: #475569;">Esperienza: {lav['esperienza']} &bull; Disponibilità: {lav['disponibilita']}</p>
-                <hr style="margin: 10px 0; border: none; border-top: 1px solid #f1f5f9;">
-                <p style="margin: 0; font-size: 0.9rem; color: #16a34a;">📞 <b>Contatto diretto WhatsApp:</b> {lav['telefono']}</p>
+                <div style="display: flex; gap: 15px; align-items: flex-start;">
+                    <img src="{foto_url}" style="width: 65px; height: 65px; border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0; flex-shrink: 0;" />
+                    <div style="flex-grow: 1;">
+                        <span class="badge-verified">VERIFICATO MILANO</span>
+                        <h4 style="margin: 0 0 2px 0; color: #0f172a;">👤 {lav['nome']}</h4>
+                        <p style="margin: 2px 0; font-size: 0.85rem; font-weight: 600; color: #334155;">Mansione: {lav['mansione']} ({lav['esperienza']})</p>
+                        <p style="margin: 2px 0; font-size: 0.8rem; color: #475569;">📍 Residenza: <b>{lav.get('residenza', 'Milano')}</b> &bull; 🚗 Automunito: <b>{lav.get('automunito', 'Sì')}</b></p>
+                        <p style="margin: 2px 0; font-size: 0.8rem; color: #475569;">⏱️ Disponibilità: {lav['disponibilita']}</p>
+                    </div>
+                </div>
+                <hr style="margin: 12px 0; border: none; border-top: 1px solid #f1f5f9;">
+                <div style="font-size: 0.85rem; color: #334155; display: flex; flex-direction: column; gap: 4px;">
+                    <div>📞 <b>Cellulare / WhatsApp:</b> <a href="https://wa.me/{lav['telefono'].replace(' ', '')}" target="_blank" style="color: #16a34a; text-decoration: none; font-weight: 600;">{lav['telefono']}</a></div>
+                    <div>✉️ <b>Email:</b> <a href="mailto:{lav.get('email', '')}" style="color: #0284c7; text-decoration: none;">{lav.get('email', 'Non specificata')}</a></div>
+                </div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -367,22 +388,38 @@ elif st.session_state.vista_corrente == "Area Aziende":
 
 
 # ==========================================
-# 👤 3. AREA LAVORATORE
+# 👤 3. AREA LAVORATORE (FORM COMPLETO)
 # ==========================================
 else:
   st.subheader("👤 Registrazione e Schedulazione Profilo")
   st.markdown(
-      "<p style='color: #475569; font-size: 0.85rem;'>Il servizio è <b>100% gratuito per i lavoratori</b>. Entra a far parte del database ufficiale di Milano e fatti contattare direttamente su WhatsApp.</p>",
+      "<p style='color: #475569; font-size: 0.85rem;'>Il servizio è <b>100% gratuito per i lavoratori</b>. Inserisci i tuoi dati completi per entrare nel database ufficiale di Milano e farti contattare direttamente dai locali.</p>",
       unsafe_allow_html=True,
   )
 
   with st.form("form_profilo_lavoratore", clear_on_submit=True):
-    nome_lav = st.text_input(
-        "Nome e Cognome (o Nome puntato) *", placeholder="Es. Andrea M."
-    )
-    telefono_lav = st.text_input(
-        "Numero WhatsApp / Telefono *", placeholder="Es. 3331234567"
-    )
+    col_f1, col_f2 = st.columns(2)
+    with col_f1:
+      nome_lav = st.text_input(
+          "Nome e Cognome (o Nome puntato) *", placeholder="Es. Andrea M."
+      )
+      telefono_lav = st.text_input(
+          "Cellulare / WhatsApp *", placeholder="Es. 3331234567"
+      )
+      email_lav = st.text_input(
+          "Indirizzo Email *", placeholder="Es. andrea@email.com"
+      )
+    with col_f2:
+      residenza_lav = st.text_input(
+          "Residenza a Milano (Zona) *", placeholder="Es. Milano - Navigli"
+      )
+      automunito_lav = st.selectbox(
+          "Sei automunito/a?", ["Sì 🚗", "No (mezzi pubblici) 🚇"]
+      )
+      foto_lav = st.text_input(
+          "URL Foto Profilo (opzionale)",
+          placeholder="Es. link immagine o lascia vuoto",
+      )
 
     col_l1, col_l2 = st.columns(2)
     with col_l1:
@@ -402,7 +439,7 @@ else:
       )
 
     disponibilita_lav = st.text_input(
-        "Disponibilità (Giorni / Orari)",
+        "Disponibilità (Giorni / Orari) *",
         placeholder="Es. Disponibile weekend e serali",
     )
 
@@ -411,14 +448,25 @@ else:
     )
 
     if salva_profilo:
-      if nome_lav and telefono_lav:
+      if nome_lav and telefono_lav and email_lav and residenza_lav:
+        # Gestione foto predefinita se non inserita
+        foto_finale = (
+            foto_lav
+            if foto_lav
+            else "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150"
+        )
+
         nuovo_record = {
             "id": len(st.session_state.lavoratori_schedulati) + 1,
             "nome": nome_lav,
             "mansione": mansione_lav,
             "esperienza": esperienza_lav,
             "disponibilita": disponibilita_lav,
+            "email": email_lav,
             "telefono": telefono_lav,
+            "residenza": residenza_lav,
+            "automunito": automunito_lav,
+            "foto": foto_finale,
         }
         st.session_state.lavoratori_schedulati.append(nuovo_record)
         st.success(
@@ -427,15 +475,15 @@ else:
         )
       else:
         st.warning(
-            "⚠️ Inserisci almeno Nome e Telefono per completare la"
-            " schedulazione."
+            "⚠️ Per favore compila tutti i campi obbligatori (Nome, Cellulare,"
+            " Email, Residenza)."
         )
 
 # --- FOOTER ---
 st.markdown("---")
 st.markdown(
     """
-    <div style='text-align: center; color: #94a3b8; font-size: 0.7rem; line-height: 1.4;'>
+    <div style='text-align: center; color: #64748b; font-size: 0.7rem; line-height: 1.4;'>
         <b>FlashJob Milano</b> &bull; Piattaforma tecnologica di directory e bacheca contatti.<br>
         Non gestisce contratti di lavoro o retribuzioni dirette.
     </div>
