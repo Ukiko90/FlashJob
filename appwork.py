@@ -10,16 +10,7 @@ st.set_page_config(
 )
 
 # ============================================================
-# URL DELLE IMMAGINI CARICATE (OTTIMIZZATI PER STREAMLIT)
-# ============================================================
-BG_URL = "image.png"  # Sfondo sabbia
-IMG_3 = "image_3.png"
-IMG_4 = "image_4.png"
-IMG_5 = "image_5.png"
-IMG_6 = "image_6.png"
-
-# ============================================================
-# DATA
+# DATI E STATO
 # ============================================================
 if "lavoratori" not in st.session_state:
     st.session_state.lavoratori = [
@@ -54,22 +45,13 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM CON SFONDO SABBIA
+# DESIGN SYSTEM & STYLING
 # ============================================================
-bg_css = f"""
-    background: 
-        linear-gradient(rgba(240, 235, 227, 0.92), rgba(240, 235, 227, 0.92)),
-        url("{BG_URL}");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-"""
-
-st.markdown(f"""
+st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-:root {{
+:root {
     --bg: #f0ebe3;
     --surface: rgba(255,255,255,.88);
     --surface-strong: #ffffff;
@@ -82,34 +64,28 @@ st.markdown(f"""
     --green-soft: #eaf8f1;
     --shadow: 0 12px 40px rgba(17,24,39,.07);
     --radius: 18px;
-}}
+}
 
-html, body, [class*="css"] {{
+html, body, [class*="css"] {
     font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}}
+}
 
-.stApp {{
-    {bg_css}
+.stApp {
+    background: #f0ebe3;
     color: var(--text);
-}}
+}
 
-.block-container {{
+.block-container {
     max-width: 1180px !important;
     padding: 0 28px 60px !important;
-}}
+}
 
-[data-testid="stHeader"] {{
-    background: transparent;
-}}
-[data-testid="stToolbar"] {{
-    display: none;
-}}
-footer {{
-    visibility: hidden;
-}}
+[data-testid="stHeader"] { background: transparent; }
+[data-testid="stToolbar"] { display: none; }
+footer { visibility: hidden; }
 
 /* HERO */
-.hero {{
+.hero {
     margin: 0 -28px 34px;
     padding: 54px 28px 42px;
     text-align: center;
@@ -117,9 +93,9 @@ footer {{
     border-bottom: 1px solid var(--line);
     box-shadow: 0 1px 0 rgba(0,0,0,.02);
     backdrop-filter: blur(10px);
-}}
+}
 
-.logo-mark {{
+.logo-mark {
     width: 48px;
     height: 48px;
     margin: 0 auto 15px;
@@ -132,29 +108,27 @@ footer {{
     font-size: 23px;
     font-weight: 700;
     box-shadow: 0 8px 20px rgba(0,0,0,.13);
-}}
+}
 
-.hero h1 {{
+.hero h1 {
     margin: 0;
     font-size: clamp(2.2rem, 5vw, 3.7rem);
     letter-spacing: -.055em;
     line-height: 1;
     font-weight: 700;
-}}
+}
 
-.hero p {{
+.hero p {
     max-width: 680px;
     margin: 15px auto 0;
     color: var(--muted);
     font-size: 1rem;
     line-height: 1.6;
-}}
+}
 
 /* NAV */
-div[data-testid="stRadio"] > label {{
-    display: none;
-}}
-div[data-testid="stRadio"] div[role="radiogroup"] {{
+div[data-testid="stRadio"] > label { display: none; }
+div[data-testid="stRadio"] div[role="radiogroup"] {
     width: fit-content;
     margin: 0 auto 34px;
     padding: 5px;
@@ -164,38 +138,38 @@ div[data-testid="stRadio"] div[role="radiogroup"] {{
     background: rgba(255,255,255,.82);
     box-shadow: 0 4px 18px rgba(17,24,39,.04);
     backdrop-filter: blur(10px);
-}}
-div[data-testid="stRadio"] div[role="radiogroup"] label {{
+}
+div[data-testid="stRadio"] div[role="radiogroup"] label {
     border-radius: 9px;
     padding: 8px 15px;
     color: #616873 !important;
     font-size: .82rem;
     font-weight: 600;
-}}
-div[data-testid="stRadio"] div[role="radiogroup"] label:hover {{
+}
+div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
     background: #f2f4f7;
-}}
-div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
+}
+div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     background: #17181b;
     color: #fff !important;
-}}
+}
 
 /* TITOLI */
-.section-title {{
+.section-title {
     margin: 0 0 7px;
     font-size: 1.55rem;
     letter-spacing: -.025em;
     font-weight: 700;
-}}
-.section-subtitle {{
+}
+.section-subtitle {
     margin: 0 0 25px;
     color: var(--muted);
     line-height: 1.6;
     font-size: .94rem;
-}}
+}
 
 /* FULL BLEED HORIZONTAL SCROLL GALLERY - RETTANGOLARE E ATTACCATA */
-.full-bleed-container {{
+.full-bleed-container {
     width: 100vw;
     position: relative;
     left: 50%;
@@ -209,17 +183,15 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     scrollbar-width: thin;
     scroll-snap-type: x mandatory;
     scroll-padding-left: 4vw;
-}}
+}
 
-.full-bleed-container::-webkit-scrollbar {{
-    height: 6px;
-}}
-.full-bleed-container::-webkit-scrollbar-thumb {{
+.full-bleed-container::-webkit-scrollbar { height: 6px; }
+.full-bleed-container::-webkit-scrollbar-thumb {
     background: rgba(0,0,0,0.25);
     border-radius: 3px;
-}}
+}
 
-.full-bleed-item {{
+.full-bleed-item {
     flex: 0 0 420px;
     height: 280px;
     scroll-snap-align: start;
@@ -227,29 +199,29 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     overflow: hidden;
     position: relative;
     box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    background: #1a1a1a;
+    background: #2a2a2a;
     border: 1px solid rgba(255,255,255,0.15);
-}}
+}
 
-@media (max-width: 768px) {{
-    .full-bleed-item {{
+@media (max-width: 768px) {
+    .full-bleed-item {
         flex: 0 0 280px;
         height: 200px;
-    }}
-}}
+    }
+}
 
-.full-bleed-item img {{
+.full-bleed-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
-}}
+}
 
-.full-bleed-item:hover img {{
+.full-bleed-item:hover img {
     transform: scale(1.03);
-}}
+}
 
-.full-bleed-caption {{
+.full-bleed-caption {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -260,34 +232,23 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     font-size: 0.88rem;
     font-weight: 500;
     letter-spacing: -0.01em;
-}}
+}
 
 /* CARD */
-.card {{
+.card {
     background: var(--surface);
     border: 1px solid rgba(17,24,39,.07);
     border-radius: var(--radius);
     padding: 25px;
     box-shadow: var(--shadow);
     backdrop-filter: blur(18px);
-}}
-.card h3 {{
-    margin: 0 0 9px;
-    font-size: 1.08rem;
-    letter-spacing: -.015em;
-}}
-.card p, .card li {{
-    color: #626975;
-    font-size: .9rem;
-    line-height: 1.65;
-}}
-.card ul {{
-    margin: 12px 0 0;
-    padding-left: 19px;
-}}
+}
+.card h3 { margin: 0 0 9px; font-size: 1.08rem; letter-spacing: -.015em; }
+.card p, .card li { color: #626975; font-size: .9rem; line-height: 1.65; }
+.card ul { margin: 12px 0 0; padding-left: 19px; }
 
 /* BADGE */
-.badge {{
+.badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -299,18 +260,12 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     font-weight: 700;
     letter-spacing: .07em;
     text-transform: uppercase;
-}}
-.badge.blue {{
-    background: var(--blue-soft);
-    color: var(--blue);
-}}
-.badge.green {{
-    background: var(--green-soft);
-    color: var(--green);
-}}
+}
+.badge.blue { background: var(--blue-soft); color: var(--blue); }
+.badge.green { background: var(--green-soft); color: var(--green); }
 
 /* STATS */
-.stats {{
+.stats {
     display: grid;
     grid-template-columns: repeat(3,1fr);
     margin: 24px 0;
@@ -318,19 +273,11 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     border: 1px solid var(--line);
     border-radius: 15px;
     background: #fafbfc;
-}}
-.stat {{
-    padding: 17px 10px;
-    text-align: center;
-    border-right: 1px solid var(--line);
-}}
-.stat:last-child {{ border-right: 0; }}
-.stat strong {{
-    display: block;
-    font-size: 1.35rem;
-    letter-spacing: -.03em;
-}}
-.stat span {{
+}
+.stat { padding: 17px 10px; text-align: center; border-right: 1px solid var(--line); }
+.stat:last-child { border-right: 0; }
+.stat strong { display: block; font-size: 1.35rem; letter-spacing: -.03em; }
+.stat span {
     display: block;
     margin-top: 3px;
     color: var(--muted);
@@ -338,10 +285,10 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .07em;
-}}
+}
 
 /* PROFILE */
-.profile {{
+.profile {
     max-width: 760px;
     margin: 0 auto;
     padding: 34px;
@@ -350,13 +297,9 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     border-radius: 22px;
     box-shadow: var(--shadow);
     backdrop-filter: blur(18px);
-}}
-.profile-head {{
-    display: flex;
-    align-items: center;
-    gap: 17px;
-}}
-.avatar {{
+}
+.profile-head { display: flex; align-items: center; gap: 17px; }
+.avatar {
     width: 72px;
     height: 72px;
     flex: 0 0 72px;
@@ -364,29 +307,12 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     object-fit: cover;
     border: 3px solid #fff;
     box-shadow: 0 5px 18px rgba(0,0,0,.12);
-}}
-.profile h2 {{
-    margin: 0;
-    font-size: 1.4rem;
-    letter-spacing: -.03em;
-}}
-.role {{
-    margin: 4px 0 0;
-    color: var(--blue);
-    font-size: .88rem;
-    font-weight: 600;
-}}
-.meta {{
-    margin: 4px 0 0;
-    color: var(--muted);
-    font-size: .78rem;
-}}
-.divider {{
-    height: 1px;
-    margin: 25px 0;
-    background: var(--line);
-}}
-.quote {{
+}
+.profile h2 { margin: 0; font-size: 1.4rem; letter-spacing: -.03em; }
+.role { margin: 4px 0 0; color: var(--blue); font-size: .88rem; font-weight: 600; }
+.meta { margin: 4px 0 0; color: var(--muted); font-size: .78rem; }
+.divider { height: 1px; margin: 25px 0; background: var(--line); }
+.quote {
     padding: 17px 18px;
     border-left: 3px solid var(--blue);
     border-radius: 0 12px 12px 0;
@@ -394,39 +320,18 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     color: #3f4650;
     font-size: .9rem;
     line-height: 1.65;
-}}
+}
 
 /* DATABASE */
-.worker {{
-    min-height: 165px;
-}}
-.worker-top {{
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 15px;
-}}
-.worker h3 {{
-    margin: 0;
-    font-size: 1.04rem;
-}}
-.worker-role {{
-    margin: 5px 0;
-    color: #626975;
-    font-size: .86rem;
-}}
-.worker-meta {{
-    color: var(--muted);
-    font-size: .78rem;
-}}
-.worker-status {{
-    color: var(--green);
-    font-size: .72rem;
-    font-weight: 700;
-}}
+.worker { min-height: 165px; }
+.worker-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; }
+.worker h3 { margin: 0; font-size: 1.04rem; }
+.worker-role { margin: 5px 0; color: #626975; font-size: .86rem; }
+.worker-meta { color: var(--muted); font-size: .78rem; }
+.worker-status { color: var(--green); font-size: .72rem; font-weight: 700; }
 
 /* LEGAL */
-.legal {{
+.legal {
     margin-top: 48px;
     padding: 22px;
     border: 1px solid var(--line);
@@ -436,11 +341,11 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     font-size: .7rem;
     line-height: 1.65;
     backdrop-filter: blur(10px);
-}}
-.legal b {{ color: #333840; }}
+}
+.legal b { color: #333840; }
 
 /* STREAMLIT BUTTONS */
-.stButton > button {{
+.stButton > button {
     width: 100%;
     min-height: 42px;
     border: 1px solid #17181b;
@@ -450,37 +355,24 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     font-weight: 600;
     font-size: .82rem;
     transition: all .15s ease;
-}}
-.stButton > button:hover {{
+}
+.stButton > button:hover {
     border-color: #000;
     background: #000;
     color: #fff;
     transform: translateY(-1px);
-}}
-.back-button .stButton > button {{
+}
+.back-button .stButton > button {
     width: auto;
     background: transparent;
     color: #333840;
     border-color: var(--line);
-}}
-
-@media (max-width: 720px) {{
-    .block-container {{ padding: 0 15px 40px !important; }}
-    .hero {{ margin: 0 -15px 25px; padding: 40px 18px 34px; }}
-    div[data-testid="stRadio"] div[role="radiogroup"] {{
-        width: 100%;
-        overflow-x: auto;
-    }}
-    div[data-testid="stRadio"] div[role="radiogroup"] label {{
-        white-space: nowrap;
-    }}
-    .profile {{ padding: 23px; }}
-}}
+}
 </style>
 """, unsafe_allow_html=True)
 
 # ============================================================
-# HERO
+# HERO SECTION
 # ============================================================
 st.markdown("""
 <div class="hero">
@@ -500,7 +392,7 @@ scelta = st.radio(
 )
 
 # ============================================================
-# PANORAMICA
+# PANORAMICA & MODELLO
 # ============================================================
 if scelta == "Panoramica & Modello":
     st.markdown("""
@@ -550,23 +442,37 @@ Esplora la galleria full-bleed a scorrimento orizzontale con i momenti chiave de
 </div>
 """, unsafe_allow_html=True)
 
-    # Galleria Full-Bleed a scorrimento orizzontale con le immagini rettangolari affiancate
+    # Utilizziamo immagini di pubblico dominio Unsplash stabili e ad alte prestazioni 
+    # che garantiscono il caricamento immediato senza errori di file locali mancanti.
+    img_url_1 = (
+        "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80"
+    )  # Cucina / Piatto
+    img_url_2 = (
+        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&q=80"
+    )  # Cocktail / Bar
+    img_url_3 = (
+        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80"
+    )  # Sala / Ristorante
+    img_url_4 = (
+        "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80"
+    )  # Evento / Food pairing
+
     st.markdown(f"""
 <div class="full-bleed-container">
     <div class="full-bleed-item">
-        <img src="{IMG_3}" alt="Cura del piatto">
+        <img src="{img_url_1}" alt="Cura del piatto">
         <div class="full-bleed-caption">Presentazione e cura sartoriale del piatto</div>
     </div>
     <div class="full-bleed-item">
-        <img src="{IMG_4}" alt="Cocktail & Sound">
+        <img src="{img_url_2}" alt="Cocktail & Sound">
         <div class="full-bleed-caption">Atmosfera unica tra mixology e design</div>
     </div>
     <div class="full-bleed-item">
-        <img src="{IMG_5}" alt="Servizio di sala">
+        <img src="{img_url_3}" alt="Servizio di sala">
         <div class="full-bleed-caption">Accoglienza e servizio impeccabile in sala</div>
     </div>
     <div class="full-bleed-item">
-        <img src="{IMG_6}" alt="Food & Drink pairing">
+        <img src="{img_url_4}" alt="Food & Drink pairing">
         <div class="full-bleed-caption">Food pairing di alto livello per ogni evento</div>
     </div>
 </div>
