@@ -247,6 +247,20 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 .card p, .card li { color: #626975; font-size: .9rem; line-height: 1.65; }
 .card ul { margin: 12px 0 0; padding-left: 19px; }
 
+/* PRICING CARD */
+.price-tag {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 12px 0 15px 0;
+    letter-spacing: -.03em;
+}
+.price-tag span {
+    font-size: .85rem;
+    color: var(--muted);
+    font-weight: 400;
+}
+
 /* BADGE */
 .badge {
     display: inline-flex;
@@ -387,7 +401,12 @@ st.markdown("""
 
 scelta = st.radio(
     "Navigazione",
-    ["Panoramica & Modello", "Database Aziendale", "Area Personale Lavoratore"],
+    [
+        "Panoramica & Modello",
+        "Database Aziendale",
+        "Area Personale Lavoratore",
+        "Piani & Abbonamenti ⚡",
+    ],
     horizontal=True,
 )
 
@@ -494,7 +513,6 @@ elif scelta == "Database Aziendale":
 
         c = selected
 
-        # NOTA: Questa stringa HTML è ora rigorosamente attaccata al margine sinistro
         profile_html = f"""<div class="profile">
     <div class="profile-head">
         <img class="avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Profilo">
@@ -575,7 +593,7 @@ Seleziona un professionista per visualizzare profilo, storico e referenze.
 # ============================================================
 # AREA LAVORATORE
 # ============================================================
-else:
+elif scelta == "Area Personale Lavoratore":
     st.markdown("""
 <div class="section-title">Area Personale</div>
 <div class="section-subtitle">
@@ -621,6 +639,81 @@ Gestisci il tuo profilo, monitora i turni e consulta lo storico delle attività.
 </div>"""
 
     st.markdown(area_html, unsafe_allow_html=True)
+
+# ============================================================
+# PIANI & ABBONAMENTI
+# ============================================================
+else:
+    st.markdown("""
+<div class="section-title">Listino Piani & Abbonamenti ⚡</div>
+<div class="section-subtitle">
+Scegli la soluzione su misura per la tua attività o per accelerare le tue opportunità di lavoro.
+</div>
+""", unsafe_allow_html=True)
+
+    col_a, col_b = st.columns(2, gap="large")
+
+    with col_a:
+        st.markdown("""
+<div class="card">
+    <span class="badge blue">Aziende & Locali</span>
+    <h3>Abbonamento Mensile Standard</h3>
+    <div class="price-tag">20€ <span>/ mese</span></div>
+    <p>Accesso illimitato al database dei professionisti hospitality e pubblicazione dei turni di copertura immediata.</p>
+    <ul>
+        <li>Ricerca avanzata per zona e mansione</li>
+        <li>Contatto diretto e chat sbloccata</li>
+        <li>Gestione completa delle emergenze di sala e cucina</li>
+    </ul>
+    <div style="margin-top: 22px;"></div>
+</div>
+""", unsafe_allow_html=True)
+        if st.button("Attiva Abbonamento Azienda (20€/mo)"):
+            st.success(
+                "Richiesta di attivazione abbonamento aziendale registrata con successo!"
+            )
+
+        st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
+
+        st.markdown("""
+<div class="card">
+    <span class="badge blue">Add-on Urgenze</span>
+    <h3>Job Boosting Urgente</h3>
+    <div class="price-tag">5€ <span>/ settimana</span></div>
+    <p>Per le emergenze critiche dell'ultimo minuto: metti in cima la tua richiesta e invia notifiche prioritarie.</p>
+    <ul>
+        <li>Posizionamento in evidenza nel feed dei lavoratori</li>
+        <li>Notifica push prioritaria immediata in zona</li>
+        <li>Copertura garantita in tempi record</li>
+    </ul>
+    <div style="margin-top: 22px;"></div>
+</div>
+""", unsafe_allow_html=True)
+        if st.button("Lancia Job Boosting (5€/sett)"):
+            st.success(
+                "Job Boosting attivato! La tua richiesta è ora in evidenza tra i lavoratori."
+            )
+
+    with colb := col_b:
+        st.markdown("""
+<div class="card">
+    <span class="badge green">Professionisti & Lavoratori</span>
+    <h3>Piano Lavoratore Premium</h3>
+    <div class="price-tag">10€ <span>/ mese</span></div>
+    <p>Massimizza le tue opportunità e sali in cima alle preferenze dei migliori ristoranti e hotel di Milano.</p>
+    <ul>
+        <li><strong>Profilo in Primo Piano</strong> nel database aziendale</li>
+        <li><strong>Badge "Top Verified"</strong> per massima affidabilità</li>
+        <li><strong>Anticipo Notifiche</strong> sui turni liberi in arrivo</li>
+        <li>Zero commissioni sui guadagni dei turni</li>
+    </ul>
+    <div style="margin-top: 22px;"></div>
+</div>
+""", unsafe_allow_html=True)
+        if st.button("Passa a Lavoratore Premium (10€/mo)"):
+            st.success(
+                "Ottimo! Il tuo account è stato aggiornato allo status Premium."
+            )
 
 # ============================================================
 # LEGAL
