@@ -1,158 +1,170 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Flashjob - H&R Enterprise Hub", page_icon="⚡", layout="wide"
+    page_title="Flashjob &bull; Enterprise Hub", page_icon="⚡", layout="wide"
 )
 
 st.markdown(
     """
     <style>
-    .block-container { padding: 0rem 3rem 2rem 3rem; max-width: 100% !important; }
+    .block-container { padding: 0rem 3rem 3rem 3rem; max-width: 100% !important; }
     
-    /* SFONDO GLOBALE LUMINOSO ED ELEGANTE */
+    /* SFONDO MINIMAL STILE APPLE (CLEAN & WARM) */
     .stApp {
-        background-color: #6b5545;
-        background-image: 
-            radial-gradient(circle at 25% 15%, rgba(230, 205, 180, 0.4) 0%, transparent 65%),
-            linear-gradient(140deg, #4e3d30 0%, #7d6552 50%, #3e3025 100%);
+        background-color: #f5f2eb;
+        background-image: linear-gradient(135deg, #f7f4ed 0%, #eae3d5 100%);
         background-attachment: fixed;
-        color: #ffffff;
+        color: #1d1d1f;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
-    /* MENU DI NAVIGAZIONE RAPIDA UNIFORME E PULITO */
+    /* MENU DI NAVIGAZIONE RAPIDA STILE SEGMENTED CONTROL APPLE */
     .stRadio > label {
-        color: #e2e8f0 !important;
+        color: #86868b !important;
         font-weight: 500;
-        font-size: 0.9rem;
-        letter-spacing: 0.5px;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
         text-transform: uppercase;
+        margin-bottom: 8px;
     }
     .stRadio div[role="radiogroup"] {
-        background: rgba(45, 35, 28, 0.6);
-        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 6px;
         border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        display: flex;
+        gap: 6px;
     }
     .stRadio label span {
-        color: #ffffff !important;
-        font-weight: 600;
+        color: #1d1d1f !important;
+        font-weight: 500;
+        font-size: 0.9rem;
     }
 
-    .content-wrapper { max-width: 950px; margin: 0 auto; }
+    .content-wrapper { max-width: 980px; margin: 0 auto; }
     
-    /* HERO SECTION PROFESSIONALE */
-    .hero-full-bleed { 
+    /* HERO BANNER CRISTALLINO (ALTA LEGGIBILITÀ) */
+    .apple-hero { 
         width: 100vw; 
         position: relative; 
         left: 50%; 
         right: 50%; 
         margin-left: -50vw; 
         margin-right: -50vw; 
-        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=1800'); 
-        background-size: cover; 
-        background-position: center; 
-        color: white; 
-        padding: 80px 20px; 
+        background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(245,242,235,0.9) 100%);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        padding: 70px 20px 60px 20px; 
         text-align: center; 
-        margin-bottom: 40px; 
-        border: none;
+        margin-bottom: 50px; 
     }
     
     .brand-title { 
-        color: white; 
+        color: #1d1d1f; 
         font-size: 3rem; 
-        font-weight: 800; 
-        letter-spacing: -1px; 
+        font-weight: 700; 
+        letter-spacing: -0.015em; 
+        margin-bottom: 12px;
     }
     
-    /* CARD STRUTTURATE IN STILE ENTERPRISE */
+    /* CARD STILE GLASSMORPHISM ELEGANTE */
     .feature-card { 
-        background: rgba(55, 42, 33, 0.85); 
-        padding: 30px; 
-        border-radius: 16px; 
-        margin-bottom: 20px; 
-        border: 1px solid rgba(255, 255, 255, 0.08); 
-        color: #ffffff; 
+        background: rgba(255, 255, 255, 0.8); 
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        padding: 35px; 
+        border-radius: 20px; 
+        margin-bottom: 24px; 
+        border: 1px solid rgba(0, 0, 0, 0.04); 
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        color: #1d1d1f; 
     }
     
     .badge-tag { 
-        background-color: #e2e8f0; 
-        color: #3e3025; 
-        padding: 4px 12px; 
-        border-radius: 6px; 
-        font-size: 0.7rem; 
-        font-weight: 700; 
+        background-color: #1d1d1f; 
+        color: #ffffff; 
+        padding: 5px 12px; 
+        border-radius: 20px; 
+        font-size: 0.65rem; 
+        font-weight: 600; 
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.1em;
         display: inline-block; 
-        margin-bottom: 15px; 
+        margin-bottom: 18px; 
     }
     
     .profile-container { 
-        background: rgba(55, 42, 33, 0.9); 
-        border: 1px solid rgba(255, 255, 255, 0.08); 
-        border-radius: 20px; 
-        padding: 30px; 
+        background: rgba(255, 255, 255, 0.85); 
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 0, 0, 0.04); 
+        border-radius: 24px; 
+        padding: 40px; 
         max-width: 700px; 
         margin: 0 auto 30px auto; 
         text-align: center; 
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
     }
     
     .profile-img { 
-        width: 85px; 
-        height: 85px; 
+        width: 90px; 
+        height: 90px; 
         border-radius: 50%; 
         object-fit: cover; 
         border: 2px solid #ffffff; 
-        margin: 0 auto 15px auto; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        margin: 0 auto 16px auto; 
     }
     
     .profile-stats-row { 
         display: flex; 
         justify-content: space-around; 
-        background: rgba(42, 32, 25, 0.95); 
-        border-radius: 12px; 
-        padding: 15px; 
-        margin: 20px 0; 
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(245, 242, 235, 0.7); 
+        border-radius: 16px; 
+        padding: 20px; 
+        margin: 24px 0; 
+        border: 1px solid rgba(0, 0, 0, 0.03);
     }
     
     .menu-item-card { 
-        background: rgba(42, 32, 25, 0.95); 
-        border-radius: 10px; 
-        padding: 14px 20px; 
-        margin-bottom: 10px; 
+        background: rgba(245, 242, 235, 0.7); 
+        border-radius: 12px; 
+        padding: 16px 20px; 
+        margin-bottom: 12px; 
         display: flex; 
         align-items: center; 
         justify-content: space-between; 
-        color: #ffffff; 
+        color: #1d1d1f; 
         text-align: left; 
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(0, 0, 0, 0.03);
     }
     
     .framed-gallery-container { 
         width: 100%; 
-        max-width: 950px; 
+        max-width: 980px; 
         margin: 40px auto; 
-        background: rgba(55, 42, 33, 0.85); 
-        border-radius: 20px; 
-        border: 1px solid rgba(255, 255, 255, 0.08); 
+        background: rgba(255, 255, 255, 0.8); 
+        backdrop-filter: blur(25px);
+        border-radius: 24px; 
+        border: 1px solid rgba(0, 0, 0, 0.04); 
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
         overflow: hidden; 
     }
     .image-strip { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; }
-    .fluid-slide { flex: 0 0 100%; width: 100%; height: 450px; scroll-snap-align: start; position: relative; }
+    .fluid-slide { flex: 0 0 100%; width: 100%; height: 460px; scroll-snap-align: start; position: relative; }
     .fluid-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .slide-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2)); color: #ffffff; padding: 20px; text-align: center; font-size: 0.95rem; }
+    .slide-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)); color: #ffffff; padding: 25px; text-align: center; font-size: 0.95rem; font-weight: 500; }
     
     .legal-footer { 
-        background-color: rgba(55, 42, 33, 0.85); 
-        color: #cbd5e1; 
-        padding: 25px; 
-        border-radius: 16px; 
+        background-color: rgba(255, 255, 255, 0.6); 
+        color: #86868b; 
+        padding: 30px; 
+        border-radius: 20px; 
         font-size: 0.75rem; 
         line-height: 1.6; 
-        margin-top: 50px; 
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        margin-top: 60px; 
+        border: 1px solid rgba(0, 0, 0, 0.04);
     }
     </style>
 """,
@@ -175,13 +187,13 @@ if "lavoratori" not in st.session_state:
       },
   ]
 
-# HEADER PRINCIPALE
+# HEADER PRINCIPALE STILE APPLE
 st.markdown(
     """
-    <div class="hero-full-bleed">
+    <div class="apple-hero">
         <div class="hero-content">
             <h1 class="brand-title">Flashjob</h1>
-            <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 650px; margin: 0 auto; font-weight: 300;">Enterprise Workforce Hub &bull; Soluzioni di ingaggio rapido per l'Hotellerie & Ristorazione a Milano</p>
+            <p style="color: #515154; font-size: 1.15rem; max-width: 680px; margin: 0 auto; font-weight: 400; line-height: 1.5;">Enterprise Workforce Hub &bull; Soluzioni di ingaggio rapido per l'Hotellerie & Ristorazione a Milano.</p>
         </div>
     </div>
 """,
@@ -190,30 +202,30 @@ st.markdown(
 
 st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
 scelta = st.radio(
-    "Navigazione Rapida:",
+    "Navigazione Rapida",
     ["Panoramica & Modello", "Database Aziendale", "Area Personale Lavoratore"],
     horizontal=True,
 )
-st.markdown("---")
+st.markdown("<div style='margin: 30px 0;'></div>", unsafe_allow_html=True)
 st.markdown("</div>", unsafe_allow_html=True)
 
 if scelta == "Panoramica & Modello":
   st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
   st.markdown(
-      "<h3 style='color: #ffffff; font-weight: 700; font-size: 1.4rem;"
-      " margin-bottom: 15px;'>Infrastruttura Operativa</h3>",
+      "<h3 style='color: #1d1d1f; font-weight: 600; font-size: 1.5rem;"
+      " margin-bottom: 12px; letter-spacing: -0.01em;'>Infrastruttura"
+      " Operativa</h3>",
       unsafe_allow_html=True,
   )
   st.markdown(
-      "<p style='color: #cbd5e1; line-height: 1.6;'>Flashjob"
-      " ottimizza la gestione del personale riducendo i tempi di copertura"
-      " delle turnazioni critiche. I titolari possono individuare e contattare"
-      " direttamente i professionisti qualificati per interventi last-minute"
-      " sul territorio di Milano.</p>",
+      "<p style='color: #515154; line-height: 1.65; font-size: 1.05rem;"
+      " margin-bottom: 30px;'>Flashjob ottimizza la gestione del personale"
+      " riducendo i tempi di copertura delle turnazioni critiche. I titolari"
+      " possono individuare e contattare direttamente i professionisti"
+      " qualificati per interventi last-minute sul territorio di Milano.</p>",
       unsafe_allow_html=True,
   )
 
-  st.markdown("<br>", unsafe_allow_html=True)
   col_v1, col_v2 = st.columns(2)
 
   with col_v1:
@@ -221,8 +233,8 @@ if scelta == "Panoramica & Modello":
         """
         <div class="feature-card">
             <span class="badge-tag">Area Aziende</span>
-            <h4 style="color: #ffffff; margin-top:5px; font-weight: 600;">Standard di Servizio</h4>
-            <ul style="padding-left: 18px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+            <h4 style="color: #1d1d1f; margin-top:5px; font-weight: 600; font-size: 1.2rem;">Standard di Servizio</h4>
+            <ul style="padding-left: 18px; color: #515154; font-size: 0.95rem; line-height: 1.7; margin-top: 12px;">
                 <li>Zero commissioni sulle selezioni attive.</li>
                 <li>Canale di comunicazione diretto via WhatsApp.</li>
                 <li>Copertura tempestiva dei turni operativi.</li>
@@ -238,8 +250,8 @@ if scelta == "Panoramica & Modello":
         """
         <div class="feature-card">
             <span class="badge-tag">Area Lavoratori</span>
-            <h4 style="color: #ffffff; margin-top:5px; font-weight: 600;">Protocollo e Compliance</h4>
-            <ul style="padding-left: 18px; color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+            <h4 style="color: #1d1d1f; margin-top:5px; font-weight: 600; font-size: 1.2rem;">Protocollo e Compliance</h4>
+            <ul style="padding-left: 18px; color: #515154; font-size: 0.95rem; line-height: 1.7; margin-top: 12px;">
                 <li>Piattaforma interamente gratuita per lo staff.</li>
                 <li>Patto di serietà vincolante all'accettazione dell'offerta.</li>
                 <li><b>Policy di affidabilità (3 Strike):</b> Tre assenze ingiustificate comportano la revoca dell'accesso al database.</li>
@@ -252,8 +264,9 @@ if scelta == "Panoramica & Modello":
 
   st.markdown("<br>", unsafe_allow_html=True)
   st.markdown(
-      "<h3 style='color: #ffffff; font-weight: 700; font-size: 1.4rem;"
-      " margin-bottom: 15px;'>Standard Visivo e Location</h3>",
+      "<h3 style='color: #1d1d1f; font-weight: 600; font-size: 1.5rem;"
+      " margin-bottom: 15px; letter-spacing: -0.01em;'>Standard Visivo e"
+      " Location</h3>",
       unsafe_allow_html=True,
   )
   st.markdown("</div>", unsafe_allow_html=True)
@@ -279,13 +292,13 @@ if scelta == "Panoramica & Modello":
 elif scelta == "Database Aziendale":
   st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
   st.markdown(
-      "<h3 style='color: #ffffff; font-weight: 700; font-size: 1.4rem;"
-      " margin-bottom: 10px;'>Database Professionisti</h3>",
+      "<h3 style='color: #1d1d1f; font-weight: 600; font-size: 1.5rem;"
+      " margin-bottom: 8px;'>Database Professionisti</h3>",
       unsafe_allow_html=True,
   )
   st.markdown(
-      "<p style='color: #cbd5e1; margin-bottom: 25px;'>Directory attiva"
-      " del personale disponibile per ingaggi rapidi in area"
+      "<p style='color: #515154; margin-bottom: 25px; font-size: 1.05rem;'>Directory"
+      " attiva del personale disponibile per ingaggi rapidi in area"
       " metropolitana.</p>",
       unsafe_allow_html=True,
   )
@@ -294,9 +307,9 @@ elif scelta == "Database Aziendale":
     st.markdown(
         f"""
         <div class="feature-card">
-            <h4 style="color: white; margin-top:0; font-weight: 600;">{lav['nome']}</h4>
-            <p style="margin: 6px 0; color: #cbd5e1; font-size: 0.95rem;"><b>Qualifica:</b> {lav['mansione']} &bull; <b>Area:</b> {lav['zona']}</p>
-            <p style="margin: 6px 0; font-size: 0.9rem;"><b>Contatto Diretto:</b> <a href="https://wa.me/{lav['tel'].replace(' ', '')}" target="_blank" style="color: #ffffff; font-weight: 600; text-decoration: underline;">{lav['tel']}</a></p>
+            <h4 style="color: #1d1d1f; margin-top:0; font-weight: 600; font-size: 1.2rem;">{lav['nome']}</h4>
+            <p style="margin: 6px 0; color: #515154; font-size: 0.95rem;"><b>Qualifica:</b> {lav['mansione']} &bull; <b>Area:</b> {lav['zona']}</p>
+            <p style="margin: 6px 0; font-size: 0.95rem;"><b>Contatto Diretto:</b> <a href="https://wa.me/{lav['tel'].replace(' ', '')}" target="_blank" style="color: #0066cc; font-weight: 600; text-decoration: none;">{lav['tel']} &rarr;</a></p>
         </div>
         """,
         unsafe_allow_html=True,
@@ -309,34 +322,34 @@ else:
       """
     <div class="profile-container">
         <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400" class="profile-img" />
-        <h2 style="color: white; margin-bottom: 2px; font-weight: 700; font-size: 1.3rem;">Giulia Rossi</h2>
-        <p style="color: #ffffff; font-weight: 600; font-size: 0.95rem;">+39 334 5678901</p>
-        <p style="color: #cbd5e1; font-size: 0.85rem; margin-top: 2px;">Profilo Verificato &bull; Milano Centro</p>
+        <h2 style="color: #1d1d1f; margin-bottom: 2px; font-weight: 600; font-size: 1.35rem;">Giulia Rossi</h2>
+        <p style="color: #1d1d1f; font-weight: 600; font-size: 0.95rem;">+39 334 5678901</p>
+        <p style="color: #86868b; font-size: 0.85rem; margin-top: 2px;">Profilo Verificato &bull; Milano Centro</p>
         
         <div class="profile-stats-row">
             <div>
-                <div style="font-size: 1.2rem; font-weight: 700; color: #fef08a;">03</div>
-                <div style="font-size: 0.75rem; color: #cbd5e1; text-transform: uppercase;">In Attesa</div>
+                <div style="font-size: 1.3rem; font-weight: 700; color: #1d1d1f;">03</div>
+                <div style="font-size: 0.7rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em;">In Attesa</div>
             </div>
             <div>
-                <div style="font-size: 1.2rem; font-weight: 700; color: #38bdf8;">02</div>
-                <div style="font-size: 0.75rem; color: #cbd5e1; text-transform: uppercase;">In Corso</div>
+                <div style="font-size: 1.3rem; font-weight: 700; color: #0066cc;">02</div>
+                <div style="font-size: 0.7rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em;">In Corso</div>
             </div>
             <div>
-                <div style="font-size: 1.2rem; font-weight: 700; color: #ffffff;">18</div>
-                <div style="font-size: 0.75rem; color: #cbd5e1; text-transform: uppercase;">Completati</div>
+                <div style="font-size: 1.3rem; font-weight: 700; color: #34c759;">18</div>
+                <div style="font-size: 0.7rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em;">Completati</div>
             </div>
         </div>
 
         <div style="text-align: left; margin-top: 25px;">
-            <p style="color: #cbd5e1; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Configurazione Account</p>
+            <p style="color: #86868b; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;">Configurazione Account</p>
             <div class="menu-item-card">
-                <span style="font-size: 0.9rem;">Lingua di Sistema</span>
-                <span style="color: #ffffff; font-weight: 600; font-size: 0.9rem;">Italiano</span>
+                <span style="font-size: 0.95rem; font-weight: 500;">Lingua di Sistema</span>
+                <span style="color: #1d1d1f; font-weight: 600; font-size: 0.95rem;">Italiano</span>
             </div>
             <div class="menu-item-card">
-                <span style="font-size: 0.9rem;">Credenziali di Sicurezza</span>
-                <span style="color: #cbd5e1; font-size: 0.9rem;">&gt;</span>
+                <span style="font-size: 0.95rem; font-weight: 500;">Credenziali di Sicurezza</span>
+                <span style="color: #86868b; font-size: 0.95rem;">&gt;</span>
             </div>
         </div>
     </div>
@@ -349,7 +362,7 @@ st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
 st.markdown(
     """
     <div class="legal-footer">
-        <b style="color: #ffffff; font-size: 0.8rem;">Note Legali e Regolamento Enterprise - Flashjob</b><br><br>
+        <b style="color: #1d1d1f; font-size: 0.8rem;">Note Legali e Regolamento Enterprise - Flashjob</b><br><br>
         La piattaforma opera esclusivamente come directory e bacheca di contatto B2B per il settore Hotellerie & Restaurant (H&R). <b>Protocollo di Affidabilità:</b> L'accettazione formale di un turno vincola il lavoratore alla presenza; la violazione reiterata (3 strike) comporta la disattivazione immediata dell'account. Il servizio non configura agenzia di somministrazione o intermediazione di manodopera ai sensi della normativa vigente.
     </div>
 """,
