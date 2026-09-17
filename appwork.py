@@ -216,6 +216,7 @@ logo_html = """
     </div>
 </div>
 """
+# NOTA BENE: qui sotto c'è l'argomento fondamentale unsafe_allow_html=True
 st.markdown(logo_html, unsafe_allow_html=True)
 
 # --- BARRA DI NAVIGAZIONE RAPIDA ---
@@ -392,8 +393,8 @@ elif st.session_state.vista_corrente == "Area Aziende":
                         <span class="badge-verified">VERIFICATO MILANO</span>
                         <h4 style="margin: 0 0 2px 0; color: #0f172a;">👤 {lav['nome']}</h4>
                         <p style="margin: 2px 0; font-size: 0.85rem; font-weight: 600; color: #334155;">Mansione: {lav['mansione']} ({lav['esperienza']})</p>
-                        <p style="margin: 2px 0; font-size: 0.8rem; color: #475569;">📍 Residenza: <b>{lav.get('residenza', 'Milano')}</b> &bull; 🚗 Automunito: <b>{lav.get('automunito', 'Sì')}</b></p>
-                        <p style="margin: 2px 0; font-size: 0.8rem; color: #475569;">⏱️ Disponibilità: {lav['disponibilita']}</p>
+                        <p style="margin: 2px 0; font-size: 0.80rem; color: #475569;">📍 Residenza: <b>{lav.get('residenza', 'Milano')}</b> &bull; 🚗 Automunito: <b>{lav.get('automunito', 'Sì')}</b></p>
+                        <p style="margin: 2px 0; font-size: 0.80rem; color: #475569;">⏱️ Disponibilità: {lav['disponibilita']}</p>
                     </div>
                 </div>
                 <hr style="margin: 12px 0; border: none; border-top: 1px solid #f1f5f9;">
