@@ -68,7 +68,7 @@ def whatsapp_url(phone):
 # ============================================================
 bg_css = f"""
     background: 
-        linear-gradient(rgba(240, 235, 227, 0.90), rgba(240, 235, 227, 0.90)),
+        linear-gradient(rgba(240, 235, 227, 0.92), rgba(240, 235, 227, 0.92)),
         url("data:image/jpeg;base64,{BG_BASE64}");
     background-size: cover;
     background-position: center;
@@ -204,7 +204,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     font-size: .94rem;
 }}
 
-/* FULL BLEED HORIZONTAL SCROLL GALLERY */
+/* FULL BLEED HORIZONTAL SCROLL GALLERY - RETTANGOLARE E ATTACCATA */
 .full-bleed-container {{
     width: 100vw;
     position: relative;
@@ -212,41 +212,39 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
-    padding: 20px 0;
+    padding: 10px 4vw 25px 4vw;
     overflow-x: auto;
     display: flex;
-    gap: 20px;
+    gap: 12px;
     scrollbar-width: thin;
     scroll-snap-type: x mandatory;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    scroll-padding-left: 4vw;
 }}
 
 .full-bleed-container::-webkit-scrollbar {{
-    height: 8px;
+    height: 6px;
 }}
 .full-bleed-container::-webkit-scrollbar-thumb {{
-    background: rgba(0,0,0,0.2);
-    border-radius: 4px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 3px;
 }}
 
 .full-bleed-item {{
-    flex: 0 0 85vw;
-    height: 70vh;
-    scroll-snap-align: center;
-    border-radius: 20px;
+    flex: 0 0 420px;
+    height: 280px;
+    scroll-snap-align: start;
+    border-radius: 14px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-    background: #111;
-    margin-left: 10px;
-    margin-right: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.15);
 }}
 
-@media (min-width: 1024px) {{
+@media (max-width: 768px) {{
     .full-bleed-item {{
-        flex: 0 0 45vw;
-        height: 75vh;
+        flex: 0 0 280px;
+        height: 200px;
     }}
 }}
 
@@ -254,6 +252,11 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.4s ease;
+}}
+
+.full-bleed-item:hover img {{
+    transform: scale(1.03);
 }}
 
 .full-bleed-caption {{
@@ -261,11 +264,12 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {{
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 30px 20px;
-    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    padding: 18px 20px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
     color: #fff;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
 }}
 
 /* CARD */
@@ -547,16 +551,16 @@ un database operativo con profili, disponibilità, storico e referenze.
 </div>
 """, unsafe_allow_html=True)
 
-    st.markdown("<div style='height:22px'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
 
     st.markdown("""
 <div class="section-title">Standard Visivo & Atmosfera</div>
 <div class="section-subtitle">
-Esplora la galleria full-bleed a scorrimento con i momenti chiave del servizio hospitality.
+Esplora la galleria full-bleed a scorrimento orizzontale con i momenti chiave del servizio hospitality.
 </div>
 """, unsafe_allow_html=True)
 
-    # Gallerie Full-Bleed a scorrimento orizzontale con le nuove immagini
+    # Galleria Full-Bleed a scorrimento con layout rettangolare ravvicinato
     st.markdown(f"""
 <div class="full-bleed-container">
     <div class="full-bleed-item">
