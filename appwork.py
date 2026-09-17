@@ -694,7 +694,7 @@ Scegli la soluzione su misura per la tua attività o per accelerare le tue oppor
                 "Job Boosting attivato! La tua richiesta è ora in evidenza tra i lavoratori."
             )
 
-    with colb := col_b:
+    with col_b:
         st.markdown("""
 <div class="card">
     <span class="badge green">Professionisti & Lavoratori</span>
