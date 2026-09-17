@@ -2,17 +2,17 @@ import streamlit as st
 
 # Configurazione della pagina
 st.set_page_config(
-    page_title="FlashJob Milano - H&R Hub",
+    page_title="Fla⚡h Job - H&R Hub",
     page_icon="⚡",
     layout="wide",
 )
 
-# Stile CSS corretto: sfondi chiari/a contrasto per la massima leggibilità dei testi
+# Stile CSS per il Full Bleed e la pulizia della pagina
 st.markdown(
     """
     <style>
     .block-container {
-        padding-top: 2rem;
+        padding-top: 0rem;
         padding-bottom: 2rem;
         padding-left: 3rem;
         padding-right: 3rem;
@@ -29,14 +29,27 @@ st.markdown(
         margin: 0 auto;
     }
 
-    .hero-box {
-        background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+    /* --- BANNER FULL BLEED CON IMMAGINE (Niente più box blu) --- */
+    .hero-full-bleed {
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1800');
+        background-size: cover;
+        background-position: center;
         color: white;
-        padding: 45px 30px;
-        border-radius: 20px;
+        padding: 90px 20px;
         text-align: center;
-        margin-bottom: 30px;
-        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
+        margin-bottom: 40px;
+        box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+    }
+
+    .hero-content {
+        max-width: 900px;
+        margin: 0 auto;
     }
 
     .feature-card {
@@ -59,7 +72,7 @@ st.markdown(
         margin-bottom: 10px;
     }
 
-    /* --- GALLERIA FULL BLEED FLUIDA CON PIÙ FOTO --- */
+    /* --- GALLERIA FULL BLEED FLUIDA ORIZZONTALE --- */
     .fluid-gallery {
         width: 100vw;
         position: relative;
@@ -150,20 +163,23 @@ if "lavoratori" not in st.session_state:
       },
   ]
 
-# Contenitore centrale per l'header e il menu
-st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
-
-# Header principale
+# ==========================================
+# BANNER FULL BLEED CON IMMAGINE (A TUTTO SCHERMO) E Fla⚡️h Job
+# ==========================================
 st.markdown(
     """
-    <div class="hero-box">
-        <div style="font-size: 2.8rem; margin-bottom: 10px;">⚡ 🍸 🍳 🛎️</div>
-        <h1 style="color: white; margin-bottom: 10px; font-weight: 800;">FlashJob Milano</h1>
-        <p style="color: #cbd5e1; font-size: 1.2rem; max-width: 650px; margin: 0 auto;">Il primo hub digitale che unisce i locali della ristorazione milanese con i migliori professionisti dell'accoglienza in tempo reale.</p>
+    <div class="hero-full-bleed">
+        <div class="hero-content">
+            <h1 style="color: white; margin-bottom: 10px; font-size: 3.2rem; font-weight: 900; letter-spacing: 1px;">Fla⚡️h Job</h1>
+            <p style="color: #e2e8f0; font-size: 1.25rem; max-width: 650px; margin: 0 auto; font-weight: 400;">Il primo hub digitale che unisce i locali della ristorazione milanese con i migliori professionisti dell'accoglienza in tempo reale.</p>
+        </div>
     </div>
 """,
     unsafe_allow_html=True,
 )
+
+# Contenitore centrale per il menu e le sezioni
+st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
 
 # Menu di navigazione
 scelta = st.radio(
@@ -176,14 +192,14 @@ st.markdown("---")
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
-# 🏠 HOME PAGE: CHI SIAMO, VANTAGGI E GALLERIA FULL BLEED AMPLIATA
+# 🏠 HOME PAGE: CHI SIAMO, VANTAGGI E GALLERIA FULL BLEED
 # ==========================================
 if scelta == "🏠 Chi Siamo & Atmosfera":
 
   st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
   st.markdown("### 🎯 Chi Siamo e Cosa Facciamo")
   st.write(
-      "**FlashJob Milano** nasce per sradicare il caos dei gruppi di messaggistica"
+      "**Fla⚡️h Job** nasce per sradicare il caos dei gruppi di messaggistica"
       " disordinati e dare una svolta professionale al mondo dell'hotellerie e"
       " della ristorazione (H&R) sotto la Madonnina. Siamo il punto di incontro"
       " ideale tra i locali milanesi che hanno bisogno di coprire turni o"
@@ -237,34 +253,34 @@ if scelta == "🏠 Chi Siamo & Atmosfera":
   )
   st.markdown("</div>", unsafe_allow_html=True)
 
-  # --- GALLERIA FULL BLEED AMPLIATA CON PIÙ FOTO (SCORRIMENTO ORIZZONTALE FLUIDO) ---
+  # --- GALLERIA FULL BLEED ORIZZONTALE ---
   st.markdown(
       """
     <div class="fluid-gallery">
         <div class="image-strip">
             <div class="fluid-slide">
                 <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1600" />
-                <div class="slide-caption">🍸 FlashJob Milano &bull; Cocktail di ricerca e mixology d'eccellenza</div>
+                <div class="slide-caption">🍸 Fla⚡️h Job &bull; Cocktail di ricerca e mixology d'eccellenza</div>
             </div>
             <div class="fluid-slide">
                 <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600" />
-                <div class="slide-caption">🍽️ FlashJob Milano &bull; Cura meticolosa della cucina e del servizio</div>
+                <div class="slide-caption">🍽️ Fla⚡️h Job &bull; Cura meticolosa della cucina e del servizio</div>
             </div>
             <div class="fluid-slide">
                 <img src="https://images.unsplash.com/photo-1574096079513-d8259312b785?w=1600" />
-                <div class="slide-caption">🎧 FlashJob Milano &bull; Mood serale, eventi e intrattenimento nei locali</div>
+                <div class="slide-caption">🎧 Fla⚡️h Job &bull; Mood serale, eventi e intrattenimento nei locali</div>
             </div>
             <div class="fluid-slide">
                 <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=1600" />
-                <div class="slide-caption">🛎️ FlashJob Milano &bull; Professionalità e servizio di sala impeccabile</div>
+                <div class="slide-caption">🛎️ Fla⚡️h Job &bull; Professionalità e servizio di sala impeccabile</div>
             </div>
             <div class="fluid-slide">
                 <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?w=1600" />
-                <div class="slide-caption">🍷 FlashJob Milano &bull; Wine tasting e atmosfere esclusive in centro</div>
+                <div class="slide-caption">🍷 Fla⚡️h Job &bull; Wine tasting e atmosfere esclusive in centro</div>
             </div>
             <div class="fluid-slide">
                 <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600" />
-                <div class="slide-caption">✨ FlashJob Milano &bull; Ristoranti, bistrot e design milanese</div>
+                <div class="slide-caption">✨ Fla⚡️h Job &bull; Ristoranti, bistrot e design milanese</div>
             </div>
         </div>
     </div>
@@ -348,9 +364,9 @@ st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
 st.markdown(
     """
     <div class="legal-footer">
-        <b style="color: #0f172a; font-size: 0.85rem;">⚖️ Note Legali e Condizioni di Utilizzo - FlashJob Milano</b><br><br>
-        <b>1. Natura del Servizio:</b> FlashJob Milano opera esclusivamente come bacheca digitale e directory di contatto B2B/B2C per il settore Hotellerie & Restaurant (H&R). La piattaforma non costituisce un'agenzia di somministrazione di lavoro di cui al D.Lgs. 276/2003, né agisce in qualità di intermediario o datore di lavoro.<br><br>
-        <b>2. Autonomia delle Parti:</b> Tutti gli accordi lavorativi, contrattuali, di ingaggio o di corresponsione economica avvengono direttamente e autonomamente tra i locali/aziende e i singoli lavoratori. FlashJob Milano è totalmente estranea ai rapporti contrattuali instaurati e declina ogni responsabilità civile e penale derivante dalle prestazioni lavorative.<br><br>
+        <b style="color: #0f172a; font-size: 0.85rem;">⚖️ Note Legali e Condizioni di Utilizzo - Fla⚡️h Job</b><br><br>
+        <b>1. Natura del Servizio:</b> Fla⚡️h Job opera esclusivamente come bacheca digitale e directory di contatto B2B/B2C per il settore Hotellerie & Restaurant (H&R). La piattaforma non costituisce un'agenzia di somministrazione di lavoro di cui al D.Lgs. 276/2003, né agisce in qualità di intermediario o datore di lavoro.<br><br>
+        <b>2. Autonomia delle Parti:</b> Tutti gli accordi lavorativi, contrattuali, di ingaggio o di corresponsione economica avvengono direttamente e autonomamente tra i locali/aziende e i singoli lavoratori. Fla⚡️h Job è totalmente estranea ai rapporti contrattuali instaurati e declina ogni responsabilità civile e penale derivante dalle prestazioni lavorative.<br><br>
         <b>3. Trattamento Dati e Privacy:</b> I dati inseriti volontariamente dagli utenti vengono trattati nel pieno rispetto del GDPR (Regolamento UE 2016/679). La pubblicazione dei contatti all'interno dell'area riservata è subordinata all'accettazione delle presenti condizioni d'uso.
     </div>
 """,
