@@ -168,7 +168,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     font-size: .94rem;
 }
 
-/* FULL BLEED HORIZONTAL SCROLL GALLERY - RETTANGOLARE E ATTACCATA */
+/* FULL BLEED HORIZONTAL SCROLL GALLERY */
 .full-bleed-container {
     width: 100vw;
     position: relative;
@@ -442,22 +442,21 @@ Esplora la galleria full-bleed a scorrimento orizzontale con i momenti chiave de
 </div>
 """, unsafe_allow_html=True)
 
-    # Utilizziamo immagini di pubblico dominio Unsplash stabili e ad alte prestazioni 
-    # che garantiscono il caricamento immediato senza errori di file locali mancanti.
     img_url_1 = (
         "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80"
-    )  # Cucina / Piatto
+    )
     img_url_2 = (
         "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&q=80"
-    )  # Cocktail / Bar
+    )
     img_url_3 = (
         "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80"
-    )  # Sala / Ristorante
+    )
     img_url_4 = (
         "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80"
-    )  # Evento / Food pairing
+    )
 
-    st.markdown(f"""
+    st.markdown(
+        f"""
 <div class="full-bleed-container">
     <div class="full-bleed-item">
         <img src="{img_url_1}" alt="Cura del piatto">
@@ -476,7 +475,9 @@ Esplora la galleria full-bleed a scorrimento orizzontale con i momenti chiave de
         <div class="full-bleed-caption">Food pairing di alto livello per ogni evento</div>
     </div>
 </div>
-""", unsafe_allow_html=True)
+""",
+        unsafe_allow_html=True,
+    )
 
 # ============================================================
 # DATABASE AZIENDALE
@@ -493,7 +494,9 @@ elif scelta == "Database Aziendale":
 
         c = selected
 
-        st.markdown(f"""
+        # NOTA BENE: QUI C'ERA L'ERRORE (Mancava unsafe_allow_html=True)
+        st.markdown(
+            f"""
 <div class="profile">
     <div class="profile-head">
         <img class="avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Profilo">
@@ -525,7 +528,9 @@ elif scelta == "Database Aziendale":
     <span class="badge">Referenza</span>
     <div class="quote">“{safe(c["referenze"])}”</div>
 </div>
-""", unsafe_allow_html=True)
+""",
+            unsafe_allow_html=True,
+        )
 
         st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
 
@@ -547,7 +552,8 @@ Seleziona un professionista per visualizzare profilo, storico e referenze.
             left, right = st.columns([5, 1.7], gap="large")
 
             with left:
-                st.markdown(f"""
+                st.markdown(
+                    f"""
 <div class="card worker">
     <div class="worker-top">
         <div>
@@ -562,7 +568,9 @@ Seleziona un professionista per visualizzare profilo, storico e referenze.
         {safe(lav["completati"])} turni completati · Profilo verificato
     </div>
 </div>
-""", unsafe_allow_html=True)
+""",
+                    unsafe_allow_html=True,
+                )
 
             with right:
                 st.markdown("<div style='height:42px'></div>", unsafe_allow_html=True)
@@ -585,7 +593,8 @@ Gestisci il tuo profilo, monitora i turni e consulta lo storico delle attività.
 </div>
 """, unsafe_allow_html=True)
 
-    st.markdown("""
+    st.markdown(
+        """
 <div class="profile">
 <div class="profile-head">
 <img class="avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Giulia Rossi">
@@ -622,7 +631,9 @@ Gestisci il tuo profilo, monitora i turni e consulta lo storico delle attività.
 </div>
 </div>
 </div>
-""", unsafe_allow_html=True)
+""",
+        unsafe_allow_html=True,
+    )
 
 # ============================================================
 # LEGAL
