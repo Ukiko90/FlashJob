@@ -9,9 +9,9 @@ st.markdown(
     <style>
     .block-container { padding: 0rem 3rem 2rem 3rem; max-width: 100% !important; }
     
-    /* SFONDO GLOBALE APPLICATO A TUTTA LA PAGINA CON LA TEXTURE RICHIESTA */
+    /* SFONDO GLOBALE CON LA TEXTURE CALDA/SABBIA CORRETTA (ZERO VIOLA) */
     .stApp {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1800');
+        background-image: linear-gradient(rgba(30, 20, 10, 0.4), rgba(15, 10, 5, 0.6)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1800');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -45,21 +45,21 @@ st.markdown(
         letter-spacing: -2px; 
     }
     
-    .feature-card { background: rgba(17, 17, 17, 0.85); backdrop-filter: blur(10px); padding: 25px; border-radius: 16px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.1); color: #f8fafc; }
+    .feature-card { background: rgba(20, 15, 12, 0.85); backdrop-filter: blur(10px); padding: 25px; border-radius: 16px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.1); color: #f8fafc; }
     .badge-tag { background-color: #fef08a; color: #713f12; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; margin-bottom: 10px; }
     
-    .profile-container { background: rgba(17, 17, 17, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 30px; max-width: 700px; margin: 0 auto 30px auto; text-align: center; }
+    .profile-container { background: rgba(20, 15, 12, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 30px; max-width: 700px; margin: 0 auto 30px auto; text-align: center; }
     .profile-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #4ade80; margin: 0 auto 15px auto; }
-    .profile-stats-row { display: flex; justify-content: space-around; background: rgba(24, 24, 27, 0.9); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 15px; margin: 20px 0; }
-    .menu-item-card { background: rgba(24, 24, 27, 0.9); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 14px; padding: 16px 20px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; color: #f8fafc; text-align: left; }
+    .profile-stats-row { display: flex; justify-content: space-around; background: rgba(30, 22, 18, 0.9); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 15px; margin: 20px 0; }
+    .menu-item-card { background: rgba(30, 22, 18, 0.9); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 14px; padding: 16px 20px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; color: #f8fafc; text-align: left; }
     
-    .framed-gallery-container { width: 100%; max-width: 950px; margin: 40px auto; background: rgba(22, 22, 22, 0.85); backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); overflow: hidden; }
+    .framed-gallery-container { width: 100%; max-width: 950px; margin: 40px auto; background: rgba(20, 15, 12, 0.85); backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); overflow: hidden; }
     .image-strip { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; }
     .fluid-slide { flex: 0 0 100%; width: 100%; height: 500px; scroll-snap-align: start; position: relative; }
     .fluid-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .slide-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.4)); color: #f8fafc; padding: 25px; text-align: center; }
     
-    .legal-footer { background-color: rgba(17, 17, 17, 0.85); backdrop-filter: blur(10px); color: #94a3b8; padding: 25px; border-radius: 14px; font-size: 0.75rem; line-height: 1.6; margin-top: 50px; border: 1px solid rgba(255, 255, 255, 0.1); }
+    .legal-footer { background-color: rgba(20, 15, 12, 0.85); backdrop-filter: blur(10px); color: #94a3b8; padding: 25px; border-radius: 14px; font-size: 0.75rem; line-height: 1.6; margin-top: 50px; border: 1px solid rgba(255, 255, 255, 0.1); }
     </style>
 """,
     unsafe_allow_html=True,
