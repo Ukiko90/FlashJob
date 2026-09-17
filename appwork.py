@@ -494,10 +494,8 @@ elif scelta == "Database Aziendale":
 
         c = selected
 
-        # NOTA BENE: QUI C'ERA L'ERRORE (Mancava unsafe_allow_html=True)
-        st.markdown(
-            f"""
-<div class="profile">
+        # NOTA: Questa stringa HTML è ora rigorosamente attaccata al margine sinistro
+        profile_html = f"""<div class="profile">
     <div class="profile-head">
         <img class="avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Profilo">
         <div>
@@ -506,9 +504,7 @@ elif scelta == "Database Aziendale":
             <p class="meta">● Disponibile per turni urgenti</p>
         </div>
     </div>
-
     <div class="divider"></div>
-
     <span class="badge">Performance</span>
     <div class="stats">
         <div class="stat">
@@ -524,13 +520,11 @@ elif scelta == "Database Aziendale":
             <span>Profilo verificato</span>
         </div>
     </div>
-
     <span class="badge">Referenza</span>
     <div class="quote">“{safe(c["referenze"])}”</div>
-</div>
-""",
-            unsafe_allow_html=True,
-        )
+</div>"""
+
+        st.markdown(profile_html, unsafe_allow_html=True)
 
         st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
 
@@ -552,9 +546,7 @@ Seleziona un professionista per visualizzare profilo, storico e referenze.
             left, right = st.columns([5, 1.7], gap="large")
 
             with left:
-                st.markdown(
-                    f"""
-<div class="card worker">
+                worker_html = f"""<div class="card worker">
     <div class="worker-top">
         <div>
             <h3>{safe(lav["nome"])}</h3>
@@ -567,10 +559,8 @@ Seleziona un professionista per visualizzare profilo, storico e referenze.
     <div class="worker-meta">
         {safe(lav["completati"])} turni completati · Profilo verificato
     </div>
-</div>
-""",
-                    unsafe_allow_html=True,
-                )
+</div>"""
+                st.markdown(worker_html, unsafe_allow_html=True)
 
             with right:
                 st.markdown("<div style='height:42px'></div>", unsafe_allow_html=True)
@@ -593,9 +583,7 @@ Gestisci il tuo profilo, monitora i turni e consulta lo storico delle attività.
 </div>
 """, unsafe_allow_html=True)
 
-    st.markdown(
-        """
-<div class="profile">
+    area_html = """<div class="profile">
 <div class="profile-head">
 <img class="avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Giulia Rossi">
 <div>
@@ -630,10 +618,9 @@ Gestisci il tuo profilo, monitora i turni e consulta lo storico delle attività.
 <span style="color:#8a9099;">›</span>
 </div>
 </div>
-</div>
-""",
-        unsafe_allow_html=True,
-    )
+</div>"""
+
+    st.markdown(area_html, unsafe_allow_html=True)
 
 # ============================================================
 # LEGAL
