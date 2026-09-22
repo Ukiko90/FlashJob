@@ -6,7 +6,7 @@ st.set_page_config(
     page_title="Flashjob • Il Lavoro a Portata di Mano",
     page_icon="⚡",
     layout="wide",
-    initial_sidebar_state="expanded",  # Lasciamo aperta la sidebar per il login admin
+    initial_sidebar_state="expanded",
 )
 
 # ============================================================
@@ -35,7 +35,7 @@ if "mio_profilo" not in st.session_state:
       "tel": "+39 333 0000000",
       "completati": 0,
       "disponibile": False,
-      "referenze": "Professionista verificato nel settore HORECA.",
+      "referenze": "Professionista verificato nel settore HORECA e Accoglienza.",
   }
 
 
@@ -270,7 +270,6 @@ with st.sidebar:
       " Flashjob."
   )
 
-  # Puoi cambiare la password qui sotto (es. "admin123")
   password_inserita = st.text_input(
       "Password Admin", type="password", key="input_pwd_admin"
   )
@@ -292,7 +291,7 @@ st.markdown(
         <div class="app-logo-box">⚡</div>
         <div class="app-titles">
             <h1>Flashjob</h1>
-            <p>Il Lavoro a Portata di Mano • Disponibile per ogni mansione HORECA</p>
+            <p>Il Lavoro a Portata di Mano • Sala, Bar, Cucina, Hostess & Booking</p>
         </div>
     </div>
     <div class="app-badges-right">
@@ -304,7 +303,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Se l'admin ha fatto il login, aggiungiamo l'opzione nel menu principale
 menu_opzioni = [
     "Panoramica",
     "Database & Filtri Azienda",
@@ -323,9 +321,9 @@ if scelta == "Panoramica":
   st.markdown(
       """
         <div style="text-align: center; max-width: 800px; margin: 0 auto 2.5rem auto;">
-            <span class="badge-pop badge-purple">Il tuo partner strategico HORECA</span>
+            <span class="badge-pop badge-purple">Il tuo partner strategico HORECA & Eventi</span>
             <h2 style='font-weight:800; font-size:2.2rem; margin-top:10px; color:#211e33;'>Rivoluzioniamo il modo in cui il lavoro incontra il talento.</h2>
-            <p style='color:var(--text-muted); font-size:1.1rem; line-height:1.6; margin-top:10px;'>Flashjob è la piattaforma intelligente progettata per azzerare i tempi morti del recruiting nella ristorazione e nell'ospitalità. Che tu sia un locale in cerca di supporto immediato o un professionista pronto a scendere in campo, noi ti connettiamo in tempo zero.</p>
+            <p style='color:var(--text-muted); font-size:1.1rem; line-height:1.6; margin-top:10px;'>Flashjob è la piattaforma intelligente progettata per azzerare i tempi morti del recruiting nella ristorazione, nell'ospitalità e nell'accoglienza. Dalla sala alla cucina, passando per hostess, reception e booking: ti connettiamo in tempo zero.</p>
         </div>
     """,
       unsafe_allow_html=True,
@@ -340,10 +338,10 @@ if scelta == "Panoramica":
             <span class="badge-pop badge-blue">Per i Ristoratori & Locali</span>
             <h3 style="font-size: 1.3rem; margin-top: 5px;">Cerca il professionista perfetto, senza attese</h3>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-                Un'emergenza in sala o un picco di lavoro inaspettato? Con Flashjob trovi supporto immediato.
+                Un'emergenza in sala, un evento speciale o un picco di prenotazioni? Trova supporto immediato.
             </p>
             <ul style="padding-left: 18px; color: #444; font-size: 0.9rem; line-height: 1.6; margin-top: 15px;">
-                <li><b>Filtri di precisione:</b> Seleziona mansione e zona con un click.</li>
+                <li><b>Filtri di precisione:</b> Seleziona mansione (Camerieri, Hostess, Booking) e zona.</li>
                 <li><b>Indicatori di stato live:</b> Visualizza chi ha il pallino verde ed è libero adesso.</li>
                 <li><b>Contatto diretto:</b> Accedi al numero verificato e prenota via chat.</li>
             </ul>
@@ -356,15 +354,15 @@ if scelta == "Panoramica":
     st.markdown(
         """
         <div class="custom-card" style="height: 100%;">
-            <span class="badge-pop badge-purple">Per i Lavoratori HORECA</span>
+            <span class="badge-pop badge-purple">Per i Lavoratori & Professionisti</span>
             <h3 style="font-size: 1.3rem; margin-top: 5px;">Il lavoro cerca te, esattamente quando vuoi</h3>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-                Gestisci i tuoi turni e la tua libertà professionale senza intermediari.
+                Gestisci i tuoi turni, i servizi di accoglienza e la tua libertà professionale.
             </p>
             <ul style="padding-left: 18px; color: #444; font-size: 0.9rem; line-height: 1.6; margin-top: 15px;">
                 <li><b>Disponibilità a comando:</b> Accendi il profilo e renditi visibile ai locali.</li>
-                <li><b>Massima flessibilità:</b> Lavora quando ti è più comodo.</li>
-                <li><b>Visibilità garantita:</b> Mettiti in mostra con recensioni e referenze.</li>
+                <li><b>Tutti i ruoli inclusi:</b> Sala, Bar, Cucina, Hostess, Booking e Reception.</li>
+                <li><b>Visibilità garantita:</b> Mettiti in mostra con referenze e competenze.</li>
             </ul>
         </div>
         """,
@@ -462,6 +460,8 @@ elif scelta == "Database & Filtri Azienda":
               "Barista / Bartender",
               "Chef de Rang / Jolly",
               "Aiuto Cuoco",
+              "Hostess / Accoglienza",
+              "Booking / Reception",
           ],
           key="filtro_mansione_box",
       )
@@ -546,7 +546,7 @@ elif scelta == "Area Lavoratore":
   st.markdown(
       """
         <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Area Personale Lavoratore</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>Modifica il tuo stato: accendi la disponibilità per farti contattare subito dai locali.</p>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Modifica il tuo stato e la tua mansione: accendi la disponibilità per farti contattare subito.</p>
     """,
       unsafe_allow_html=True,
   )
@@ -568,6 +568,21 @@ elif scelta == "Area Lavoratore":
       unsafe_allow_html=True,
   )
 
+  # Selezione Mansione personale
+  nuova_mansione = st.selectbox(
+      "Seleziona la tua mansione principale",
+      [
+          "Cameriere / Sala",
+          "Barista / Bartender",
+          "Chef de Rang / Jolly",
+          "Aiuto Cuoco",
+          "Hostess / Accoglienza",
+          "Booking / Reception",
+      ],
+      index=0,
+  )
+  mio["mansione"] = nuova_mansione
+
   st.markdown("### Gestione Stato in Tempo Reale")
   nuova_disp = st.toggle(
       "🟢 Attiva disponibilità per lavorare (Accendi pallino verde)",
@@ -575,7 +590,7 @@ elif scelta == "Area Lavoratore":
       key="toggle_disponibilita_lavoratore",
   )
 
-  if nuova_disp != mio["disponibile"]:
+  if nuova_disp != mio["disponibile"] or mio["mansione"] != nuova_mansione:
     mio["disponibile"] = nuova_disp
     trovato = next(
         (item for item in st.session_state.lavoratori if item["id"] == mio["id"]),
@@ -584,6 +599,7 @@ elif scelta == "Area Lavoratore":
     if nuova_disp:
       if trovato:
         trovato["disponibile"] = True
+        trovato["mansione"] = mio["mansione"]
       else:
         st.session_state.lavoratori.append(mio.copy())
     else:
@@ -593,7 +609,7 @@ elif scelta == "Area Lavoratore":
         ]
 
     st.success(
-        "Stato aggiornato con successo nel database! I ristoranti vedranno"
+        "Stato aggiornato con successo nel database! I locali vedranno"
         " immediatamente la modifica."
     )
 
@@ -625,7 +641,7 @@ elif scelta == "Piani & Abbonamenti":
   st.markdown(
       """
         <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Piani & Funzioni Elite ⚡</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>Stiamo preparando strumenti rivoluzionari per connettere locali e professionisti HORECA.</p>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Stiamo preparando strumenti rivoluzionari per connettere locali, eventi e professionisti.</p>
     """,
       unsafe_allow_html=True,
   )
@@ -637,9 +653,9 @@ elif scelta == "Piani & Abbonamenti":
         """
         <div class="custom-card">
             <span class="badge-pop badge-blue">Coming Soon 🚀</span>
-            <h3 style="margin-top:10px; font-size:1.2rem;">Aziende Elite</h3>
+            <h3 style="margin-top:10px; font-size:1.2rem;">Aziende ed Eventi Elite</h3>
             <div style="font-size: 1.4rem; font-weight: 800; color: #0284c7; margin: 10px 0;">Accesso Anticipato</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Ricerche illimitate senza attese per locali.</p>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Ricerche illimitate per ristoranti e agenzie eventi.</p>
         </div>
         """,
         unsafe_allow_html=True,
@@ -652,7 +668,7 @@ elif scelta == "Piani & Abbonamenti":
         """
         <div class="custom-card">
             <span class="badge-pop badge-orange">Coming Soon 🌟</span>
-            <h3 style="margin-top:10px; font-size:1.2rem;">Lavoratore Pro Pass</h3>
+            <h3 style="margin-top:10px; font-size:1.2rem;">Pro Pass (Hostess & Sala)</h3>
             <div style="font-size: 1.4rem; font-weight: 800; color: #ea580c; margin: 10px 0;">Presto Disponibile</div>
             <p style="font-size:0.85rem; color:var(--text-muted);">Salta la fila e vai in cima alle preferenze dei locali.</p>
         </div>
