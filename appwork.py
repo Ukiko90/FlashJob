@@ -87,7 +87,7 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM & COLOR PALETTE (CELESTE, VERDE ACQUA, SFUMATO)
+# DESIGN SYSTEM & COLOR PALETTE (FLUIDA, INTERATTIVA & UNIFORME)
 # ============================================================
 st.markdown(
     """
@@ -167,7 +167,7 @@ html, body, [class*="css"] {
     font-weight: 600;
 }
 
-/* RADIO NAVIGATION STILE PILLOLA MODERNO */
+/* RADIO NAVIGATION STILE PILLOLA FLUIDO */
 div[data-testid="stRadio"] > label { display: none; }
 div[data-testid="stRadio"] div[role="radiogroup"] {
     display: flex;
@@ -183,11 +183,15 @@ div[data-testid="stRadio"] div[role="radiogroup"] {
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label {
     border-radius: 40px;
-    padding: 10px 20px;
+    padding: 10px 18px;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: var(--text-muted) !important;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
+    background: #f0fdfa;
+    color: #0d9488 !important;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     background: linear-gradient(135deg, #0284c7 0%, #0d9488 100%) !important;
@@ -195,7 +199,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);
 }
 
-/* BANNER PIU CARINI E CURATI (STILE ICE/AQUA) */
+/* BANNER INIZIALI UNIFORMI CON EFFETTO HOVER FLUIDO */
 .feature-banner {
     background: linear-gradient(145deg, #ffffff 0%, #f0fdfa 100%);
     color: var(--text-main);
@@ -206,20 +210,26 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     box-shadow: var(--shadow);
     border: 1px solid #99f6e4;
     height: 100%;
-    transition: all 0.3s ease;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .feature-banner:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 18px 40px rgba(13, 148, 136, 0.15);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 45px rgba(13, 148, 136, 0.2);
+    border-color: #0d9488;
+    background: linear-gradient(145deg, #ffffff 0%, #ccfbf1 100%);
 }
-.feature-banner.featured {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    color: white;
-    border: 2px solid #2dd4bf;
+.feature-tag { 
+    background: #ccfbf1; 
+    color: #0f766e; 
+    padding: 6px 14px; 
+    border-radius: 30px; 
+    font-size: 0.75rem; 
+    font-weight: 800; 
+    text-transform: uppercase; 
+    display: inline-block; 
+    margin-bottom: 15px; 
+    box-shadow: 0 2px 8px rgba(13, 148, 136, 0.15);
 }
-.feature-tag-aqua { background: #ccfbf1; color: #0f766e; padding: 6px 14px; border-radius: 30px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; display: inline-block; margin-bottom: 15px; }
-.feature-tag-sky { background: #e0f2fe; color: #0369a1; padding: 6px 14px; border-radius: 30px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; display: inline-block; margin-bottom: 15px; }
-.feature-tag-dark { background: #2dd4bf; color: #0f172a; padding: 6px 14px; border-radius: 30px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; display: inline-block; margin-bottom: 15px; }
 
 .custom-card {
     background: var(--card-bg);
@@ -228,6 +238,10 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     box-shadow: var(--shadow);
     border: 1px solid var(--border-color);
     margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+.custom-card:hover {
+    box-shadow: 0 16px 40px rgba(14, 165, 233, 0.12);
 }
 .boosted-card {
     border: 2px solid #2dd4bf;
@@ -281,11 +295,12 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     font-weight: 800;
     border: none;
     box-shadow: 0 6px 20px rgba(13, 148, 136, 0.25);
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .stButton > button:hover {
-    opacity: 0.92;
-    transform: translateY(-2px);
+    opacity: 0.95;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(13, 148, 136, 0.35);
     color: white;
 }
 </style>
@@ -338,7 +353,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Menu senza prezzi tra parentesi
 menu_opzioni = [
     "Panoramica",
     "Database & Filtri Azienda",
@@ -351,7 +365,7 @@ if mostra_admin:
 scelta = st.radio("Navigazione", menu_opzioni, horizontal=True)
 
 # ============================================================
-# 1. PANORAMICA (CHI SIAMO, A COSA SERVE & BANNER SUPER CURATI)
+# 1. PANORAMICA (CHI SIAMO, A COSA SERVE & BANNER UNIFORMI)
 # ============================================================
 if scelta == "Panoramica":
     st.markdown(
@@ -401,13 +415,13 @@ if scelta == "Panoramica":
         unsafe_allow_html=True,
     )
 
-    # 3 BANNER MOLTO PIÙ CARINI E CURATI (Stile Celeste / Verde Acqua)
+    # 3 BANNER STESSO COLORE E STILE CON EFFETTO HOVER DINAMICO
     b1, b2, b3 = st.columns(3, gap="medium")
     with b1:
         st.markdown(
             """
         <div class="feature-banner">
-            <span class="feature-tag-aqua">Velocità 🟢</span>
+            <span class="feature-tag">Velocità 🟢</span>
             <h3 style="margin: 10px 0; color: #0f172a; font-size: 1.25rem;">Disponibilità Live</h3>
             <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; margin: 0;">
                 Il pallino verde lampeggiante mostra all'istante chi è pronto a lavorare adesso, eliminando telefonate a vuoto e perdite di tempo.
@@ -420,11 +434,11 @@ if scelta == "Panoramica":
     with b2:
         st.markdown(
             """
-        <div class="feature-banner featured">
-            <span class="feature-tag-dark">Diretto 💬</span>
-            <h3 style="margin: 10px 0; color: white; font-size: 1.25rem;">Chat & WhatsApp</h3>
-            <p style="color: #94a3b8; font-size: 0.85rem; line-height: 1.6; margin: 0;">
-                Nessuna intermediazione burocratica. Con l'abbonamento Titolare parli direttamente con il candidato in un singolo click.
+        <div class="feature-banner">
+            <span class="feature-tag">Diretto 💬</span>
+            <h3 style="margin: 10px 0; color: #0f172a; font-size: 1.25rem;">Chat & WhatsApp</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; margin: 0;">
+                Nessuna intermediazione burocratica. Con i piani dedicati parli direttamente con il candidato in un singolo click.
             </p>
         </div>
         """,
@@ -435,7 +449,7 @@ if scelta == "Panoramica":
         st.markdown(
             """
         <div class="feature-banner">
-            <span class="feature-tag-sky">Visibilità 🚀</span>
+            <span class="feature-tag">Visibilità 🚀</span>
             <h3 style="margin: 10px 0; color: #0f172a; font-size: 1.25rem;">Weekend Boost</h3>
             <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; margin: 0;">
                 I lavoratori possono potenziare la propria visibilità nei giorni di maggiore afflusso per ricevere molte più offerte di lavoro.
@@ -565,7 +579,7 @@ elif scelta == "Area Lavoratore & Weekend Boost":
         unsafe_allow_html=True,
     )
     st.markdown(
-        "<p style='color:var(--text-muted); margin-bottom:2rem;'>Attiva il tuo pallino verde e scegli il tuo piano di visibilità per il fine settimana.</p>",
+        "<p style='color:var(--text-muted); margin-bottom:2rem;'>Attiva il tuo pallino verde e scegli il tuo piano di visibilità per il fine settimana o professionale.</p>",
         unsafe_allow_html=True,
     )
 
@@ -580,23 +594,23 @@ elif scelta == "Area Lavoratore & Weekend Boost":
         st.rerun()
 
     st.markdown("---")
-    st.markdown("### 🚀 Gestione Piano Lavoratore")
+    st.markdown("### 🚀 Gestione Piani Lavoratore")
 
-    col_lp1, col_lp2 = st.columns(2, gap="medium")
+    col_lp1, col_lp2, col_lp3 = st.columns(3, gap="medium")
     with col_lp1:
         st.markdown(
             """
         <div class="custom-card" style="height:100%;">
             <span class="badge-pop" style="background:#f1f5f9; color:#475569;">Base Free</span>
-            <h4 style="margin:5px 0;">Visibilità Standard</h4>
-            <p style="color:var(--text-muted); font-size:0.85rem;">Inserimento nel database generale senza priorità nelle ricerche del weekend.</p>
+            <h4 style="margin:5px 0;">Standard</h4>
+            <p style="color:var(--text-muted); font-size:0.85rem;">Inserimento nel database generale senza priorità nelle ricerche.</p>
         </div>
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Seleziona Piano Free"):
+        if st.button("Seleziona Free"):
             mio["boosted"] = False
-            st.success("Selezionato piano Free.")
+            st.success("Selezionato piano Base Free.")
             st.rerun()
 
     with col_lp2:
@@ -604,8 +618,8 @@ elif scelta == "Area Lavoratore & Weekend Boost":
             """
         <div class="custom-card boosted-card" style="height:100%;">
             <span class="badge-pop badge-boost">Weekend Boost</span>
-            <h4 style="margin:5px 0;">Top Visibilità</h4>
-            <p style="color:var(--text-muted); font-size:0.85rem;">Posizionamento in cima alle ricerche dei titolari per tutto il fine settimana.</p>
+            <h4 style="margin:5px 0;">Top Weekend</h4>
+            <p style="color:var(--text-muted); font-size:0.85rem;">Posizionamento in cima alle ricerche per tutto il fine settimana.</p>
         </div>
         """,
             unsafe_allow_html=True,
@@ -613,13 +627,27 @@ elif scelta == "Area Lavoratore & Weekend Boost":
         if st.button("Attiva Weekend Boost"):
             mio["boosted"] = True
             st.session_state.boost_attivi_count += 1
-            st.success(
-                "Weekend Boost attivato con successo! Profilo in primo piano 🚀"
-            )
+            st.success("Weekend Boost attivato con successo 🚀")
+            st.rerun()
+
+    with col_lp3:
+        st.markdown(
+            """
+        <div class="custom-card" style="height:100%; border-top: 4px solid #0d9488;">
+            <span class="badge-pop badge-aqua">PRO Talento</span>
+            <h4 style="margin:5px 0;">Abbonamento PRO</h4>
+            <p style="color:var(--text-muted); font-size:0.85rem;">Visibilità prioritaria continua per 30 giorni + badge verificato speciale.</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+        if st.button("Attiva PRO Talento"):
+            mio["boosted"] = True
+            st.success("Abbonamento PRO Talento attivato!")
             st.rerun()
 
 # ============================================================
-# 4. PIANI ABBONAMENTO
+# 4. PIANI ABBONAMENTO (NUOVA SEZIONE AMPLIATA)
 # ============================================================
 elif scelta == "Piani Abbonamento":
     st.markdown(
@@ -627,52 +655,110 @@ elif scelta == "Piani Abbonamento":
         unsafe_allow_html=True,
     )
     st.markdown(
-        "<p style='color:var(--text-muted); margin-bottom:2rem;'>Scegli la soluzione perfetta per le tue esigenze, che tu sia un titolare di locale o un professionista.</p>",
+        "<p style='color:var(--text-muted); margin-bottom:2rem;'>Soluzioni flessibili pensate su misura per titolari di locali, hotel, bar e professionisti.</p>",
         unsafe_allow_html=True,
     )
 
-    col_sub1, col_sub2 = st.columns(2, gap="large")
+    st.markdown(
+        "### 🏢 Soluzioni per Locali & Aziende", unsafe_allow_html=True
+    )
+    col_sub1, col_sub2, col_sub3 = st.columns(3, gap="medium")
 
     with col_sub1:
         st.markdown(
             """
-        <div class="custom-card" style="border-top: 5px solid #0284c7; height: 100%;">
-            <span class="badge-pop badge-aqua">Per Titolari & Locali</span>
-            <h3 style="font-size: 1.4rem; margin-top: 5px;">Abbonamento Full Access</h3>
-            <div style="font-size: 1.8rem; font-weight: 800; color: #0284c7; margin: 10px 0;">20 € <span style="font-size: 0.9rem; color: var(--text-muted);">/ mese</span></div>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Sblocca i numeri di telefono diretti e contatta subito qualsiasi lavoratore su WhatsApp senza limiti.</p>
+        <div class="custom-card" style="height: 100%;">
+            <span class="badge-pop" style="background:#f1f5f9; color:#475569;">Flash Pass</span>
+            <h3 style="font-size: 1.2rem; margin-top: 5px;">Turno Singolo</h3>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #0284c7; margin: 8px 0;">7 € <span style="font-size: 0.8rem; color: var(--text-muted);">/ evento</span></div>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Perfetto per coprire un'emergenza o un singolo turno serale last-minute.</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+        if st.button("Acquista Flash Pass"):
+            st.success("Flash Pass acquistato! Contatti sbloccati per 24h.")
+            st.rerun()
+
+    with col_sub2:
+        st.markdown(
+            """
+        <div class="custom-card" style="border-top: 4px solid #0284c7; height: 100%;">
+            <span class="badge-pop badge-aqua">Full Access</span>
+            <h3 style="font-size: 1.2rem; margin-top: 5px;">Abbonamento Mensile</h3>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #0284c7; margin: 8px 0;">20 € <span style="font-size: 0.8rem; color: var(--text-muted);">/ mese</span></div>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Contatti diretti illimitati su WhatsApp per tutti i lavoratori della piattaforma.</p>
         </div>
         """,
             unsafe_allow_html=True,
         )
         if st.session_state.abbonamento_titolare:
-            st.success("✅ Abbonamento Titolare Attivo")
+            st.success("✅ Attivo")
         else:
-            if st.button("Abbonati Titolare"):
+            if st.button("Abbonati Mensile"):
                 st.session_state.abbonamento_titolare = True
                 st.success("Abbonamento Titolare attivato con successo!")
                 st.rerun()
 
-    with col_sub2:
+    with col_sub3:
         st.markdown(
             """
-        <div class="custom-card" style="border-top: 5px solid #0d9488; height: 100%;">
-            <span class="badge-pop badge-boost">Per Lavoratori</span>
-            <h3 style="font-size: 1.4rem; margin-top: 5px;">Weekend Boost</h3>
-            <div style="font-size: 1.8rem; font-weight: 800; color: #0d9488; margin: 10px 0;">5 € <span style="font-size: 0.9rem; color: var(--text-muted);">/ weekend</span></div>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Metti in evidenza il tuo profilo durante i giorni di maggiore afflusso e ricevi più offerte di lavoro.</p>
+        <div class="custom-card" style="height: 100%;">
+            <span class="badge-pop badge-boost">Enterprise</span>
+            <h3 style="font-size: 1.2rem; margin-top: 5px;">Catene & Hotel</h3>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #0d9488; margin: 8px 0;">49 € <span style="font-size: 0.8rem; color: var(--text-muted);">/ mese</span></div>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Account multi-sede, supporto prioritario dedicato e ricerca avanzata filtri.</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+        if st.button("Attiva Enterprise"):
+            st.success("Richiesta Enterprise inviata con successo!")
+            st.rerun()
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown(
+        "### 👥 Soluzioni per Lavoratori & Talenti", unsafe_allow_html=True
+    )
+    col_lsub1, col_lsub2 = st.columns(2, gap="medium")
+
+    with col_lsub1:
+        st.markdown(
+            """
+        <div class="custom-card" style="height: 100%;">
+            <span class="badge-pop badge-boost">Weekend Boost</span>
+            <h3 style="font-size: 1.2rem; margin-top: 5px;">In Evidenza Weekend</h3>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #0d9488; margin: 8px 0;">5 € <span style="font-size: 0.8rem; color: var(--text-muted);">/ weekend</span></div>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Metti in evidenza il tuo profilo durante i giorni di maggiore afflusso nei locali.</p>
         </div>
         """,
             unsafe_allow_html=True,
         )
         if st.session_state.mio_profilo["boosted"]:
-            st.success("✅ Weekend Boost Attivo")
+            st.success("✅ Boost Attivo")
         else:
-            if st.button("Attiva Boost Lavoratore"):
+            if st.button("Attiva Weekend Boost Lavoratore"):
                 st.session_state.mio_profilo["boosted"] = True
                 st.session_state.boost_attivi_count += 1
                 st.success("Boost attivato con successo!")
                 st.rerun()
+
+    with col_lsub2:
+        st.markdown(
+            """
+        <div class="custom-card" style="border-top: 4px solid #0d9488; height: 100%;">
+            <span class="badge-pop badge-aqua">PRO Mensile</span>
+            <h3 style="font-size: 1.2rem; margin-top: 5px;">Abbonamento Talento PRO</h3>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #0d9488; margin: 8px 0;">12 € <span style="font-size: 0.8rem; color: var(--text-muted);">/ mese</span></div>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Visibilità costante tutto il mese, badge verificato oro e notifiche anticipate.</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+        if st.button("Attiva PRO Mensile"):
+            st.session_state.mio_profilo["boosted"] = True
+            st.success("Abbonamento PRO Mensile attivato!")
+            st.rerun()
 
 # ============================================================
 # 5. DASHBOARD ADMIN PROFESSIONALE (LIVE STATS)
@@ -722,8 +808,8 @@ elif scelta == "📊 Dashboard Admin" and mostra_admin:
             """
         <div class="custom-card">
             <h4 style="margin-top:0;">Fatturato Stimato Mensile</h4>
-            <p style="font-size: 1.8rem; font-weight: 800; color: #0284c7; margin: 10px 0;">€ 360,00</p>
-            <p style="color: var(--text-muted); font-size: 0.85rem;">Calcolato su abbonamenti titolari attivi + pacchetti boost weekend attivi.</p>
+            <p style="font-size: 1.8rem; font-weight: 800; color: #0284c7; margin: 10px 0;">€ 412,00</p>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Calcolato su abbonamenti attivi, flash pass e pacchetti boost.</p>
         </div>
         """,
             unsafe_allow_html=True,
