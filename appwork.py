@@ -80,7 +80,7 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM COLORATO & PULSAR CSS (Pallino Verde Lampeggiante)
+# DESIGN SYSTEM MULTICOLOR PASTELLO & SFUMATURE (VIOLA, CELESTE, ARANCIO, GIALLO)
 # ============================================================
 st.markdown(
     """
@@ -88,12 +88,12 @@ st.markdown(
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    --bg-gradient: linear-gradient(135deg, #f7f5ff 0%, #edf2fc 50%, #fffaf0 100%);
     --card-bg: #ffffff;
-    --text-main: #1a1a1a;
-    --text-muted: #757575;
-    --border-color: #eee;
-    --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    --text-main: #1f1d2b;
+    --text-muted: #6e7191;
+    --border-color: #e4e7eb;
+    --shadow: 0 10px 30px rgba(111, 76, 255, 0.08);
     --radius: 20px;
 }
 
@@ -117,14 +117,14 @@ footer {visibility: hidden;}
 [data-testid="stHeader"] { display: none !important; }
 [data-testid="stToolbar"] { display: none !important; }
 
-/* HERO COLORATA */
+/* HERO MULTICOLOR (VIOLA - CELESTE - ARANCIO) */
 .hero-box {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    background: linear-gradient(135deg, #7f5af0 0%, #2cb67d 50%, #ff8906 100%);
     color: white;
     padding: 3rem 2rem;
     border-radius: 24px;
     text-align: center;
-    box-shadow: 0 15px 35px rgba(56, 239, 125, 0.3);
+    box-shadow: 0 15px 35px rgba(127, 90, 240, 0.25);
     margin-bottom: 2rem;
 }
 .hero-box h1 {
@@ -156,14 +156,14 @@ div[data-testid="stRadio"] div[role="radiogroup"] label {
     border-radius: 40px;
     padding: 10px 18px;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: var(--text-muted) !important;
     transition: all 0.3s ease;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
-    background: #11998e !important;
+    background: linear-gradient(135deg, #7f5af0 0%, #3a86ff 100%) !important;
     color: white !important;
-    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+    box-shadow: 0 4px 15px rgba(127, 90, 240, 0.4);
 }
 
 /* CARD */
@@ -178,16 +178,16 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 
 /* PALLINO VERDE LAMPEGGIANTE (PULSAR) */
 @keyframes pulse-animation {
-    0% { transform: scale(0.95); boxShadow: 0 0 0 0 rgba(0, 200, 83, 0.7); }
-    70% { transform: scale(1); boxShadow: 0 0 0 10px rgba(0, 200, 83, 0); }
-    100% { transform: scale(0.95); boxShadow: 0 0 0 0 rgba(0, 200, 83, 0); }
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(44, 182, 125, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(44, 182, 125, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(44, 182, 125, 0); }
 }
 
 .pulsing-dot {
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-color: #00c853;
+    background-color: #2cb67d;
     border-radius: 50%;
     animation: pulse-animation 1.8s infinite;
     margin-right: 6px;
@@ -198,13 +198,13 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-color: #ccc;
+    background-color: #cbd5e1;
     border-radius: 50%;
     margin-right: 6px;
     vertical-align: middle;
 }
 
-/* BADGE */
+/* BADGE PASTELLO */
 .badge-pop {
     display: inline-block;
     padding: 5px 12px;
@@ -215,36 +215,36 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     letter-spacing: 0.5px;
     margin-bottom: 10px;
 }
-.badge-green { background: #e8f8f0; color: #00c853; }
-.badge-orange { background: #fff3e0; color: #ff9100; }
-.badge-blue { background: #e3f2fd; color: #2979ff; }
-.badge-gray { background: #f1f5f9; color: #64748b; }
+.badge-purple { background: #f3e8ff; color: #7f5af0; }
+.badge-blue { background: #e0f2fe; color: #0284c7; }
+.badge-orange { background: #ffedd5; color: #ea580c; }
+.badge-yellow { background: #fef9c3; color: #ca8a04; }
 
 /* STATS */
 .stats-container {
     display: flex;
-    background: #f8f9fa;
+    background: #f8fafc;
     border-radius: 16px;
     padding: 1rem;
     margin: 1.2rem 0;
     text-align: center;
-    border: 1px solid #edf2f7;
+    border: 1px solid #f1f5f9;
 }
 .stat-box { flex: 1; border-right: 1px solid #e2e8f0; }
 .stat-box:last-child { border-right: none; }
-.stat-box strong { display: block; font-size: 1.3rem; color: #11998e; }
-.stat-box span { font-size: 0.7rem; color: #718096; font-weight: 700; text-transform: uppercase; }
+.stat-box strong { display: block; font-size: 1.3rem; color: #7f5af0; }
+.stat-box span { font-size: 0.7rem; color: #6e7191; font-weight: 700; text-transform: uppercase; }
 
 /* BOTTONI */
 .stButton > button {
     width: 100%;
     min-height: 48px;
     border-radius: 14px;
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    background: linear-gradient(135deg, #7f5af0 0%, #3a86ff 100%);
     color: white;
     font-weight: 700;
     border: none;
-    box-shadow: 0 4px 15px rgba(56, 239, 125, 0.35);
+    box-shadow: 0 4px 15px rgba(127, 90, 240, 0.3);
     transition: all 0.2s ease;
 }
 .stButton > button:hover {
@@ -309,7 +309,7 @@ if scelta == "Panoramica":
         st.markdown(
             """
         <div class="custom-card">
-            <span class="badge-pop badge-green">Per i Lavoratori</span>
+            <span class="badge-pop badge-purple">Per i Lavoratori</span>
             <h3>Disponibilità Istantanea</h3>
             <p>Attiva l'interfaccia di stato: il tuo profilo si illumina con un indicatore verde lampeggiante visibile a tutti i locali in cerca.</p>
         </div>
@@ -330,7 +330,7 @@ elif scelta == "Database & Filtri Azienda":
 
         c = selected
         stato_html = (
-            '<span class="pulsing-dot"></span><b style="color:#00c853;">DISPONIBILE ORA</b>'
+            '<span class="pulsing-dot"></span><b style="color:#2cb67d;">DISPONIBILE ORA</b>'
             if c["disponibile"]
             else '<span class="offline-dot"></span><span style="color:#888;">NON DISPONIBILE</span>'
         )
@@ -339,7 +339,7 @@ elif scelta == "Database & Filtri Azienda":
             f"""
         <div class="custom-card" style="margin-top: 20px;">
             <div style="display: flex; align-items: center; gap: 20px;">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid #38ef7d;" />
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid #7f5af0;" />
                 <div>
                     <div style="margin-bottom:6px;">{stato_html}</div>
                     <h2 style="margin:0; font-size:1.5rem;">{safe(c["nome"])}</h2>
@@ -362,7 +362,7 @@ elif scelta == "Database & Filtri Azienda":
                 </div>
             </div>
             
-            <div style="background:#f0fdf4; border-left:4px solid #00c853; padding:15px; border-radius:0 12px 12px 0; margin-top:15px; font-style:italic; color:#166534;">
+            <div style="background:#f3e8ff; border-left:4px solid #7f5af0; padding:15px; border-radius:0 12px 12px 0; margin-top:15px; font-style:italic; color:#5b21b6;">
                 “{safe(c["referenze"])}”
             </div>
         </div>
@@ -387,7 +387,7 @@ elif scelta == "Database & Filtri Azienda":
 
         # SEZIONE FILTRI
         st.markdown(
-            '<div class="custom-card" style="padding: 1.2rem; background: #fafbfc;">',
+            '<div class="custom-card" style="padding: 1.2rem; background: #fafafa;">',
             unsafe_allow_html=True,
         )
         col_f1, col_f2, col_f3 = st.columns(3)
@@ -435,7 +435,7 @@ elif scelta == "Database & Filtri Azienda":
             ]
 
         st.markdown(
-            f"<p style='color:#666; font-size:0.9rem; margin: 1rem 0;'>Trovati <b>{len(lavoratori_filtrati)}</b> professionisti in archivio.</p>",
+            f"<p style='color:#6e7191; font-size:0.9rem; margin: 1rem 0;'>Trovati <b>{len(lavoratori_filtrati)}</b> professionisti in archivio.</p>",
             unsafe_allow_html=True,
         )
 
@@ -444,7 +444,7 @@ elif scelta == "Database & Filtri Azienda":
 
             with col_info:
                 if lav["disponibile"]:
-                    badge_stato = '<span class="pulsing-dot"></span><b style="color:#00c853; font-size:0.75rem;">DISPONIBILE ORA</b>'
+                    badge_stato = '<span class="pulsing-dot"></span><b style="color:#2cb67d; font-size:0.75rem;">DISPONIBILE ORA</b>'
                 else:
                     badge_stato = '<span class="offline-dot"></span><span style="color:#888; font-size:0.75rem;">NON DISPONIBILE</span>'
 
@@ -469,7 +469,7 @@ elif scelta == "Database & Filtri Azienda":
                     st.rerun()
 
 # ============================================================
-# 3. AREA LAVORATORE (IMPOSTA DISPONIBILITÀ CON PALLINO VERDE)
+# 3. AREA LAVORATORE
 # ============================================================
 elif scelta == "Area Lavoratore (Imposta Disponibilità)":
     st.markdown(
@@ -480,7 +480,6 @@ elif scelta == "Area Lavoratore (Imposta Disponibilità)":
         unsafe_allow_html=True,
     )
 
-    # Prendiamo ad esempio il primo lavoratore (Marco Rossi) come profilo demo gestito dall'utente
     lavoratore_corrente = st.session_state.lavoratori[0]
 
     st.markdown(
@@ -491,7 +490,7 @@ elif scelta == "Area Lavoratore (Imposta Disponibilità)":
             <div>
                 <h3 style="margin:0;">Marco Rossi</h3>
                 <p style="color:var(--text-muted); margin:2px 0; font-size:0.85rem;">Cameriere / Sala · Navigli, Milano</p>
-                <span class="badge-pop badge-blue" style="margin:0;">Profilo Verificato</span>
+                <span class="badge-pop badge-purple" style="margin:0;">Profilo Verificato</span>
             </div>
         </div>
     """,
@@ -515,7 +514,7 @@ elif scelta == "Area Lavoratore (Imposta Disponibilità)":
     if lavoratore_corrente["disponibile"]:
         st.markdown(
             """
-        <div style="background:#e8f8f0; color:#00c853; padding:12px; border-radius:12px; font-weight:700; margin-top:15px;">
+        <div style="background:#e6fcf5; color:#2cb67d; padding:12px; border-radius:12px; font-weight:700; margin-top:15px;">
             <span class="pulsing-dot"></span> Il tuo profilo è attualmente ONLINE con il pallino verde lampeggiante nel database aziendale!
         </div>
         """,
@@ -534,7 +533,7 @@ elif scelta == "Area Lavoratore (Imposta Disponibilità)":
     st.markdown("</div>", unsafe_allow_html=True)
 
 # ============================================================
-# 4. PIANI & ABBONAMENTI
+# 4. PIANI & ABBONAMENTI (INCLUSO BOOST WEEKEND)
 # ============================================================
 else:
     st.markdown(
@@ -545,44 +544,67 @@ else:
         unsafe_allow_html=True,
     )
 
-    col1, col2 = st.columns(2, gap="large")
+    col1, col2, col3 = st.columns(3, gap="medium")
 
     with col1:
         st.markdown(
             """
         <div class="custom-card">
-            <span class="badge-pop badge-blue">Per Aziende & Locali</span>
-            <h3 style="margin-top:10px;">Abbonamento Standard</h3>
-            <div style="font-size: 2.2rem; font-weight: 800; color: #11998e; margin: 10px 0;">20€ <span style="font-size:0.9rem; color:#777; font-weight:400;">/ mese</span></div>
-            <p style="font-size:0.9rem; color:var(--text-muted);">Accesso completo ai filtri avanzati e al database dei professionisti.</p>
-            <ul style="padding-left:18px; color:#555; font-size:0.9rem; line-height:1.6;">
-                <li>Filtri per mansione e zona in tempo reale</li>
-                <li>Contatto diretto WhatsApp sbloccato</li>
-                <li>Gestione turni e urgenze senza limiti</li>
+            <span class="badge-pop badge-blue">Aziende & Locali</span>
+            <h3 style="margin-top:10px; font-size:1.2rem;">Standard</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; color: #0284c7; margin: 10px 0;">20€ <span style="font-size:0.8rem; color:#777; font-weight:400;">/ mese</span></div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Accesso completo ai filtri avanzati e al database.</p>
+            <ul style="padding-left:16px; color:#555; font-size:0.85rem; line-height:1.5;">
+                <li>Filtri per mansione e zona</li>
+                <li>Contatto diretto WhatsApp</li>
+                <li>Gestione turni e urgenze</li>
             </ul>
         </div>
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Attiva Abbonamento Azienda"):
-            st.success("Richiesta registrata! Abbonamento attivato.")
+        if st.button("Attiva Azienda", key="btn_std"):
+            st.success("Abbonamento Azienda attivato con successo!")
 
     with col2:
         st.markdown(
             """
         <div class="custom-card">
-            <span class="badge-pop badge-orange">Per i Lavoratori</span>
-            <h3 style="margin-top:10px;">Piano Premium Pro</h3>
-            <div style="font-size: 2.2rem; font-weight: 800; color: #ff9100; margin: 10px 0;">10€ <span style="font-size:0.9rem; color:#777; font-weight:400;">/ mese</span></div>
-            <p style="font-size:0.9rem; color:var(--text-muted);">Mettiti in cima alle preferenze dei ristoranti e ottieni più turni.</p>
-            <ul style="padding-left:18px; color:#555; font-size:0.9rem; line-height:1.6;">
-                <li>Priorità sul pallino verde lampeggiante</li>
-                <li>Badge esclusivo "Top Verified"</li>
-                <li>Anteprima notifiche sui nuovi turni liberi</li>
+            <span class="badge-pop badge-orange">Lavoratori</span>
+            <h3 style="margin-top:10px; font-size:1.2rem;">Premium Pro</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; color: #ea580c; margin: 10px 0;">10€ <span style="font-size:0.8rem; color:#777; font-weight:400;">/ mese</span></div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Mettiti in cima alle preferenze dei ristoranti.</p>
+            <ul style="padding-left:16px; color:#555; font-size:0.85rem; line-height:1.5;">
+                <li>Priorità sul pallino verde</li>
+                <li>Badge "Top Verified"</li>
+                <li>Notifiche anticipate turni</li>
             </ul>
         </div>
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Passa a Premium Lavoratore"):
-            st.success("Account aggiornato con successo allo status Premium!")
+        if st.button("Passa a Premium", key="btn_prem"):
+            st.success("Account aggiornato a Premium Pro!")
+
+    with col3:
+        st.markdown(
+            """
+        <div class="custom-card">
+            <span class="badge-pop badge-yellow">⚡ Novità</span>
+            <h3 style="margin-top:10px; font-size:1.2rem;">Boost Weekend</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; color: #ca8a04; margin: 10px 0;">5€ <span style="font-size:0.8rem; color:#777; font-weight:400;">/ settimana</span></div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Disponibile a lavorare nel weekend in evidenza.</p>
+            <ul style="padding-left:16px; color:#555; font-size:0.85rem; line-height:1.5;">
+                <li>In evidenza speciale Sabato e Domenica</li>
+                <li>Visibilità prioritaria urgenze serali</li>
+                <li>Disdetta facile quando vuoi</li>
+            </ul>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+        if st.button("Attiva Boost Weekend", key="btn_boost"):
+            st.success(
+                "Boost Weekend attivato! Sarai in evidenza per tutto il fine"
+                " settimana."
+            )
