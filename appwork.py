@@ -3,14 +3,91 @@ import re
 import streamlit as st
 
 st.set_page_config(
-    page_title="Flashjob • Freelance Marketplace",
+    page_title="Flashjob • Il talento che cercavi alla portata di mano",
     page_icon="⚡",
-    layout="centered",
-    initial_sidebar_state="collapsed",
+    layout="wide",
+    initial_sidebar_state="expanded",
 )
 
 # ============================================================
-# DESIGN SYSTEM & STYLING (ISPIRATO ALL'APP DI RIFERIMENTO)
+# STATO INIZIALE & DATABASE PROFESSIONISTI
+# ============================================================
+if "lavoratori" not in st.session_state:
+    st.session_state.lavoratori = [
+        {
+            "id": 1,
+            "nome": "Marco Rossi",
+            "mansione": "Project Manager / Senior",
+            "zona": "Milano Centro",
+            "tel": "+39 333 1234567",
+            "completati": 14,
+            "disponibile": True,
+            "referenze": "Eccellente gestione dei team e coordinamento progetti complessi.",
+            "recensioni": "4.9 ⭐ (12 recensioni verificate)",
+            "competenze": ["Agile & Scrum", "Leadership", "Risk Management"],
+        },
+        {
+            "id": 2,
+            "nome": "Giulia Bianchi",
+            "mansione": "UI/UX Designer",
+            "zona": "Navigli / Ticinese",
+            "tel": "+39 333 9876543",
+            "completati": 22,
+            "disponibile": True,
+            "referenze": "Velocità incredibile nella prototipazione e design system.",
+            "recensioni": "5.0 ⭐ (19 recensioni verificate)",
+            "competenze": ["Figma", "Design Systems", "User Research"],
+        },
+        {
+            "id": 3,
+            "nome": "Davide Verdi",
+            "mansione": "Full Stack Developer",
+            "zona": "Porta Nuova / Como",
+            "tel": "+39 333 5554433",
+            "completati": 30,
+            "disponibile": True,
+            "referenze": "Ottima attitudine al problem solving e architetture scalabili.",
+            "recensioni": "4.8 ⭐ (15 recensioni verificate)",
+            "competenze": ["Python", "React", "Cloud Architecture"],
+        },
+        {
+            "id": 4,
+            "nome": "Sofia Neri",
+            "mansione": "Data Analyst",
+            "zona": "Brera / Garibaldi",
+            "tel": "+39 333 7778899",
+            "completati": 18,
+            "disponibile": True,
+            "referenze": "Grande precisione nell'analisi dei dati e modellazione predittiva.",
+            "recensioni": "4.9 ⭐ (14 recensioni verificate)",
+            "competenze": ["SQL", "Tableau", "Python"],
+        },
+    ]
+
+if "selected_id" not in st.session_state:
+    st.session_state.selected_id = None
+
+if "visite_totali" not in st.session_state:
+    st.session_state.visite_totali = 0
+
+if "sessione_contata" not in st.session_state:
+    st.session_state.visite_totali += 1
+    st.session_state.sessione_contata = True
+
+if "abbonamento_attivo" not in st.session_state:
+    st.session_state.abbonamento_attivo = False
+
+
+def safe(value):
+    return html.escape(str(value))
+
+
+def whatsapp_url(phone):
+    return "https://wa.me/" + re.sub(r"\D", "", phone)
+
+
+# ============================================================
+# DESIGN SYSTEM PROFESSIONALE (LIGHT MODE PULITO)
 # ============================================================
 st.markdown(
     """
@@ -18,26 +95,29 @@ st.markdown(
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-    --bg-color: #0f1110;
-    --surface-card: #222724;
-    --accent-yellow: #d5ff00;
-    --text-main: #ffffff;
-    --text-muted: #8c9690;
-    --border-color: rgba(255, 255, 255, 0.08);
-    --radius-pill: 9999px;
-    --radius-card: 28px;
+    --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    --card-bg: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+    --radius: 20px;
 }
 
 html, body, [class*="css"] {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    color: var(--text-main);
 }
 
 .stApp {
-    background-color: var(--bg-color);
+    background: var(--bg-gradient);
+    color: var(--text-main);
 }
 
-/* Nascondi elementi di default di Streamlit */
+.block-container {
+    max-width: 1050px !important;
+    padding: 2rem 1.5rem 5rem !important;
+}
+
 #MainMenu {visibility: hidden; display: none;}
 footer {visibility: hidden; display: none;}
 header {visibility: hidden; display: none;}
@@ -45,62 +125,87 @@ header {visibility: hidden; display: none;}
 [data-testid="stToolbar"] {display: none !important;}
 [data-testid="stDecoration"] {display: none !important;}
 
-.block-container {
-    max-width: 440px !important;
-    padding: 2rem 1.2rem 5rem !important;
-}
-
-/* Card stile marketplace */
-.custom-card {
-    background-color: var(--surface-card);
-    border-radius: var(--radius-card);
-    padding: 24px;
-    border: 1px solid var(--border-color);
-    margin-bottom: 20px;
-}
-
-/* Card in evidenza (Giallo Neon) */
-.highlight-card {
-    background-color: var(--accent-yellow);
-    color: #000000;
-    border-radius: var(--radius-card);
-    padding: 24px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    margin-bottom: 20px;
-}
-
-.badge-meta {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--border-color);
-    padding: 6px 14px;
-    border-radius: var(--radius-pill);
-    font-size: 12px;
-    color: var(--text-muted);
-    display: inline-flex;
+/* HEADER AZIENDALE */
+.store-header {
+    background: linear-gradient(135deg, #0f172a 100%);
+    padding: 2.5rem;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+    margin-bottom: 2rem;
+    display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: white;
+}
+.app-titles h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+    color: white;
+}
+.app-titles p {
+    font-size: 1rem;
+    margin: 6px 0 0 0;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+/* CARD */
+.custom-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+/* PALLINO VERDE */
+@keyframes pulse-animation {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+.pulsing-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #10b981;
+    border-radius: 50%;
+    animation: pulse-animation 1.8s infinite;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.skill-pill {
+    display: inline-block;
+    background: #f1f5f9;
+    color: #334155;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
     margin-right: 6px;
     margin-bottom: 6px;
 }
 
-/* Bottoni personalizzati */
 .stButton > button {
     width: 100%;
-    min-height: 52px;
-    border-radius: var(--radius-pill);
-    background-color: var(--accent-yellow);
-    color: #000000;
+    min-height: 48px;
+    border-radius: 12px;
+    background: #0f172a;
+    color: white;
     font-weight: 700;
-    font-size: 15px;
     border: none;
-    box-shadow: 0 8px 25px rgba(213, 255, 0, 0.25);
-    transition: transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    transition: all 0.2s ease;
 }
 .stButton > button:hover {
-    opacity: 0.92;
-    transform: scale(0.99);
-    color: #000000;
-    background-color: var(--accent-yellow);
+    background: #1e293b;
+    color: white;
+    transform: translateY(-1px);
 }
 </style>
 """,
@@ -108,214 +213,192 @@ header {visibility: hidden; display: none;}
 )
 
 # ============================================================
-# STATO DELLA SESSIONE (NAVIGAZIONE TRA LE 3 SCHERMATE)
+# BARRA LATERALE ADMIN
 # ============================================================
-if "screen" not in st.session_state:
-    st.session_state.screen = "search"  # 'roles', 'search', 'detail'
+with st.sidebar:
+    st.markdown("### 🔐 Area Riservata Admin")
+    pwd = st.text_input("Password Admin", type="password")
+    mostra_admin = False
+    if pwd == "admin123":
+        st.success("Accesso Autorizzato ✅")
+        mostra_admin = True
+    elif pwd != "":
+        st.error("Password errata ❌")
 
-if "selected_freelancer" not in st.session_state:
-    st.session_state.selected_freelancer = {
-        "nome": "Jasmin Lowery",
-        "ruolo": "Senior Hardware Engineer",
-        "tariffa": "$2400 / month",
-        "città": "New York",
-        "esperienza": "3+ year",
-        "tipo": "Full-time",
-        "bio": "Hey there! I'm your perfect freelancer for all your hardware engineering projects. 🛠️ Working with me is easy and enjoyable; I'm always ready to dive into the details.",
-        "responsabilita": [
-            "Developing and designing hardware components for various devices.",
-            "Testing and debugging electronic circuits and printed circuit boards.",
-        ],
-    }
-
-if "roles" not in st.session_state:
-    st.session_state.roles = {
-        "Product Designer": False,
-        "Business Analyst": True,
-        "Web Design": False,
-        "Database Analyst": False,
-        "Data Analyst": False,
-        "Software Engineer": False,
-        "DevOps Engineer": True,
-        "Hardware Engineer": False,
-        "Ruby Developer": True,
-        "Frontend Developer": False,
-        "Swift Developer": False,
-        "IT Consultant": False,
-        "Cloud Architect": False,
-        "Maker-up": True,
-        "Backend Developer": False,
-        "Systems Administrator": False,
-        "Web Developer": False,
-        "Programmer": True,
-    }
-
-
-def safe(value):
-    return html.escape(str(value))
-
-
-# ============================================================
-# SCHERMATA 1: SELEZIONE RUOLI (Filtri con tag pillola)
-# ============================================================
-if st.session_state.screen == "roles":
-    col_h1, col_h2 = st.columns([6, 1])
-    with col_h1:
-        if st.button("← Indietro", key="back_r"):
-            st.session_state.screen = "search"
+    st.markdown("---")
+    st.markdown("### 🏢 Stato Account")
+    if st.session_state.abbonamento_attivo:
+        st.success("🌟 Abbonamento Elite Attivo")
+        if st.button("Torna a Piano Base"):
+            st.session_state.abbonamento_attivo = False
             st.rerun()
-    with col_h2:
-        if st.button("Skip", key="skip_r"):
-            st.session_state.screen = "search"
+    else:
+        st.warning("🔒 Account Free (Limitato)")
+        if st.button("✨ Sblocca Tutto"):
+            st.session_state.abbonamento_attivo = True
             st.rerun()
 
+# ============================================================
+# HEADER PRINCIPALE
+# ============================================================
+st.markdown(
+    """
+<div class="store-header">
+    <div class="app-titles">
+        <h1>Flashjob Pro</h1>
+        <p>Marketplace Professionale per la Selezione di Talenti & Risorse</p>
+    </div>
+</div>
+""",
+    unsafe_allow_html=True,
+)
+
+menu = ["Panoramica", "Ricerca Talenti", "Area Professionista", "Piani"]
+if mostra_admin:
+    menu.append("Dashboard Admin")
+
+scelta = st.radio("Navigazione", menu, horizontal=True)
+
+# ============================================================
+# 1. PANORAMICA
+# ============================================================
+if scelta == "Panoramica":
     st.markdown(
-        "<h1 style='font-size: 26px; font-weight: 700; margin-top: 15px; margin-bottom: 20px;'>Select the role that suits your needs best</h1>",
+        """
+        <div style="text-align: center; max-width: 750px; margin: 0 auto 2.5rem auto;">
+            <h2 style='font-weight:800; font-size:2.2rem; color:#0f172a;'>Il professionista giusto, esattamente quando serve.</h2>
+            <p style='color:var(--text-muted); font-size:1.05rem; line-height:1.6; margin-top:10px;'>Flashjob mette in contatto aziende e specialisti qualificati a Milano, azzerando le tempistiche di intermediazione e semplificando la gestione del personale.</p>
+        </div>
+    """,
         unsafe_allow_html=True,
     )
 
-    if st.button("Seleziona / Deseleziona Tutti", key="toggle_all_btn"):
-        current_state = all(st.session_state.roles.values())
-        for r in st.session_state.roles:
-            st.session_state.roles[r] = not current_state
-        st.rerun()
-
-    st.markdown("<div style='margin-bottom: 15px;'></div>", unsafe_allow_html=True)
-
-    # Griglia di chip interattivi
-    for role_name in list(st.session_state.roles.keys()):
-        is_sel = st.session_state.roles[role_name]
-        label = f"✓ {role_name}" if is_sel else role_name
-        if st.button(label, key=f"role_chip_{role_name}"):
-            st.session_state.roles[role_name] = not is_sel
-            st.rerun()
-
-    st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
-    if st.button("Continue", key="continue_roles"):
-        st.session_state.screen = "search"
-        st.rerun()
-
-# ============================================================
-# SCHERMATA 2: RICERCA E SCHEDE SOVRAPPOSTE (Card Stack)
-# ============================================================
-elif st.session_state.screen == "search":
-    col_top1, col_top2 = st.columns([3, 1])
-    with col_top1:
+    col1, col2 = st.columns(2, gap="large")
+    with col1:
         st.markdown(
             """
-            <h1 style='font-size: 30px; font-weight: 800; line-height: 1.1; margin:0;'>Search<br>freelancers</h1>
-            <p style='color: var(--text-muted); font-size: 13px; margin-top: 6px;'>DevOps Engineer</p>
+        <div class="custom-card" style="height: 100%;">
+            <h3 style="font-size: 1.25rem; margin-top: 0; color:#0f172a;">Per le Aziende</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
+                Trova profili verificati in pochi secondi. Filtra per competenze specifiche e avvia subito il contatto diretto.
+            </p>
+        </div>
         """,
             unsafe_allow_html=True,
         )
-    with col_top2:
-        if st.button("⚙️ Filters", key="open_filters"):
-            st.session_state.screen = "roles"
+    with col2:
+        st.markdown(
+            """
+        <div class="custom-card" style="height: 100%;">
+            <h3 style="font-size: 1.25rem; margin-top: 0; color:#0f172a;">Per i Professionisti</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
+                Metti in mostra le tue competenze certificate, gestisci la tua disponibilità in tempo reale e ricevi offerte immediate.
+            </p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+# ============================================================
+# 2. RICERCA TALENTI
+# ============================================================
+elif scelta == "Ricerca Talenti":
+    selected_c = next(
+        (
+            item
+            for item in st.session_state.lavoratori
+            if item["id"] == st.session_state.selected_id
+        ),
+        None,
+    )
+
+    if selected_c is not None:
+        if st.button("← Torna alla lista"):
+            st.session_state.selected_id = None
             st.rerun()
 
-    st.markdown(
-        "<p style='color: var(--text-muted); font-size: 12px; margin-top: 15px; margin-bottom: 10px;'>238 results</p>",
-        unsafe_allow_html=True,
-    )
-
-    # Simulazione della card in primo piano (stile identico all'immagine)
-    f = st.session_state.selected_freelancer
-    st.markdown(
-        f"""
-    <div class="highlight-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-            <div style="width: 48px; height: 48px; border-radius: 50%; background: #000; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 20px;">👤</div>
-            <div style="width: 40px; height: 40px; background: rgba(0,0,0,0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center;">💬</div>
-        </div>
-        <h2 style="font-size: 26px; font-weight: 800; margin: 0; color: #000;">{safe(f["nome"])}</h2>
-        <p style="font-size: 14px; font-weight: 600; opacity: 0.7; margin: 4px 0 35px 0; color: #000;">{safe(f["ruolo"])}</p>
-        
-        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-            <div>
-                <span style="font-size: 22px; font-weight: 800; color: #000;">{safe(f["tariffa"].split('/')[0])}</span>
-                <span style="font-size: 12px; font-weight: 600; opacity: 0.7; color: #000;">/ month</span>
-            </div>
-        </div>
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    if st.button("See details", key="btn_see_details"):
-        st.session_state.screen = "detail"
-        st.rerun()
-
-    # Barra di navigazione finta in basso
-    st.markdown(
-        """
-    <div style="display: flex; justify-content: space-around; background: var(--surface-card); padding: 12px; border-radius: var(--radius-pill); border: 1px solid var(--border-color); margin-top: 25px;">
-        <span style="background: var(--accent-yellow); color: #000; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">💼</span>
-        <span style="color: var(--text-muted); display: flex; align-items: center; justify-content: center;">🔍</span>
-        <span style="color: var(--text-muted); display: flex; align-items: center; justify-content: center;">👤</span>
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
-
-# ============================================================
-# SCHERMATA 3: DETTAGLIO PROFILO & RESPONSABILITÀ
-# ============================================================
-elif st.session_state.screen == "detail":
-    if st.button("← Indietro alla ricerca", key="back_to_search"):
-        st.session_state.screen = "search"
-        st.rerun()
-
-    f = st.session_state.selected_freelancer
-
-    st.markdown(
-        f"""
-    <div class="custom-card">
-        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 14px;">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; font-size: 22px;">👩‍💻</div>
-            <div>
-                <h2 style="font-size: 18px; font-weight: 700; margin: 0;">{safe(f["nome"])}</h2>
-                <p style="font-size: 13px; color: var(--text-muted); margin: 2px 0 0 0;">{safe(f["ruolo"])}</p>
-            </div>
-        </div>
-        
-        <div style="margin-bottom: 14px;">
-            <span class="badge-meta">📍 {safe(f["città"])}</span>
-            <span class="badge-meta">🕒 {safe(f["esperienza"])}</span>
-            <span class="badge-meta">💼 {safe(f["tipo"])}</span>
-        </div>
-        
-        <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-            {safe(f["bio"])}
-        </p>
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    # Tab di navigazione finti
-    st.markdown(
-        """
-    <div style="display: flex; gap: 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; padding-bottom: 8px;">
-        <span style="color: var(--accent-yellow); font-weight: 700; font-size: 14px; border-bottom: 2px solid var(--accent-yellow); padding-bottom: 8px; margin-bottom: -9px;">Responsibilities</span>
-        <span style="color: var(--text-muted); font-weight: 600; font-size: 14px;">Experience</span>
-        <span style="color: var(--text-muted); font-weight: 600; font-size: 14px;">Education</span>
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    # Lista responsabilità
-    for idx, resp in enumerate(f["responsabilita"], start=1):
+        comp_html = "".join(
+            [f'<span class="skill-pill">✓ {c}</span>' for c in selected_c["competenze"]]
+        )
         st.markdown(
             f"""
-        <div class="custom-card" style="padding: 14px 18px; display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
-            <div style="width: 24px; height: 24px; background: rgba(213,255,0,0.15); color: var(--accent-yellow); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0;">{idx}</div>
-            <span style="font-size: 13px; color: var(--text-main);">{safe(resp)}</span>
+        <div class="custom-card" style="margin-top: 20px;">
+            <h2 style="margin:0; font-size:1.5rem; color:#0f172a;">{safe(selected_c["nome"])}</h2>
+            <p style="color:var(--text-muted); margin:4px 0 15px 0; font-weight:600;">{safe(selected_c["mansione"])} · 📍 {safe(selected_c["zona"])}</p>
+            <div style="margin-bottom: 15px;">{comp_html}</div>
+            <div style="background:#f8fafc; border-left:4px solid #0f172a; padding:15px; border-radius:0 12px 12px 0; font-style:italic; color:#334155;">
+                “{safe(selected_c["referenze"])}”
+            </div>
         </div>
         """,
             unsafe_allow_html=True,
         )
+        st.link_button(
+            "💬 Contatta su WhatsApp", whatsapp_url(selected_c["tel"])
+        )
+    else:
+        st.markdown(
+            "<h2 style='font-size:1.6rem; font-weight:800; color:#0f172a;'>Database Professionisti</h2>",
+            unsafe_allow_html=True,
+        )
 
-    st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
-    if st.button("Send Message", key="send_msg_btn"):
-        st.success(f"Messaggio inviato con successo a {f['nome']}! 🎉")
+        for lav in st.session_state.lavoratori:
+            col_info, col_btn = st.columns([3, 1], gap="medium")
+            with col_info:
+                st.markdown(
+                    f"""
+                    <div class="custom-card" style="padding: 1.2rem 1.5rem; margin-bottom: 1rem;">
+                        <h3 style="margin:0; font-size:1.1rem; color:#0f172a;">{safe(lav["nome"])}</h3>
+                        <p style="color:var(--text-muted); margin:3px 0; font-size:0.9rem; font-weight:600;">{safe(lav["mansione"])} · 📍 {safe(lav["zona"])}</p>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+            with col_btn:
+                st.markdown(
+                    "<div style='margin-top: 20px;'></div>", unsafe_allow_html=True
+                )
+                if st.button("Vedi profilo", key=f"btn_{lav['id']}"):
+                    st.session_state.selected_id = lav["id"]
+                    st.rerun()
+
+# ============================================================
+# 3. AREA PROFESSIONISTA
+# ============================================================
+elif scelta == "Area Professionista":
+    st.markdown(
+        "<h2 style='font-size:1.6rem; font-weight:800; color:#0f172a;'>Gestione Profilo</h2>",
+        unsafe_allow_html=True,
+    )
+    st.text_input("Il tuo Nome e Cognome", value="Il Tuo Nome")
+    st.selectbox("Mansione Principale", ["Project Manager", "UI/UX Designer", "Full Stack Developer", "Data Analyst"])
+    st.toggle("🟢 Disponibile per nuove opportunità", value=True)
+
+# ============================================================
+# 4. PIANI
+# ============================================================
+elif scelta == "Piani":
+    st.markdown(
+        "<h2 style='font-size:1.6rem; font-weight:800; color:#0f172a;'>Piani di Abbonamento</h2>",
+        unsafe_allow_html=True,
+    )
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown(
+            '<div class="custom-card"><h3>Base</h3><p>Gratuito per esplorazione limitata.</p></div>',
+            unsafe_allow_html=True,
+        )
+    with col2:
+        st.markdown(
+            '<div class="custom-card"><h3>Elite</h3><p>Accesso illimitato a tutti i talenti.</p></div>',
+            unsafe_allow_html=True,
+        )
+
+# ============================================================
+# 5. DASHBOARD ADMIN
+# ============================================================
+elif scelta == "Dashboard Admin" and mostra_admin:
+    st.markdown(
+        f"<h2 style='font-size:1.6rem; font-weight:800; color:#0f172a;'>Dashboard Admin</h2><p>Visite totali: {st.session_state.visite_totali}</p>",
+        unsafe_allow_html=True,
+    )
