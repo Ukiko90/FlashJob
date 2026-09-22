@@ -23,7 +23,7 @@ if "lavoratori" not in st.session_state:
             "completati": 14,
             "disponibile": True,
             "boosted": True,
-            "referenze": "Eccellente gestione dei team e coordinamento sala.",
+            "referenze": "Eccellente gestione dei team e coordinamento.",
             "recensioni": "4.9 ⭐ (12 recensioni verificate)",
             "competenze": ["Hospitality", "Events", "Management"],
         },
@@ -38,7 +38,7 @@ if "lavoratori" not in st.session_state:
             "boosted": False,
             "referenze": "Velocità incredibile nei momenti di massimo afflusso.",
             "recensioni": "5.0 ⭐ (19 recensioni verificate)",
-            "competenze": ["Mixology", "Caffetteria", "Cassa"],
+            "competenze": ["Mixology", "Beverage", "Cassa"],
         },
         {
             "id": 3,
@@ -51,7 +51,7 @@ if "lavoratori" not in st.session_state:
             "boosted": True,
             "referenze": "Puntuale, preciso e con grande leadership in squadra.",
             "recensioni": "4.8 ⭐ (24 recensioni verificate)",
-            "competenze": ["Gestione Sala", "Lingua Inglese", "POS"],
+            "competenze": ["Coordinamento", "Lingua Inglese", "POS"],
         },
         {
             "id": 4,
@@ -88,13 +88,13 @@ if "mio_profilo" not in st.session_state:
     st.session_state.mio_profilo = {
         "id": 999,
         "nome": "Il Tuo Nome",
-        "mansione": "Cameriere / Sala",
+        "mansione": "Professionista / Sala",
         "zona": "Milano",
         "tel": "+39 333 0000000",
         "completati": 0,
         "disponibile": False,
         "boosted": False,
-        "referenze": "Professionista verificato nel settore HORECA.",
+        "referenze": "Professionista verificato nel settore servizi.",
         "recensioni": "Nuovo utente",
         "competenze": ["Hospitality", "Management"],
     }
@@ -348,19 +348,17 @@ scelta = st.radio("Navigazione", menu_opzioni, horizontal=True)
 # 1. PANORAMICA (HERO + STATISTICHE + BLOCCHI)
 # ============================================================
 if scelta == "Panoramica":
-    # Hero compatta ad alto impatto
     st.markdown(
         """
         <div style="padding: 2.2rem 2rem; background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);">
-            <span style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; color: var(--brand-accent); background: #eff6ff; padding: 3px 8px; border-radius: 4px; border: 1px solid #dbeafe;">Network Verificato HORECA & Corporate</span>
+            <span style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; color: var(--brand-accent); background: #eff6ff; padding: 3px 8px; border-radius: 4px; border: 1px solid #dbeafe;">Network Verificato Servizi & Corporate</span>
             <h1 style="font-size: 1.85rem; font-weight: 800; color: var(--text-main); margin: 8px 0 6px 0; letter-spacing: -0.03em; line-height: 1.2;">Il talento giusto.<br>Quando serve.</h1>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem; max-width: 580px;">Piattaforma B2B leader per il matching istantaneo tra locali d'eccellenza e professionisti qualificati a Milano.</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem; max-width: 580px;">Piattaforma B2B leader per il matching istantaneo tra aziende d'eccellenza e professionisti qualificati a Milano.</p>
         </div>
     """,
         unsafe_allow_html=True,
     )
 
-    # Sezione Statistiche con dati densi
     s1, s2, s3, s4 = st.columns(4, gap="small")
     with s1:
         st.markdown(
@@ -405,7 +403,6 @@ if scelta == "Panoramica":
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Sezione Aziende / Workflow
     st.markdown(
         "<h3 style='font-size: 1.1rem; font-weight: 700; margin-bottom: 0.85rem;'>Come funziona per le aziende</h3>",
         unsafe_allow_html=True,
@@ -428,7 +425,7 @@ if scelta == "Panoramica":
             <div class="enterprise-card">
                 <div style="font-size: 0.72rem; font-weight: 800; color: var(--brand-accent); margin-bottom: 4px;">02</div>
                 <h4 style="margin: 0 0 4px 0; font-size: 0.9rem; font-weight: 700;">Seleziona</h4>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin:0; line-height: 1.4;">Consulta recensioni certificate, referenze e storico dei turni completati.</p>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin:0; line-height: 1.4;">Consulta recensioni certificate, referenze e storico dei servizi completati.</p>
             </div>
         """,
             unsafe_allow_html=True,
@@ -524,7 +521,7 @@ elif scelta == "Database Talenti":
 
     else:
         st.markdown(
-            "<h2 style='font-weight: 800; font-size: 1.2rem; margin-bottom: 2px;'>Database Talenti HORECA</h2>",
+            "<h2 style='font-weight: 800; font-size: 1.2rem; margin-bottom: 2px;'>Database Talenti</h2>",
             unsafe_allow_html=True,
         )
         st.markdown(
@@ -532,12 +529,11 @@ elif scelta == "Database Talenti":
             unsafe_allow_html=True,
         )
 
-        # Barra Filtri Avanzata Compatta
         f_col1, f_col2, f_col3 = st.columns([2, 1, 1], gap="small")
         with f_col1:
             ricerca_testo = st.text_input(
                 "Cerca",
-                placeholder="Cerca ruolo o competenza (es. Chef, Bartender)...",
+                placeholder="Cerca ruolo o competenza (es. Manager, Bartender)...",
                 label_visibility="collapsed",
             )
         with f_col2:
@@ -553,7 +549,6 @@ elif scelta == "Database Talenti":
                 label_visibility="collapsed",
             )
 
-        # Tag rapidi cliccabili in stile suggerimenti
         st.markdown(
             """
             <div style="display: flex; gap: 6px; margin: 10px 0 15px 0; flex-wrap: wrap; align-items: center;">
@@ -567,7 +562,6 @@ elif scelta == "Database Talenti":
             unsafe_allow_html=True,
         )
 
-        # Filtraggio logico dei talenti
         lavoratori_filtrati = []
         for lav in st.session_state.lavoratori:
             match_testo = (
@@ -598,7 +592,6 @@ elif scelta == "Database Talenti":
                 "Nessun professionista corrisponde ai filtri di ricerca selezionati."
             )
         else:
-            # Griglia a 3 colonne per una densità perfetta in stile enterprise
             cols = st.columns(3, gap="medium")
             for idx, lav in enumerate(lavoratori_ordinati):
                 c_target = cols[idx % 3]
@@ -652,7 +645,7 @@ elif scelta == "Area Lavoratori":
         """
         <div class="enterprise-card" style="margin-bottom: 1.25rem;">
             <h4 style="margin-top:0; font-size: 0.9rem; font-weight: 700;">Stato Operativo Live</h4>
-            <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.85rem;">Attiva lo stato per risultare visibile immediatamente ai locali in cerca di supporto urgente.</p>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.85rem;">Attiva lo stato per risultare visibile immediatamente alle aziende in cerca di supporto urgente.</p>
     """,
         unsafe_allow_html=True,
     )
@@ -689,7 +682,7 @@ elif scelta == "Area Lavoratori":
         <div class="enterprise-card enterprise-card-highlight" style="height:100%;">
             <span class="badge-top">Consigliato</span>
             <h4 style="margin: 6px 0 4px 0; font-size: 0.9rem; font-weight: 700;">Top Weekend Boost</h4>
-            <p style="color: var(--text-muted); font-size: 0.78rem; margin:0; line-height: 1.4;">Posizionamento in vetta alle ricerche dei locali per tutto il fine settimana.</p>
+            <p style="color: var(--text-muted); font-size: 0.78rem; margin:0; line-height: 1.4;">Posizionamento in vetta alle ricerche delle aziende per tutto il fine settimana.</p>
         </div>
         """,
             unsafe_allow_html=True,
@@ -704,11 +697,11 @@ elif scelta == "Area Lavoratori":
 # ============================================================
 elif scelta == "Area Aziende":
     st.markdown(
-        "<h2 style='font-weight: 800; font-size: 1.2rem; margin-bottom: 2px;'>Soluzioni per Aziende e Locali</h2>",
+        "<h2 style='font-weight: 800; font-size: 1.2rem; margin-bottom: 2px;'>Soluzioni per Aziende e Attività</h2>",
         unsafe_allow_html=True,
     )
     st.markdown(
-        "<p style='color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.82rem;'>Ottimizza la ricerca di personale qualificato per ristoranti, hotel e catering.</p>",
+        "<p style='color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.82rem;'>Ottimizza la ricerca di personale qualificato per strutture e corporate.</p>",
         unsafe_allow_html=True,
     )
 
@@ -718,7 +711,7 @@ elif scelta == "Area Aziende":
             """
         <div class="enterprise-card">
             <h3 style="font-size: 1rem; font-weight: 700; margin-top:0;">Ricerca Veloce Turni</h3>
-            <p style="color: var(--text-muted); font-size: 0.8rem; line-height: 1.4;">Trova personale di sala o cucina coperto da referenze verificate nel giro di poche ore.</p>
+            <p style="color: var(--text-muted); font-size: 0.8rem; line-height: 1.4;">Trova personale qualificato coperto da referenze verificate nel giro di poche ore.</p>
         </div>
         """,
             unsafe_allow_html=True,
@@ -743,7 +736,7 @@ elif scelta == "Piani":
         unsafe_allow_html=True,
     )
     st.markdown(
-        "<p style='color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.82rem;'>Soluzioni commerciali strutturate per locali e professionisti.</p>",
+        "<p style='color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.82rem;'>Soluzioni commerciali strutturate per aziende e professionisti.</p>",
         unsafe_allow_html=True,
     )
 
@@ -753,7 +746,7 @@ elif scelta == "Piani":
             """
         <div class="enterprise-card">
             <span style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); background: #f3f4f6; padding: 2px 6px; border-radius: 4px;">In arrivo</span>
-            <h3 style="font-size: 1rem; font-weight: 700; margin: 8px 0 2px 0;">Abbonamento Titolari</h3>
+            <h3 style="font-size: 1rem; font-weight: 700; margin: 8px 0 2px 0;">Abbonamento Aziende</h3>
             <div style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin: 6px 0;">20 € <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 400;">/ mese</span></div>
             <p style="color: var(--text-muted); font-size: 0.8rem; margin: 0; line-height: 1.4;">Contatti diretti illimitati su WhatsApp e sblocco completo di tutti i profili del database.</p>
         </div>
