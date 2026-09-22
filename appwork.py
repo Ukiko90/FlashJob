@@ -80,7 +80,7 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM COLORATO & PULSAR CSS (Pallino Verde Lampeggiante)
+# DESIGN SYSTEM CELESTINO SFUMATO & PULSAR CSS
 # ============================================================
 st.markdown(
     """
@@ -88,13 +88,15 @@ st.markdown(
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    --bg-gradient: linear-gradient(135deg, #f0f7ff 0%, #dbeafe 50%, #eff6ff 100%);
     --card-bg: #ffffff;
-    --text-main: #1a1a1a;
-    --text-muted: #757575;
-    --border-color: #eee;
-    --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --border-color: #bfdbfe;
+    --shadow: 0 10px 30px rgba(14, 116, 144, 0.08);
     --radius: 20px;
+    --primary: #0284c7;
+    --primary-dark: #0369a1;
 }
 
 html, body, [class*="css"] {
@@ -117,14 +119,14 @@ footer {visibility: hidden;}
 [data-testid="stHeader"] { display: none !important; }
 [data-testid="stToolbar"] { display: none !important; }
 
-/* HERO COLORATA */
+/* HERO CELESTINA SFUMATA */
 .hero-box {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
     color: white;
-    padding: 3rem 2rem;
+    padding: 3.5rem 2rem;
     border-radius: 24px;
     text-align: center;
-    box-shadow: 0 15px 35px rgba(56, 239, 125, 0.3);
+    box-shadow: 0 15px 35px rgba(2, 132, 199, 0.25);
     margin-bottom: 2rem;
 }
 .hero-box h1 {
@@ -134,9 +136,9 @@ footer {visibility: hidden;}
     letter-spacing: -1px;
 }
 .hero-box p {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     opacity: 0.95;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -151,6 +153,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] {
     box-shadow: var(--shadow);
     margin-bottom: 2.5rem;
     gap: 5px;
+    border: 1px solid var(--border-color);
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label {
     border-radius: 40px;
@@ -161,9 +164,9 @@ div[data-testid="stRadio"] div[role="radiogroup"] label {
     transition: all 0.3s ease;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
-    background: #11998e !important;
+    background: #0284c7 !important;
     color: white !important;
-    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
 }
 
 /* CARD */
@@ -172,7 +175,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     border-radius: var(--radius);
     padding: 1.8rem;
     box-shadow: var(--shadow);
-    border: 1px solid var(--border-color);
+    border: 1px solid #e0f2fe;
     margin-bottom: 1.5rem;
 }
 
@@ -217,34 +220,33 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 }
 .badge-green { background: #e8f8f0; color: #00c853; }
 .badge-orange { background: #fff3e0; color: #ff9100; }
-.badge-blue { background: #e3f2fd; color: #2979ff; }
-.badge-gray { background: #f1f5f9; color: #64748b; }
+.badge-blue { background: #e0f2fe; color: #0284c7; }
 
 /* STATS */
 .stats-container {
     display: flex;
-    background: #f8f9fa;
+    background: #f0fdf4;
     border-radius: 16px;
     padding: 1rem;
     margin: 1.2rem 0;
     text-align: center;
-    border: 1px solid #edf2f7;
+    border: 1px solid #bbf7d0;
 }
-.stat-box { flex: 1; border-right: 1px solid #e2e8f0; }
+.stat-box { flex: 1; border-right: 1px solid #dcfce7; }
 .stat-box:last-child { border-right: none; }
-.stat-box strong { display: block; font-size: 1.3rem; color: #11998e; }
-.stat-box span { font-size: 0.7rem; color: #718096; font-weight: 700; text-transform: uppercase; }
+.stat-box strong { display: block; font-size: 1.3rem; color: #0369a1; }
+.stat-box span { font-size: 0.7rem; color: #475569; font-weight: 700; text-transform: uppercase; }
 
 /* BOTTONI */
 .stButton > button {
     width: 100%;
     min-height: 48px;
     border-radius: 14px;
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
     color: white;
     font-weight: 700;
     border: none;
-    box-shadow: 0 4px 15px rgba(56, 239, 125, 0.35);
+    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.35);
     transition: all 0.2s ease;
 }
 .stButton > button:hover {
@@ -264,7 +266,7 @@ st.markdown(
     """
 <div class="hero-box">
     <h1>⚡ Flashjob</h1>
-    <p>Database contatti in tempo reale, filtri avanzati e gestione turni con disponibilità live.</p>
+    <p>La piattaforma intelligente che rivoluziona il recruiting nel settore della ristorazione e degli eventi in tempo reale.</p>
 </div>
 """,
     unsafe_allow_html=True,
@@ -282,40 +284,86 @@ scelta = st.radio(
 )
 
 # ============================================================
-# 1. PANORAMICA
+# 1. PANORAMICA (CHI SIAMO, COSA FACCIAMO, PERCHÉ SCEGLIERCI)
 # ============================================================
 if scelta == "Panoramica":
     st.markdown(
         """
-        <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Come funziona il Database Live</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>I dipendenti impostano la propria disponibilità e i ristoratori filtrano i profili per trovare subito chi serve.</p>
+        <div class="custom-card" style="text-align: center; padding: 2.5rem; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
+            <span class="badge-pop badge-blue">Benvenuti in Flashjob</span>
+            <h2 style='font-weight:800; font-size:2.2rem; margin-bottom:15px; color:#0f172a;'>Chi Siamo & Cosa Facciamo</h2>
+            <p style='color:var(--text-muted); font-size:1.05rem; line-height:1.7; max-width:850px; margin: 0 auto;'>
+                <b>Flashjob</b> nasce per risolvere il problema cronico delle urgenze e del reperimento rapido di personale qualificato nella ristorazione e nel mondo degli eventi. 
+                Siamo il ponte digitale diretto tra i locali in cerca di supporto immediato (ristoranti, bar, hotel, catering) e professionisti della sala, del bar e della cucina pronti a lavorare. 
+                Attraverso il nostro sistema live a <b>pallino verde lampeggiante</b>, azzeriamo i tempi di attesa delle agenzie tradizionali.
+            </p>
+        </div>
     """,
         unsafe_allow_html=True,
     )
 
-    col1, col2 = st.columns(2, gap="large")
+    st.markdown(
+        """
+        <h3 style='font-weight:800; font-size:1.5rem; margin: 2rem 0 1rem 0; text-align:center; color:#0f172a;'>I Nostri Punti di Forza</h3>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    col1, col2, col3 = st.columns(3, gap="medium")
+
     with col1:
         st.markdown(
             """
-        <div class="custom-card">
-            <span class="badge-pop badge-blue">Per i Ristoratori</span>
-            <h3>Filtri e Ricerca Rapida</h3>
-            <p>Seleziona la mansione o la zona per visualizzare all'istante solo i lavoratori con il pallino verde accesi e pronti a lavorare.</p>
+        <div class="custom-card" style="height: 100%;">
+            <span style="font-size: 2rem;">⚡</span>
+            <h4 style="margin: 10px 0 8px 0; font-weight:700; color:#0369a1;">Velocità Istantanea</h4>
+            <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                Niente colloqui infiniti o lunghe attese. Visualizza chi è disponibile <b>in tempo reale</b> e contatta subito il lavoratore tramite WhatsApp.
+            </p>
         </div>
         """,
             unsafe_allow_html=True,
         )
+
     with col2:
         st.markdown(
             """
-        <div class="custom-card">
-            <span class="badge-pop badge-green">Per i Lavoratori</span>
-            <h3>Disponibilità Istantanea</h3>
-            <p>Attiva l'interfaccia di stato: il tuo profilo si illumina con un indicatore verde lampeggiante visibile a tutti i locali in cerca.</p>
+        <div class="custom-card" style="height: 100%;">
+            <span style="font-size: 2rem;">🎯</span>
+            <h4 style="margin: 10px 0 8px 0; font-weight:700; color:#0369a1;">Profili Verificati</h4>
+            <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                Ogni risorsa ha uno storico di turni completati e referenze verificate sul campo, per garantirti affidabilità e competenza massima sin dal primo giorno.
+            </p>
         </div>
         """,
             unsafe_allow_html=True,
         )
+
+    with col3:
+        st.markdown(
+            """
+        <div class="custom-card" style="height: 100%;">
+            <span style="font-size: 2rem;">🤝</span>
+            <h4 style="margin: 10px 0 8px 0; font-weight:700; color:#0369a1;">Zero Intermediari</h4>
+            <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                Un contatto diretto e trasparente tra locale e lavoratore. Gestisci le tue urgenze di turni in piena autonomia e flessibilità.
+            </p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+    st.markdown(
+        """
+        <div class="custom-card" style="margin-top: 2rem; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: white; text-align: center; padding: 2.5rem;">
+            <h3 style="font-weight:800; font-size:1.8rem; margin-bottom:10px; color: white;">Perché Scegliere Flashjob?</h3>
+            <p style="font-size:1.05rem; opacity:0.95; max-width:750px; margin: 0 auto; line-height:1.6;">
+                Perché un imprevisto di personale non deve mai compromettere la qualità del tuo servizio o il fatturato del tuo locale. Con Flashjob hai la certezza di trovare il professionista giusto al momento giusto, ottimizzando costi e tempo.
+            </p>
+        </div>
+    """,
+        unsafe_allow_html=True,
+    )
 
 # ============================================================
 # 2. DATABASE & FILTRI AZIENDA
@@ -339,7 +387,7 @@ elif scelta == "Database & Filtri Azienda":
             f"""
         <div class="custom-card" style="margin-top: 20px;">
             <div style="display: flex; align-items: center; gap: 20px;">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid #38ef7d;" />
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid #38bdf8;" />
                 <div>
                     <div style="margin-bottom:6px;">{stato_html}</div>
                     <h2 style="margin:0; font-size:1.5rem;">{safe(c["nome"])}</h2>
@@ -380,14 +428,14 @@ elif scelta == "Database & Filtri Azienda":
         st.markdown(
             """
             <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Database Contatti & Filtri</h2>
-            <p style='color:var(--text-muted); margin-bottom:1.5rem;'>Filtri i professionisti per trovare subito la risorsa ideale per il tuo locale.</p>
+            <p style='color:var(--text-muted); margin-bottom:1.5rem;'>Filtra i professionisti per trovare subito la risorsa ideale per il tuo locale.</p>
         """,
             unsafe_allow_html=True,
         )
 
         # SEZIONE FILTRI
         st.markdown(
-            '<div class="custom-card" style="padding: 1.2rem; background: #fafbfc;">',
+            '<div class="custom-card" style="padding: 1.2rem; background: #f8fafc;">',
             unsafe_allow_html=True,
         )
         col_f1, col_f2, col_f3 = st.columns(3)
@@ -435,7 +483,7 @@ elif scelta == "Database & Filtri Azienda":
             ]
 
         st.markdown(
-            f"<p style='color:#666; font-size:0.9rem; margin: 1rem 0;'>Trovati <b>{len(lavoratori_filtrati)}</b> professionisti in archivio.</p>",
+            f"<p style='color:#475569; font-size:0.9rem; margin: 1rem 0;'>Trovati <b>{len(lavoratori_filtrati)}</b> professionisti in archivio.</p>",
             unsafe_allow_html=True,
         )
 
@@ -454,7 +502,7 @@ elif scelta == "Database & Filtri Azienda":
                     <div style="margin-bottom:6px;">{badge_stato}</div>
                     <h3 style="margin:0; font-size:1.15rem;">{safe(lav["nome"])}</h3>
                     <p style="color:var(--text-muted); margin:3px 0; font-size:0.9rem; font-weight:600;">{safe(lav["mansione"])} · {safe(lav["zona"])}</p>
-                    <span style="font-size:0.8rem; color:#888;">{safe(lav["completati"])} turni completati</span>
+                    <span style="font-size:0.8rem; color:#64748b;">{safe(lav["completati"])} turni completati</span>
                 </div>
                 """,
                     unsafe_allow_html=True,
@@ -469,7 +517,7 @@ elif scelta == "Database & Filtri Azienda":
                     st.rerun()
 
 # ============================================================
-# 3. AREA LAVORATORE (IMPOSTA DISPONIBILITÀ CON PALLINO VERDE)
+# 3. AREA LAVORATORE
 # ============================================================
 elif scelta == "Area Lavoratore (Imposta Disponibilità)":
     st.markdown(
@@ -552,7 +600,7 @@ else:
         <div class="custom-card">
             <span class="badge-pop badge-blue">Per Aziende & Locali</span>
             <h3 style="margin-top:10px;">Abbonamento Standard</h3>
-            <div style="font-size: 2.2rem; font-weight: 800; color: #11998e; margin: 10px 0;">20€ <span style="font-size:0.9rem; color:#777; font-weight:400;">/ mese</span></div>
+            <div style="font-size: 2.2rem; font-weight: 800; color: #0284c7; margin: 10px 0;">20€ <span style="font-size:0.9rem; color:#777; font-weight:400;">/ mese</span></div>
             <p style="font-size:0.9rem; color:var(--text-muted);">Accesso completo ai filtri avanzati e al database dei professionisti.</p>
             <ul style="padding-left:18px; color:#555; font-size:0.9rem; line-height:1.6;">
                 <li>Filtri per mansione e zona in tempo reale</li>
