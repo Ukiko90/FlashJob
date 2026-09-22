@@ -87,7 +87,7 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM CON SFONDO PREMIUM PROFONDO E DINAMICO
+# DESIGN SYSTEM CON SFONDO CHIARO, CALDO E LUMINOSO
 # ============================================================
 st.markdown(
     """
@@ -95,22 +95,23 @@ st.markdown(
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --accent-teal: #14b8a6;
-    --border-glass: rgba(255, 255, 255, 0.1);
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --accent-teal: #0d9488;
+    --border-glass: rgba(255, 255, 255, 0.6);
 }
 
 html, body, [class*="css"] {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
-/* SFONDO D'IMPATTO (PROFONDO, ELEGANTE E MODERNO) */
+/* SFONDO CHIARO, CALDO E AVVOLGENTE (TONI PASTEL-WARM) */
 .stApp {
     background: 
-        radial-gradient(circle at 15% 15%, rgba(20, 184, 166, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-        linear-gradient(135deg, #090d16 0%, #111827 50%, #0f172a 100%);
+        radial-gradient(circle at 10% 20%, rgba(254, 215, 170, 0.45) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(244, 114, 182, 0.25) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(253, 230, 138, 0.3) 0%, transparent 60%),
+        linear-gradient(135deg, #fdf8f6 0%, #f4f4f5 100%);
     background-attachment: fixed;
     color: var(--text-main);
 }
@@ -130,14 +131,14 @@ html, body, [class*="css"] {
 #MainMenu, footer, header {visibility: hidden; display: none;}
 [data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"] {display: none !important;}
 
-/* HEADER TECH CON EFFETTO GLASS SCURO */
+/* HEADER CHIARO CON EFFETTO GLASS */
 .tech-header {
-    background: rgba(17, 24, 39, 0.75);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-glass);
     padding: 1.5rem 1.5rem;
     border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
     margin-bottom: 2rem;
     display: flex;
     flex-direction: row;
@@ -155,7 +156,7 @@ html, body, [class*="css"] {
     font-size: 1.8rem;
     font-weight: 800;
     letter-spacing: -0.03em;
-    color: #ffffff;
+    color: #0f172a;
     margin: 0;
 }
 @media (min-width: 768px) {
@@ -175,14 +176,14 @@ div[data-testid="stRadio"] > label { display: none; }
 div[data-testid="stRadio"] div[role="radiogroup"] {
     display: flex;
     justify-content: center;
-    background: rgba(17, 24, 39, 0.75);
-    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
     padding: 5px;
     border-radius: 14px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.03);
     margin-bottom: 2.5rem;
     gap: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-glass);
     flex-wrap: wrap;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label {
@@ -194,36 +195,34 @@ div[data-testid="stRadio"] div[role="radiogroup"] label {
     transition: all 0.2s ease;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
-    background: rgba(20, 184, 166, 0.1);
-    color: #14b8a6 !important;
+    background: #fdf2f8;
+    color: #db2777 !important;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
-    background: #14b8a6 !important;
-    color: #0f172a !important;
-    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
-    font-weight: 700;
+    background: #0f172a !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
 }
 
-/* CARD CON EFFETTO GLASSMORPHISM SCURO PULITO */
+/* CARD CON EFFETTO GLASSMORPHISM CHIARO */
 .tech-card {
-    background: rgba(17, 24, 39, 0.65);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-glass);
     border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
     margin-bottom: 1.2rem;
     transition: all 0.2s ease;
-    color: #f8fafc;
 }
 .tech-card:hover {
-    background: rgba(17, 24, 39, 0.85);
-    border-color: rgba(20, 184, 166, 0.4);
-    box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.05);
 }
 .tech-card-highlight {
-    background: rgba(17, 24, 39, 0.85);
-    border: 2px solid #14b8a6;
+    background: rgba(255, 255, 255, 0.92);
+    border: 2px solid #0d9488;
 }
 
 .tech-tag {
@@ -231,24 +230,24 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #14b8a6;
-    background: rgba(20, 184, 166, 0.1);
+    color: #0d9488;
+    background: #f0fdfa;
     padding: 4px 10px;
     border-radius: 6px;
     display: inline-block;
     margin-bottom: 0.8rem;
-    border: 1px solid rgba(20, 184, 166, 0.3);
+    border: 1px solid #ccfbf1;
 }
 
 @keyframes pulse-animation {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(20, 184, 166, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(20, 184, 166, 0); }
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(13, 148, 136, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); }
 }
 .pulsing-dot {
     display: inline-block;
     width: 8px; height: 8px;
-    background-color: #14b8a6;
+    background-color: #0d9488;
     border-radius: 50%;
     animation: pulse-animation 1.5s infinite;
     margin-right: 6px;
@@ -257,7 +256,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 .offline-dot {
     display: inline-block;
     width: 8px; height: 8px;
-    background-color: #64748b;
+    background-color: #cbd5e1;
     border-radius: 50%;
     margin-right: 6px;
     vertical-align: middle;
@@ -267,18 +266,18 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     width: 100%;
     min-height: 44px;
     border-radius: 10px;
-    background: #14b8a6;
-    color: #0f172a;
-    font-weight: 700;
+    background: #0f172a;
+    color: white;
+    font-weight: 600;
     font-size: 0.88rem;
     border: none;
-    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
     transition: all 0.2s ease;
 }
 .stButton > button:hover {
     background: #0d9488;
-    color: #ffffff;
     transform: translateY(-1px);
+    color: white;
 }
 </style>
 """,
@@ -322,7 +321,7 @@ st.markdown(
         <h1>Flashjob.</h1>
         <p>Curated Hospitality Network • Milano</p>
     </div>
-    <div style="font-size: 1.5rem; background: rgba(20,184,166,0.1); padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(20,184,166,0.3);">⚡</div>
+    <div style="font-size: 1.5rem; background: rgba(240,253,250,0.85); padding: 10px 14px; border-radius: 12px; border: 1px solid #ccfbf1;">⚡</div>
 </div>
 """,
     unsafe_allow_html=True,
@@ -347,7 +346,7 @@ if scelta == "Panoramica":
         """
         <div style="text-align: center; max-width: 700px; margin: 0 auto 2.5rem auto;">
             <span class="tech-tag">Network & Soluzioni</span>
-            <h2 style="font-weight: 800; font-size: 1.7rem; color: #ffffff; margin-top: 4px; letter-spacing: -0.02em;">Connettiamo locali d'eccellenza e professionisti HORECA.</h2>
+            <h2 style="font-weight: 800; font-size: 1.7rem; color: #0f172a; margin-top: 4px; letter-spacing: -0.02em;">Connettiamo locali d'eccellenza e professionisti HORECA.</h2>
         </div>
     """,
         unsafe_allow_html=True,
@@ -358,7 +357,7 @@ if scelta == "Panoramica":
         st.markdown(
             """
         <div class="tech-card">
-            <h3 style="color: #14b8a6; margin-top: 0; font-size: 1.05rem; font-weight: 700;">Per le Aziende</h3>
+            <h3 style="color: #0d9488; margin-top: 0; font-size: 1.05rem; font-weight: 700;">Per le Aziende</h3>
             <p style="color: var(--text-muted); line-height: 1.5; font-size: 0.88rem; margin-bottom: 0;">
                 Trova personale qualificato immediatamente disponibile a Milano, riducendo i tempi di ricerca e le chiamate a vuoto.
             </p>
@@ -371,7 +370,7 @@ if scelta == "Panoramica":
         st.markdown(
             """
         <div class="tech-card">
-            <h3 style="color: #ffffff; margin-top: 0; font-size: 1.05rem; font-weight: 700;">Per i Talenti</h3>
+            <h3 style="color: #0f172a; margin-top: 0; font-size: 1.05rem; font-weight: 700;">Per i Talenti</h3>
             <p style="color: var(--text-muted); line-height: 1.5; font-size: 0.88rem; margin-bottom: 0;">
                 Gestisci la tua disponibilità in tempo reale e fatti contattare direttamente dai migliori locali della zona.
             </p>
@@ -399,9 +398,9 @@ elif scelta == "Database Talenti":
             st.rerun()
 
         stato_html = (
-            '<span class="pulsing-dot"></span><b style="color:#14b8a6; font-size:0.8rem;">DISPONIBILE ORA</b>'
+            '<span class="pulsing-dot"></span><b style="color:#0d9488; font-size:0.8rem;">DISPONIBILE ORA</b>'
             if selected_c["disponibile"]
-            else '<span class="offline-dot"></span><span style="color:#94a3b8; font-size:0.8rem;">NON DISPONIBILE</span>'
+            else '<span class="offline-dot"></span><span style="color:#64748b; font-size:0.8rem;">NON DISPONIBILE</span>'
         )
 
         st.markdown(
@@ -409,10 +408,10 @@ elif scelta == "Database Talenti":
         <div class="tech-card tech-card-highlight" style="margin-top: 10px;">
             <span class="tech-tag">Profilo Selezionato</span>
             <div style="margin-top: 6px; margin-bottom: 4px;">{stato_html}</div>
-            <h2 style="font-weight: 800; margin: 0; font-size: 1.5rem; letter-spacing: -0.02em; color: #ffffff;">{safe(selected_c["nome"])}</h2>
+            <h2 style="font-weight: 800; margin: 0; font-size: 1.5rem; letter-spacing: -0.02em;">{safe(selected_c["nome"])}</h2>
             <p style="color: var(--text-muted); margin: 4px 0 6px 0; font-weight: 600; font-size: 0.88rem;">{safe(selected_c["mansione"])} · {safe(selected_c["zona"])}</p>
-            <p style="color: #14b8a6; font-weight: 700; font-size: 0.88rem;">{safe(selected_c["recensioni"])}</p>
-            <hr style="border: 0; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 12px 0;">
+            <p style="color: #0d9488; font-weight: 700; font-size: 0.88rem;">{safe(selected_c["recensioni"])}</p>
+            <hr style="border: 0; border-top: 1px solid rgba(204, 251, 241, 0.8); margin: 12px 0;">
             <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0;"><b>Referenze:</b> {safe(selected_c["referenze"])}</p>
         </div>
         """,
@@ -434,7 +433,7 @@ elif scelta == "Database Talenti":
 
     else:
         st.markdown(
-            "<h2 style='font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px; color: #ffffff;'>Database Talenti</h2>",
+            "<h2 style='font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px;'>Database Talenti</h2>",
             unsafe_allow_html=True,
         )
         st.markdown(
@@ -453,12 +452,12 @@ elif scelta == "Database Talenti":
                 else "tech-card"
             )
             badge_stato = (
-                '<span class="pulsing-dot"></span><b style="color:#14b8a6; font-size:0.7rem;">DISPONIBILE ORA</b>'
+                '<span class="pulsing-dot"></span><b style="color:#0d9488; font-size:0.7rem;">DISPONIBILE ORA</b>'
                 if lav["disponibile"]
-                else '<span class="offline-dot"></span><span style="color:#94a3b8; font-size:0.7rem;">NON DISPONIBILE</span>'
+                else '<span class="offline-dot"></span><span style="color:#64748b; font-size:0.7rem;">NON DISPONIBILE</span>'
             )
             boost_label = (
-                ' <span style="background:#14b8a6; color:#0f172a; padding:2px 6px; border-radius:4px; font-size:0.65rem; font-weight:700;">BOOSTED</span>'
+                ' <span style="background:#0f172a; color:white; padding:2px 6px; border-radius:4px; font-size:0.65rem; font-weight:700;">BOOSTED</span>'
                 if lav.get("boosted")
                 else ""
             )
@@ -467,7 +466,7 @@ elif scelta == "Database Talenti":
                 f"""
             <div class="{card_class}" style="margin-bottom: 1rem; padding: 1.2rem 1.4rem;">
                 <div style="margin-bottom: 4px;">{badge_stato}</div>
-                <h3 style="margin: 0; font-size: 1.05rem; font-weight: 700; color: #ffffff;">{safe(lav["nome"])}{boost_label}</h3>
+                <h3 style="margin: 0; font-size: 1.05rem; font-weight: 700;">{safe(lav["nome"])}{boost_label}</h3>
                 <p style="color: var(--text-muted); margin: 4px 0 0 0; font-size: 0.82rem; font-weight: 600;">{safe(lav["mansione"])} · {safe(lav["zona"])}</p>
             </div>
             """,
@@ -482,7 +481,7 @@ elif scelta == "Database Talenti":
 # ============================================================
 elif scelta == "Area Lavoratore":
     st.markdown(
-        "<h2 style='font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px; color: #ffffff;'>Area Personale</h2>",
+        "<h2 style='font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px;'>Area Personale</h2>",
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -507,8 +506,8 @@ elif scelta == "Area Lavoratore":
         st.markdown(
             """
         <div class="tech-card" style="height:100%;">
-            <span class="tech-tag" style="background:rgba(255,255,255,0.05); color:#94a3b8; border-color:rgba(255,255,255,0.1);">Free</span>
-            <h4 style="margin: 4px 0; font-size: 0.95rem; font-weight: 700; color: #ffffff;">Standard</h4>
+            <span class="tech-tag" style="background:rgba(255,255,255,0.6); color:#475569;">Free</span>
+            <h4 style="margin: 4px 0; font-size: 0.95rem; font-weight: 700;">Standard</h4>
             <p style="color: var(--text-muted); font-size: 0.8rem; margin:0;">Database generale senza priorità di ricerca.</p>
         </div>
         """,
@@ -524,7 +523,7 @@ elif scelta == "Area Lavoratore":
             """
         <div class="tech-card tech-card-highlight" style="height:100%;">
             <span class="tech-tag">Weekend</span>
-            <h4 style="margin: 4px 0; font-size: 0.95rem; font-weight: 700; color: #ffffff;">Top Weekend</h4>
+            <h4 style="margin: 4px 0; font-size: 0.95rem; font-weight: 700;">Top Weekend</h4>
             <p style="color: var(--text-muted); font-size: 0.8rem; margin:0;">In cima alle ricerche dei locali per tutto il fine settimana.</p>
         </div>
         """,
@@ -541,7 +540,7 @@ elif scelta == "Area Lavoratore":
 # ============================================================
 elif scelta == "Piani (Coming Soon)":
     st.markdown(
-        "<h2 style='font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px; color: #ffffff;'>Piani & Listino ⚡</h2>",
+        "<h2 style='font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px;'>Piani & Listino ⚡</h2>",
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -553,9 +552,9 @@ elif scelta == "Piani (Coming Soon)":
     st.markdown(
         """
     <div class="tech-card" style="opacity: 0.9;">
-        <span class="tech-tag" style="background:rgba(255,255,255,0.05); color:#94a3b8; border-color:rgba(255,255,255,0.1);">Coming Soon</span>
-        <h3 style="font-size: 1.05rem; font-weight: 700; margin: 4px 0; color: #ffffff;">Mensile Titolari & Pass</h3>
-        <div style="font-size: 1.3rem; font-weight: 800; color: #14b8a6; margin: 4px 0;">20 € <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">/ mese</span></div>
+        <span class="tech-tag" style="background:rgba(255,255,255,0.6); color:#475569;">Coming Soon</span>
+        <h3 style="font-size: 1.05rem; font-weight: 700; margin: 4px 0;">Mensile Titolari & Pass</h3>
+        <div style="font-size: 1.3rem; font-weight: 800; color: #0d9488; margin: 4px 0;">20 € <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">/ mese</span></div>
         <p style="color: var(--text-muted); font-size: 0.82rem; margin:0;">Contatti diretti illimitati su WhatsApp per tutti i profili.</p>
     </div>
     """,
@@ -568,9 +567,9 @@ elif scelta == "Piani (Coming Soon)":
     st.markdown(
         """
     <div class="tech-card tech-card-highlight" style="opacity: 0.9;">
-        <span class="tech-tag" style="background:rgba(255,255,255,0.05); color:#94a3b8; border-color:rgba(255,255,255,0.1);">Coming Soon</span>
-        <h3 style="font-size: 1.05rem; font-weight: 700; margin: 4px 0; color: #ffffff;">Abbonamento PRO Talento</h3>
-        <div style="font-size: 1.3rem; font-weight: 800; color: #14b8a6; margin: 4px 0;">12 € <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">/ mese</span></div>
+        <span class="tech-tag" style="background:rgba(255,255,255,0.6); color:#475569;">Coming Soon</span>
+        <h3 style="font-size: 1.05rem; font-weight: 700; margin: 4px 0;">Abbonamento PRO Talento</h3>
+        <div style="font-size: 1.3rem; font-weight: 800; color: #0d9488; margin: 4px 0;">12 € <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">/ mese</span></div>
         <p style="color: var(--text-muted); font-size: 0.82rem; margin:0;">Visibilità costante tutto il mese e badge verificato oro.</p>
     </div>
     """,
@@ -583,7 +582,7 @@ elif scelta == "Piani (Coming Soon)":
 # ============================================================
 elif scelta == "📊 Admin" and mostra_admin:
     st.markdown(
-        "<h2 style='font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px; color: #ffffff;'>📊 Dashboard Admin</h2>",
+        "<h2 style='font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px;'>📊 Dashboard Admin</h2>",
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -609,8 +608,8 @@ elif scelta == "📊 Admin" and mostra_admin:
     st.markdown(
         """
     <div class="tech-card">
-        <h4 style="margin-top:0; font-weight:700; font-size:0.95rem; color: #ffffff;">Stato Sistema</h4>
-        <p style="font-size: 1.2rem; font-weight: 800; color: #14b8a6; margin: 4px 0;">Ottimale & Responsive 🟢</p>
+        <h4 style="margin-top:0; font-weight:700; font-size:0.95rem;">Stato Sistema</h4>
+        <p style="font-size: 1.2rem; font-weight: 800; color: #0d9488; margin: 4px 0;">Ottimale & Responsive 🟢</p>
         <p style="color: var(--text-muted); font-size: 0.82rem; margin:0;">Layout completamente adattato per smartphone e desktop con sfondo coordinato.</p>
     </div>
     """,
