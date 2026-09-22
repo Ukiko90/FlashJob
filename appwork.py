@@ -6,7 +6,7 @@ st.set_page_config(
     page_title="Flashjob • Il Lavoro a Portata di Mano",
     page_icon="⚡",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="expanded",  # Lasciamo aperta la sidebar per il login admin
 )
 
 # ============================================================
@@ -144,7 +144,7 @@ footer {visibility: hidden;}
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-/* NAVIGAZIONE RADIO */
+/* NAVIGAZIONE RADIO PUBBLICA */
 div[data-testid="stRadio"] > label { display: none; }
 div[data-testid="stRadio"] div[role="radiogroup"] {
     display: flex;
@@ -160,9 +160,9 @@ div[data-testid="stRadio"] div[role="radiogroup"] {
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label {
     border-radius: 40px;
-    padding: 10px 16px;
+    padding: 10px 18px;
     font-weight: 700;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     color: var(--text-muted) !important;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
@@ -261,6 +261,28 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 )
 
 # ============================================================
+# BARRA LATERALE (SIDEBAR) RISERVATA ALL'ADMIN
+# ============================================================
+with st.sidebar:
+  st.markdown("### 🔐 Area Riservata Admin")
+  st.markdown(
+      "Inserisci la password segreta per visualizzare i dati statistici di"
+      " Flashjob."
+  )
+
+  # Puoi cambiare la password qui sotto (es. "admin123")
+  password_inserita = st.text_input(
+      "Password Admin", type="password", key="input_pwd_admin"
+  )
+
+  mostra_admin = False
+  if password_inserita == "admin123":
+    st.success("Accesso Admin Autorizzato ✅")
+    mostra_admin = True
+  elif password_inserita != "":
+    st.error("Password errata ❌")
+
+# ============================================================
 # STORE HEADER
 # ============================================================
 st.markdown(
@@ -282,17 +304,17 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-scelta = st.radio(
-    "Navigazione",
-    [
-        "Panoramica",
-        "Database & Filtri Azienda",
-        "Area Lavoratore",
-        "Piani & Abbonamenti",
-        "📊 Dashboard Admin (I Miei Numeri)",
-    ],
-    horizontal=True,
-)
+# Se l'admin ha fatto il login, aggiungiamo l'opzione nel menu principale
+menu_opzioni = [
+    "Panoramica",
+    "Database & Filtri Azienda",
+    "Area Lavoratore",
+    "Piani & Abbonamenti",
+]
+if mostra_admin:
+  menu_opzioni.append("📊 Dashboard Admin")
+
+scelta = st.radio("Navigazione", menu_opzioni, horizontal=True)
 
 # ============================================================
 # 1. PANORAMICA
@@ -656,13 +678,13 @@ elif scelta == "Piani & Abbonamenti":
       st.toast("Richiesta inviata per l'anteprima esclusiva!")
 
 # ============================================================
-# 5. DASHBOARD ADMIN (VISITE & ISCRITTI)
+# 5. DASHBOARD ADMIN (VISITA PROTETTA DA PASSWORD)
 # ============================================================
-else:
+elif scelta == "📊 Dashboard Admin":
   st.markdown(
       """
         <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>📊 Dashboard Admin & Statistiche</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>I dati in tempo reale sull'utilizzo della tua applicazione.</p>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Area protetta. Qui puoi vedere i dati in tempo reale sull'utilizzo della tua applicazione.</p>
     """,
       unsafe_allow_html=True,
   )
@@ -694,16 +716,3 @@ else:
         """,
         unsafe_allow_html=True,
     )
-
-  st.markdown(
-      """
-    <div class="custom-card" style="background: #f8fafc; margin-top: 1rem;">
-        <h4 style="margin-top: 0; color: #211e33;">💡 Come interpretare questi numeri:</h4>
-        <ul style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; padding-left: 20px;">
-            <li><b>Visite Totali:</b> Ti mostra quante persone stanno cliccando sul link della tua app.</li>
-            <li><b>Lavoratori Iscritti:</b> Ti mostra quanti professionisti si sono registrati o hanno attivato il profilo verde.</li>
-        </ul>
-    </div>
-    """,
-      unsafe_allow_html=True,
-  )
