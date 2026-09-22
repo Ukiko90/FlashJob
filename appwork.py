@@ -87,7 +87,7 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM MODERNO, DINAMICO E SENZA GHIRIGORI
+# DESIGN SYSTEM CON SFONDO ISPIRATO AL PIN PINTEREST
 # ============================================================
 st.markdown(
     """
@@ -98,16 +98,21 @@ st.markdown(
     --text-main: #0f172a;
     --text-muted: #475569;
     --accent-teal: #0d9488;
-    --border-glass: rgba(226, 232, 240, 0.8);
+    --border-glass: rgba(255, 255, 255, 0.6);
 }
 
 html, body, [class*="css"] {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
-/* SFONDO PULITO E MINIMAL */
+/* SFONDO DINAMICO ISPIRATO AL TARGET PINTEREST (Toni caldi, sfumati, eleganti e avvolgenti) */
 .stApp {
-    background-color: #f8fafc;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(254, 215, 170, 0.45) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(244, 114, 182, 0.25) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(253, 230, 138, 0.3) 0%, transparent 60%),
+        linear-gradient(135deg, #fdf8f6 0%, #f4f4f5 100%);
+    background-attachment: fixed;
     color: var(--text-main);
 }
 
@@ -126,13 +131,14 @@ html, body, [class*="css"] {
 #MainMenu, footer, header {visibility: hidden; display: none;}
 [data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"] {display: none !important;}
 
-/* HEADER TECH & CLEAN */
+/* HEADER ELEGANTE CON EFFETTO GLASS */
 .tech-header {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
     border: 1px solid var(--border-glass);
     padding: 1.5rem 1.5rem;
     border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
     margin-bottom: 2rem;
     display: flex;
     flex-direction: row;
@@ -170,10 +176,11 @@ div[data-testid="stRadio"] > label { display: none; }
 div[data-testid="stRadio"] div[role="radiogroup"] {
     display: flex;
     justify-content: center;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
     padding: 5px;
     border-radius: 14px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.03);
     margin-bottom: 2.5rem;
     gap: 4px;
     border: 1px solid var(--border-glass);
@@ -188,31 +195,33 @@ div[data-testid="stRadio"] div[role="radiogroup"] label {
     transition: all 0.2s ease;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
-    background: #f1f5f9;
-    color: var(--accent-teal) !important;
+    background: #fdf2f8;
+    color: #db2777 !important;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     background: #0f172a !important;
     color: white !important;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
 }
 
-/* CARD STRUTTURATE E PROFESSIONALI */
+/* CARD CON EFFETTO GLASSMORPHISM PULITO */
 .tech-card {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(12px);
     border: 1px solid var(--border-glass);
     border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
     margin-bottom: 1.2rem;
     transition: all 0.2s ease;
 }
 .tech-card:hover {
-    border-color: #cbd5e1;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.04);
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.05);
 }
 .tech-card-highlight {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.92);
     border: 2px solid #0d9488;
 }
 
@@ -227,6 +236,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     border-radius: 6px;
     display: inline-block;
     margin-bottom: 0.8rem;
+    border: 1px solid #ccfbf1;
 }
 
 @keyframes pulse-animation {
@@ -261,7 +271,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     font-weight: 600;
     font-size: 0.88rem;
     border: none;
-    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.1);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
     transition: all 0.2s ease;
 }
 .stButton > button:hover {
@@ -311,7 +321,7 @@ st.markdown(
         <h1>Flashjob.</h1>
         <p>Curated Hospitality Network • Milano</p>
     </div>
-    <div style="font-size: 1.5rem; background: #f0fdfa; padding: 10px 14px; border-radius: 12px; border: 1px solid #ccfbf1;">⚡</div>
+    <div style="font-size: 1.5rem; background: rgba(240,253,250,0.85); padding: 10px 14px; border-radius: 12px; border: 1px solid #ccfbf1;">⚡</div>
 </div>
 """,
     unsafe_allow_html=True,
@@ -401,7 +411,7 @@ elif scelta == "Database Talenti":
             <h2 style="font-weight: 800; margin: 0; font-size: 1.5rem; letter-spacing: -0.02em;">{safe(selected_c["nome"])}</h2>
             <p style="color: var(--text-muted); margin: 4px 0 6px 0; font-weight: 600; font-size: 0.88rem;">{safe(selected_c["mansione"])} · {safe(selected_c["zona"])}</p>
             <p style="color: #0d9488; font-weight: 700; font-size: 0.88rem;">{safe(selected_c["recensioni"])}</p>
-            <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 12px 0;">
+            <hr style="border: 0; border-top: 1px solid rgba(204, 251, 241, 0.8); margin: 12px 0;">
             <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0;"><b>Referenze:</b> {safe(selected_c["referenze"])}</p>
         </div>
         """,
@@ -496,7 +506,7 @@ elif scelta == "Area Lavoratore":
         st.markdown(
             """
         <div class="tech-card" style="height:100%;">
-            <span class="tech-tag" style="background:#f1f5f9; color:#475569;">Free</span>
+            <span class="tech-tag" style="background:rgba(255,255,255,0.6); color:#475569;">Free</span>
             <h4 style="margin: 4px 0; font-size: 0.95rem; font-weight: 700;">Standard</h4>
             <p style="color: var(--text-muted); font-size: 0.8rem; margin:0;">Database generale senza priorità di ricerca.</p>
         </div>
@@ -541,8 +551,8 @@ elif scelta == "Piani (Coming Soon)":
     st.markdown("### 🏢 Per Locali & Aziende", unsafe_allow_html=True)
     st.markdown(
         """
-    <div class="tech-card" style="opacity: 0.85;">
-        <span class="tech-tag" style="background:#f1f5f9; color:#475569;">Coming Soon</span>
+    <div class="tech-card" style="opacity: 0.9;">
+        <span class="tech-tag" style="background:rgba(255,255,255,0.6); color:#475569;">Coming Soon</span>
         <h3 style="font-size: 1.05rem; font-weight: 700; margin: 4px 0;">Mensile Titolari & Pass</h3>
         <div style="font-size: 1.3rem; font-weight: 800; color: #0d9488; margin: 4px 0;">20 € <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">/ mese</span></div>
         <p style="color: var(--text-muted); font-size: 0.82rem; margin:0;">Contatti diretti illimitati su WhatsApp per tutti i profili.</p>
@@ -556,8 +566,8 @@ elif scelta == "Piani (Coming Soon)":
     st.markdown("### 👥 Per Lavoratori", unsafe_allow_html=True)
     st.markdown(
         """
-    <div class="tech-card tech-card-highlight" style="opacity: 0.85;">
-        <span class="tech-tag" style="background:#f1f5f9; color:#475569;">Coming Soon</span>
+    <div class="tech-card tech-card-highlight" style="opacity: 0.9;">
+        <span class="tech-tag" style="background:rgba(255,255,255,0.6); color:#475569;">Coming Soon</span>
         <h3 style="font-size: 1.05rem; font-weight: 700; margin: 4px 0;">Abbonamento PRO Talento</h3>
         <div style="font-size: 1.3rem; font-weight: 800; color: #0d9488; margin: 4px 0;">12 € <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">/ mese</span></div>
         <p style="color: var(--text-muted); font-size: 0.82rem; margin:0;">Visibilità costante tutto il mese e badge verificato oro.</p>
@@ -600,7 +610,7 @@ elif scelta == "📊 Admin" and mostra_admin:
     <div class="tech-card">
         <h4 style="margin-top:0; font-weight:700; font-size:0.95rem;">Stato Sistema</h4>
         <p style="font-size: 1.2rem; font-weight: 800; color: #0d9488; margin: 4px 0;">Ottimale & Responsive 🟢</p>
-        <p style="color: var(--text-muted); font-size: 0.82rem; margin:0;">Layout completamente adattato per smartphone e desktop.</p>
+        <p style="color: var(--text-muted); font-size: 0.82rem; margin:0;">Layout completamente adattato per smartphone e desktop con sfondo coordinato.</p>
     </div>
     """,
         unsafe_allow_html=True,
