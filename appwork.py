@@ -80,7 +80,7 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM: COLORI PASTELLO CHIARI E SFUMATURE DELICATE
+# DESIGN SYSTEM: APP STORE STYLE & SFUMATURE PASTELLO LUMINOSE
 # ============================================================
 st.markdown(
     """
@@ -111,35 +111,70 @@ html, body, [class*="css"] {
     padding: 2rem 1.5rem 5rem !important;
 }
 
-/* Nasconde elementi Streamlit */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 [data-testid="stHeader"] { display: none !important; }
 [data-testid="stToolbar"] { display: none !important; }
 
-/* HERO SFUMATURE PASTELLO CHIARE */
-.hero-box {
+/* HEADER STILE APP STORE / STORE UFFICIALE */
+.store-header {
     background: linear-gradient(135deg, #b19ffb 0%, #8be8e5 50%, #ffd4a3 100%);
-    color: #2d2b38;
-    padding: 3rem 2rem;
-    border-radius: 24px;
-    text-align: center;
+    padding: 2.5rem 2rem;
+    border-radius: 28px;
     box-shadow: 0 15px 35px rgba(177, 159, 251, 0.15);
     margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
 }
-.hero-box h1 {
-    font-size: 2.8rem;
+.app-info-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.app-logo-box {
+    width: 90px;
+    height: 90px;
+    background: white;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+.app-titles h1 {
+    font-size: 2.4rem;
     font-weight: 800;
-    margin: 0 0 10px 0;
+    margin: 0;
     letter-spacing: -1px;
     color: #211e33;
 }
-.hero-box p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    max-width: 650px;
-    margin: 0 auto;
-    font-weight: 500;
+.app-titles p {
+    font-size: 1rem;
+    margin: 4px 0 0 0;
+    color: #3b3750;
+    font-weight: 600;
+}
+.app-badges-right {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.store-badge {
+    background: #111;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 /* NAVIGAZIONE RADIO */
@@ -261,13 +296,22 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 )
 
 # ============================================================
-# HERO (CON SPECIFICA INIZIALE SU TUTTE LE MANSIONI)
+# STORE HEADER (LOGO E NOME IN EVIDENZA)
 # ============================================================
 st.markdown(
     """
-<div class="hero-box">
-    <h1>⚡ Flashjob</h1>
-    <p><b>Servizio disponibile per ogni mansione</b> del settore HORECA. Database contatti in tempo reale, filtri avanzati e gestione turni con disponibilità live.</p>
+<div class="store-header">
+    <div class="app-info-left">
+        <div class="app-logo-box">⚡</div>
+        <div class="app-titles">
+            <h1>Flashjob</h1>
+            <p>Il Lavoro a Portata di Mano • Disponibile per ogni mansione HORECA</p>
+        </div>
+    </div>
+    <div class="app-badges-right">
+        <div class="store-badge">🍏 App Store Ufficiale</div>
+        <div class="store-badge">🤖 Google Play Ufficiale</div>
+    </div>
 </div>
 """,
     unsafe_allow_html=True,
@@ -388,7 +432,6 @@ elif scelta == "Database & Filtri Azienda":
             unsafe_allow_html=True,
         )
 
-        # SEZIONE FILTRI
         st.markdown(
             '<div class="custom-card" style="padding: 1.2rem; background: #fafafa;">',
             unsafe_allow_html=True,
