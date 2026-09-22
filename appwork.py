@@ -10,7 +10,7 @@ st.set_page_config(
 )
 
 # ============================================================
-# DATABASE INIZIALE & STATO
+# DATABASE INIZIALE & STATO SICURO
 # ============================================================
 if "lavoratori" not in st.session_state:
     st.session_state.lavoratori = [
@@ -67,8 +67,8 @@ if "lavoratori" not in st.session_state:
         },
     ]
 
-if "selected_candidate" not in st.session_state:
-    st.session_state.selected_candidate = None
+if "selected_id" not in st.session_state:
+    st.session_state.selected_id = None
 
 
 def safe(value):
@@ -80,7 +80,7 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM: APP STORE STYLE & SFUMATURE PASTELLO LUMINOSE
+# DESIGN SYSTEM: UI FLUIDA E PULITA
 # ============================================================
 st.markdown(
     """
@@ -116,7 +116,7 @@ footer {visibility: hidden;}
 [data-testid="stHeader"] { display: none !important; }
 [data-testid="stToolbar"] { display: none !important; }
 
-/* HEADER STILE APP STORE / STORE UFFICIALE */
+/* STORE HEADER */
 .store-header {
     background: linear-gradient(135deg, #b19ffb 0%, #8be8e5 50%, #ffd4a3 100%);
     padding: 2.5rem 2rem;
@@ -170,7 +170,6 @@ footer {visibility: hidden;}
     border-radius: 12px;
     font-size: 0.75rem;
     font-weight: 700;
-    text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -196,7 +195,6 @@ div[data-testid="stRadio"] div[role="radiogroup"] label {
     font-weight: 700;
     font-size: 0.82rem;
     color: var(--text-muted) !important;
-    transition: all 0.3s ease;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%) !important;
@@ -214,13 +212,12 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     margin-bottom: 1.5rem;
 }
 
-/* PALLINO VERDE LAMPEGGIANTE (PULSAR) */
+/* PALLINO VERDE LAMPEGGIANTE */
 @keyframes pulse-animation {
     0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6); }
     70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); }
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
 }
-
 .pulsing-dot {
     display: inline-block;
     width: 12px;
@@ -231,7 +228,6 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     margin-right: 6px;
     vertical-align: middle;
 }
-
 .offline-dot {
     display: inline-block;
     width: 12px;
@@ -242,7 +238,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     vertical-align: middle;
 }
 
-/* BADGE PASTELLO CHIARI */
+/* BADGE */
 .badge-pop {
     display: inline-block;
     padding: 5px 12px;
@@ -296,7 +292,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 )
 
 # ============================================================
-# STORE HEADER (LOGO E NOME IN EVIDENZA)
+# STORE HEADER
 # ============================================================
 st.markdown(
     """
@@ -368,17 +364,24 @@ if scelta == "Panoramica":
 # 2. DATABASE & FILTRI AZIENDA
 # ============================================================
 elif scelta == "Database & Filtri Azienda":
-    selected = st.session_state.selected_candidate
+    # Seleziona il candidato corrente in base all'ID salvato nello stato
+    selected_c = next(
+        (
+            item
+            for item in st.session_state.lavoratori
+            if item["id"] == st.session_state.selected_id
+        ),
+        None,
+    )
 
-    if selected is not None:
+    if selected_c is not None:
         if st.button("← Torna al database completo"):
-            st.session_state.selected_candidate = None
+            st.session_state.selected_id = None
             st.rerun()
 
-        c = selected
         stato_html = (
             '<span class="pulsing-dot"></span><b style="color:#059669;">DISPONIBILE ORA</b>'
-            if c["disponibile"]
+            if selected_c["disponibile"]
             else '<span class="offline-dot"></span><span style="color:#888;">NON DISPONIBILE</span>'
         )
 
@@ -389,14 +392,14 @@ elif scelta == "Database & Filtri Azienda":
                 <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid #a78bfa;" />
                 <div>
                     <div style="margin-bottom:6px;">{stato_html}</div>
-                    <h2 style="margin:0; font-size:1.5rem;">{safe(c["nome"])}</h2>
-                    <p style="color:var(--text-muted); margin:4px 0 0 0; font-weight:600;">{safe(c["mansione"])} · {safe(c["zona"])}</p>
+                    <h2 style="margin:0; font-size:1.5rem;">{safe(selected_c["nome"])}</h2>
+                    <p style="color:var(--text-muted); margin:4px 0 0 0; font-weight:600;">{safe(selected_c["mansione"])} · {safe(selected_c["zona"])}</p>
                 </div>
             </div>
             
             <div class="stats-container">
                 <div class="stat-box">
-                    <strong>{safe(c["completati"])}</strong>
+                    <strong>{safe(selected_c["completati"])}</strong>
                     <span>Turni fatti</span>
                 </div>
                 <div class="stat-box">
@@ -410,7 +413,7 @@ elif scelta == "Database & Filtri Azienda":
             </div>
             
             <div style="background:#f3e8ff; border-left:4px solid #a78bfa; padding:15px; border-radius:0 12px 12px 0; margin-top:15px; font-style:italic; color:#6b21a8;">
-                “{safe(c["referenze"])}”
+                “{safe(selected_c["referenze"])}”
             </div>
         </div>
         """,
@@ -419,7 +422,7 @@ elif scelta == "Database & Filtri Azienda":
 
         st.link_button(
             "💬 Contatta e Prenota su WhatsApp",
-            whatsapp_url(c["tel"]),
+            whatsapp_url(selected_c["tel"]),
             use_container_width=True,
         )
 
@@ -448,16 +451,21 @@ elif scelta == "Database & Filtri Azienda":
                     "Chef de Rang / Jolly",
                     "Aiuto Cuoco",
                 ],
+                key="filtro_mansione_box",
             )
 
         with col_f2:
             solo_disponibili = st.checkbox(
-                "Mostra solo disponibili con pallino verde", value=False
+                "Mostra solo disponibili con pallino verde",
+                value=False,
+                key="filtro_disp_box",
             )
 
         with col_f3:
             ricerca_testo = st.text_input(
-                "Cerca per nome o zona", placeholder="Es. Navigli o Marco..."
+                "Cerca per nome o zona",
+                placeholder="Es. Navigli o Marco...",
+                key="filtro_testo_box",
             )
 
         st.markdown("</div>", unsafe_allow_html=True)
@@ -484,7 +492,7 @@ elif scelta == "Database & Filtri Azienda":
             unsafe_allow_html=True,
         )
 
-        for idx, lav in enumerate(lavoratori_filtrati):
+        for lav in lavoratori_filtrati:
             col_info, col_btn = st.columns([3, 1], gap="medium")
 
             with col_info:
@@ -509,8 +517,8 @@ elif scelta == "Database & Filtri Azienda":
                 st.markdown(
                     "<div style='margin-top: 30px;'></div>", unsafe_allow_html=True
                 )
-                if st.button("Vedi profilo", key=f"btn_db_{lav['id']}DATA"):
-                    st.session_state.selected_candidate = lav
+                if st.button("Vedi profilo", key=f"btn_card_{lav['id']}"):
+                    st.session_state.selected_id = lav["id"]
                     st.rerun()
 
 # ============================================================
@@ -546,6 +554,7 @@ elif scelta == "Area Lavoratore (Imposta Disponibilità)":
     nuova_disp = st.toggle(
         "🟢 Attiva disponibilità per lavorare (Accendi pallino verde lampeggiante)",
         value=lavoratore_corrente["disponibile"],
+        key="toggle_disponibilita_lavoratore",
     )
 
     if nuova_disp != lavoratore_corrente["disponibile"]:
@@ -554,7 +563,6 @@ elif scelta == "Area Lavoratore (Imposta Disponibilità)":
             "Stato aggiornato con successo nel database! I ristoranti vedranno"
             " immediatamente la modifica."
         )
-        st.rerun()
 
     if lavoratore_corrente["disponibile"]:
         st.markdown(
@@ -578,7 +586,7 @@ elif scelta == "Area Lavoratore (Imposta Disponibilità)":
     st.markdown("</div>", unsafe_allow_html=True)
 
 # ============================================================
-# 4. PIANI & ABBONAMENTI (INCLUSO BOOST WEEKEND)
+# 4. PIANI & ABBONAMENTI
 # ============================================================
 else:
     st.markdown(
