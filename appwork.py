@@ -10,65 +10,25 @@ st.set_page_config(
 )
 
 # ============================================================
-# DATABASE INIZIALE & STATO SICURO
+# STATO INIZIALE (DATABASE PUBBLICO VUOTO & PROFILO PERSONALE)
 # ============================================================
 if "lavoratori" not in st.session_state:
-    st.session_state.lavoratori = [
-        {
-            "id": 1,
-            "nome": "Marco Rossi",
-            "mansione": "Cameriere / Sala",
-            "zona": "Navigli, Milano",
-            "tel": "+39 333 1234567",
-            "completati": 18,
-            "disponibile": True,
-            "referenze": (
-                "Puntuale, professionale e con ottime capacità di gestione"
-                " sala anche nei momenti di massimo afflusso."
-            ),
-        },
-        {
-            "id": 2,
-            "nome": "Sara Bianchi",
-            "mansione": "Barista / Bartender",
-            "zona": "Porta Romana, Milano",
-            "tel": "+39 340 9876543",
-            "completati": 24,
-            "disponibile": True,
-            "referenze": (
-                "Eccezionale nella mixology, rapidissima e dotata di grande"
-                " empatia con la clientela."
-            ),
-        },
-        {
-            "id": 3,
-            "nome": "Luca Verdi",
-            "mansione": "Chef de Rang / Jolly",
-            "zona": "Brera, Milano",
-            "tel": "+39 328 1122334",
-            "completati": 31,
-            "disponibile": False,
-            "referenze": (
-                "Una sicurezza assoluta per eventi e grandi coperti. Leader"
-                " naturale in squadra."
-            ),
-        },
-        {
-            "id": 4,
-            "nome": "Giulia Neri",
-            "mansione": "Aiuto Cuoco",
-            "zona": "Duomo, Milano",
-            "tel": "+39 349 5544332",
-            "completati": 12,
-            "disponibile": True,
-            "referenze": (
-                "Rapida nella linea, pulita e molto attenta alle norme HACCP."
-            ),
-        },
-    ]
+    st.session_state.lavoratori = []
 
 if "selected_id" not in st.session_state:
     st.session_state.selected_id = None
+
+if "mio_profilo" not in st.session_state:
+    st.session_state.mio_profilo = {
+        "id": 999,
+        "nome": "Il Tuo Nome",
+        "mansione": "Cameriere / Sala",
+        "zona": "Milano",
+        "tel": "+39 333 0000000",
+        "completati": 0,
+        "disponibile": False,
+        "referenze": "Professionista verificato nel settore HORECA.",
+    }
 
 
 def safe(value):
@@ -364,7 +324,6 @@ if scelta == "Panoramica":
 # 2. DATABASE & FILTRI AZIENDA
 # ============================================================
 elif scelta == "Database & Filtri Azienda":
-    # Seleziona il candidato corrente in base all'ID salvato nello stato
     selected_c = next(
         (
             item
@@ -492,6 +451,13 @@ elif scelta == "Database & Filtri Azienda":
             unsafe_allow_html=True,
         )
 
+        if not lavoratori_filtrati:
+            st.info(
+                "Nessun lavoratore trovato nel database al momento. I"
+                " lavoratori possono registrarsi o attivarsi dall'Area"
+                " Lavoratore."
+            )
+
         for lav in lavoratori_filtrati:
             col_info, col_btn = st.columns([3, 1], gap="medium")
 
@@ -533,16 +499,16 @@ elif scelta == "Area Lavoratore (Imposta Disponibilità)":
         unsafe_allow_html=True,
     )
 
-    lavoratore_corrente = st.session_state.lavoratori[0]
+    mio = st.session_state.mio_profilo
 
     st.markdown(
-        """
+        f"""
     <div class="custom-card">
         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem;">
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" style="width:70px; height:70px; border-radius:50%; object-fit:cover;" />
             <div>
-                <h3 style="margin:0;">Marco Rossi</h3>
-                <p style="color:var(--text-muted); margin:2px 0; font-size:0.85rem;">Cameriere / Sala · Navigli, Milano</p>
+                <h3 style="margin:0;">{safe(mio["nome"])}</h3>
+                <p style="color:var(--text-muted); margin:2px 0; font-size:0.85rem;">{safe(mio["mansione"])} · {safe(mio["zona"])}</p>
                 <span class="badge-pop badge-purple" style="margin:0;">Profilo Verificato</span>
             </div>
         </div>
@@ -553,22 +519,39 @@ elif scelta == "Area Lavoratore (Imposta Disponibilità)":
     st.markdown("### Gestione Stato in Tempo Reale")
     nuova_disp = st.toggle(
         "🟢 Attiva disponibilità per lavorare (Accendi pallino verde lampeggiante)",
-        value=lavoratore_corrente["disponibile"],
+        value=mio["disponibile"],
         key="toggle_disponibilita_lavoratore",
     )
 
-    if nuova_disp != lavoratore_corrente["disponibile"]:
-        lavoratore_corrente["disponibile"] = nuova_disp
+    if nuova_disp != mio["disponibile"]:
+        mio["disponibile"] = nuova_disp
+        trovato = next(
+            (item for item in st.session_state.lavoratori if item["id"] == mio["id"]),
+            None,
+        )
+        if nuova_disp:
+            if trovato:
+                trovato["disponibile"] = True
+            else:
+                st.session_state.lavoratori.append(mio.copy())
+        else:
+            if trovato:
+                st.session_state.lavoratori = [
+                    item
+                    for item in st.session_state.lavoratori
+                    if item["id"] != mio["id"]
+                ]
+
         st.success(
             "Stato aggiornato con successo nel database! I ristoranti vedranno"
             " immediatamente la modifica."
         )
 
-    if lavoratore_corrente["disponibile"]:
+    if mio["disponibile"]:
         st.markdown(
             """
         <div style="background:#ecfdf5; color:#059669; padding:12px; border-radius:12px; font-weight:700; margin-top:15px;">
-            <span class="pulsing-dot"></span> Il tuo profilo è attualmente ONLINE con il pallino verde lampeggiante!
+            <span class="pulsing-dot"></span> Il tuo profilo è attualmente ONLINE con il pallino verde lampeggiante nel database pubblico!
         </div>
         """,
             unsafe_allow_html=True,
@@ -586,13 +569,13 @@ elif scelta == "Area Lavoratore (Imposta Disponibilità)":
     st.markdown("</div>", unsafe_allow_html=True)
 
 # ============================================================
-# 4. PIANI & ABBONAMENTI
+# 4. PIANI & ABBONAMENTI (COMING SOON 🚀)
 # ============================================================
 else:
     st.markdown(
         """
-        <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Listino & Upgrade ⚡</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>Soluzioni flessibili per ogni mansione e tipo di locale.</p>
+        <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Piani & Funzioni Elite ⚡</h2>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Stiamo preparando strumenti rivoluzionari per connettere locali e professionisti HORECA alla massima velocità. Scopri cosa sta arrivando!</p>
     """,
         unsafe_allow_html=True,
     )
@@ -603,61 +586,67 @@ else:
         st.markdown(
             """
         <div class="custom-card">
-            <span class="badge-pop badge-blue">Aziende & Locali</span>
-            <h3 style="margin-top:10px; font-size:1.2rem;">Standard</h3>
-            <div style="font-size: 1.8rem; font-weight: 800; color: #0284c7; margin: 10px 0;">20€ <span style="font-size:0.8rem; color:#777; font-weight:400;">/ mese</span></div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Accesso completo ai filtri e database per tutte le mansioni.</p>
+            <span class="badge-pop badge-blue">Coming Soon 🚀</span>
+            <h3 style="margin-top:10px; font-size:1.2rem;">Aziende Elite</h3>
+            <div style="font-size: 1.4rem; font-weight: 800; color: #0284c7; margin: 10px 0;">Accesso Anticipato</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Hai un locale e vuoi sbloccare ricerche illimitate senza attese?</p>
             <ul style="padding-left:16px; color:#555; font-size:0.85rem; line-height:1.5;">
-                <li>Filtri per ogni ruolo e zona</li>
-                <li>Contatto diretto WhatsApp</li>
-                <li>Gestione urgenze illimitata</li>
+                <li>Matchmaking IA con i candidati</li>
+                <li>Gestione emergenze last-minute in 1 click</li>
+                <li>Zero commissioni sulle chiamate</li>
             </ul>
         </div>
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Attiva Azienda", key="btn_std"):
-            st.success("Abbonamento Azienda attivato con successo!")
+        if st.button("Mettiti in Lista d'Attesa", key="btn_std"):
+            st.toast(
+                "Ottimo! Ti sei iscritto alla lista d'attesa prioritaria"
+                " Aziende. Ti avviseremo al lancio!"
+            )
 
     with col2:
         st.markdown(
             """
         <div class="custom-card">
-            <span class="badge-pop badge-orange">Lavoratori</span>
-            <h3 style="margin-top:10px; font-size:1.2rem;">Premium Pro</h3>
-            <div style="font-size: 1.8rem; font-weight: 800; color: #ea580c; margin: 10px 0;">10€ <span style="font-size:0.8rem; color:#777; font-weight:400;">/ mese</span></div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Mettiti in cima alle preferenze dei ristoranti.</p>
+            <span class="badge-pop badge-orange">Coming Soon 🌟</span>
+            <h3 style="margin-top:10px; font-size:1.2rem;">Lavoratore Pro Pass</h3>
+            <div style="font-size: 1.4rem; font-weight: 800; color: #ea580c; margin: 10px 0;">Presto Disponibile</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Vuoi saltare la fila e finire dritto in cima alle preferenze dei migliori locali?</p>
             <ul style="padding-left:16px; color:#555; font-size:0.85rem; line-height:1.5;">
-                <li>Priorità sul pallino verde</li>
-                <li>Badge "Top Verified"</li>
-                <li>Notifiche anticipate turni</li>
+                <li>Badge esclusivo "Top Verified Pro"</li>
+                <li>Notifiche anticipate per i turni più remunerativi</li>
+                <li>Visibilità prioritaria garantita</li>
             </ul>
         </div>
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Passa a Premium", key="btn_prem"):
-            st.success("Account aggiornato a Premium Pro!")
+        if st.button("Avvisami al Lancio", key="btn_prem"):
+            st.toast(
+                "Registrato con successo! Sarai tra i primi a testare il Pro"
+                " Pass."
+            )
 
     with col3:
         st.markdown(
             """
         <div class="custom-card">
-            <span class="badge-pop badge-yellow">⚡ Novità</span>
-            <h3 style="margin-top:10px; font-size:1.2rem;">Boost Weekend</h3>
-            <div style="font-size: 1.8rem; font-weight: 800; color: #ca8a04; margin: 10px 0;">5€ <span style="font-size:0.8rem; color:#777; font-weight:400;">/ settimana</span></div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Disponibile a lavorare nel weekend in evidenza.</p>
+            <span class="badge-pop badge-yellow">Coming Soon ⚡</span>
+            <h3 style="margin-top:10px; font-size:1.2rem;">Radar Urgenze VIP</h3>
+            <div style="font-size: 1.4rem; font-weight: 800; color: #ca8a04; margin: 10px 0;">In Fase di Test</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">La funzione segreta per chi cerca o offre aiuto nel weekend in tempo zero.</p>
             <ul style="padding-left:16px; color:#555; font-size:0.85rem; line-height:1.5;">
-                <li>In evidenza Sabato e Domenica</li>
-                <li>Visibilità prioritaria urgenze</li>
-                <li>Disdetta facile quando vuoi</li>
+                <li>Allarmi radar geolocalizzati live</li>
+                <li>Filtro ultra-rapido per urgenze notturne</li>
+                <li>Posti limitati per i primi aderenti</li>
             </ul>
         </div>
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Attiva Boost Weekend", key="btn_boost"):
-            st.success(
-                "Boost Weekend attivato! Sarai in evidenza per tutto il fine"
-                " settimana."
+        if st.button("Richiedi Accesso Anteprima", key="btn_boost"):
+            st.toast(
+                "Richiesta inviata! Ti contatteremo per l'accesso in anteprima"
+                " esclusiva."
             )
