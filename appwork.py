@@ -1,6 +1,5 @@
 import html
 import re
-import pandas as pd
 import streamlit as st
 
 st.set_page_config(
@@ -11,7 +10,7 @@ st.set_page_config(
 )
 
 # ============================================================
-# STATO INIZIALE & DATI MILANO
+# STATO INIZIALE & DATABASE PROFESSIONISTI MILANO
 # ============================================================
 if "lavoratori" not in st.session_state:
     st.session_state.lavoratori = [
@@ -26,8 +25,6 @@ if "lavoratori" not in st.session_state:
             "referenze": "Eccellente gestione della sala e dei tavoli numerosi.",
             "recensioni": "4.9 ⭐ (12 recensioni verificate)",
             "competenze": ["Lingua Inglese", "Vini & Sommelier Base", "Piattaforma POS"],
-            "lat": 45.4642,
-            "lon": 9.1900,
         },
         {
             "id": 2,
@@ -40,8 +37,6 @@ if "lavoratori" not in st.session_state:
             "referenze": "Velocità incredibile nei momenti di massimo afflusso.",
             "recensioni": "5.0 ⭐ (19 recensioni verificate)",
             "competenze": ["Mixology Avanzata", "Caffetteria Pro", "Gestione cassa"],
-            "lat": 45.4451,
-            "lon": 9.1702,
         },
         {
             "id": 3,
@@ -54,8 +49,54 @@ if "lavoratori" not in st.session_state:
             "referenze": "Ottima attitudine al problem solving e standing elevato.",
             "recensioni": "4.8 ⭐ (15 recensioni verificate)",
             "competenze": ["Lingua Inglese", "Gestione cassa", "Mixology Base"],
-            "lat": 45.4815,
-            "lon": 9.1905,
+        },
+        {
+            "id": 4,
+            "nome": "Sofia Neri",
+            "mansione": "Aiuto Cuoco",
+            "zona": "Brera / Garibaldi",
+            "tel": "+39 333 7778899",
+            "completati": 18,
+            "disponibile": True,
+            "referenze": "Grande precisione nella linea e velocità nei piatti freddi.",
+            "recensioni": "4.9 ⭐ (14 recensioni verificate)",
+            "competenze": ["HACCP Avanzato", "Preparazione Linea"],
+        },
+        {
+            "id": 5,
+            "nome": "Luca Colombo",
+            "mansione": "Cameriere / Sala",
+            "zona": "Città Studi / Lambrate",
+            "tel": "+39 333 4443322",
+            "completati": 9,
+            "disponibile": True,
+            "referenze": "Puntuale, solare e molto gradito dalla clientela universitaria.",
+            "recensioni": "4.7 ⭐ (8 recensioni verificate)",
+            "competenze": ["Lingua Inglese", "Piattaforma POS"],
+        },
+        {
+            "id": 6,
+            "nome": "Martina Rinaldi",
+            "mansione": "Barista / Bartender",
+            "zona": "Fiera / CityLife",
+            "tel": "+39 333 6661122",
+            "completati": 27,
+            "disponibile": True,
+            "referenze": "Top livello nella caffetteria e cocktail di alto standing.",
+            "recensioni": "5.0 ⭐ (24 recensioni verificate)",
+            "competenze": ["Caffetteria Pro", "Mixology Avanzata"],
+        },
+        {
+            "id": 7,
+            "nome": "Alessandro Gallo",
+            "mansione": "Chef de Rang / Jolly",
+            "zona": "Isola",
+            "tel": "+39 333 2221144",
+            "completati": 16,
+            "disponibile": True,
+            "referenze": "Grande professionalità e ottima parlata inglese.",
+            "recensioni": "4.9 ⭐ (11 recensioni verificate)",
+            "competenze": ["Lingua Inglese", "Vini & Sommelier Base"],
         },
     ]
 
@@ -69,6 +110,11 @@ if "sessione_contata" not in st.session_state:
     st.session_state.visite_totali += 1
     st.session_state.sessione_contata = True
 
+if "abbonamento_attivo" not in st.session_state:
+    st.session_state.abbonamento_attivo = (
+        False  # False = vede solo 4 candidati, True = sbloccato tutto
+    )
+
 if "mio_profilo" not in st.session_state:
     st.session_state.mio_profilo = {
         "id": 999,
@@ -81,8 +127,6 @@ if "mio_profilo" not in st.session_state:
         "referenze": "Professionista verificato nel settore HORECA e Accoglienza.",
         "recensioni": "Nuovo utente (0 recensioni)",
         "competenze": ["Lingua Inglese"],
-        "lat": 45.4650,
-        "lon": 9.1890,
     }
 
 
@@ -322,7 +366,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 )
 
 # ============================================================
-# BARRA LATERALE ADMIN
+# BARRA LATERALE ADMIN & SIMULAZIONE ABBONAMENTO
 # ============================================================
 with st.sidebar:
     st.markdown("### 🔐 Area Riservata Admin")
@@ -336,6 +380,19 @@ with st.sidebar:
         mostra_admin = True
     elif password_inserita != "":
         st.error("Password errata ❌")
+
+    st.markdown("---")
+    st.markdown("### 🏢 Stato Account Locale")
+    if st.session_state.abbonamento_attivo:
+        st.success("🌟 Abbonamento Elite Attivo\n(Database interamente sbloccato)")
+        if st.button("Torna a Piano Base (Free)"):
+            st.session_state.abbonamento_attivo = False
+            st.rerun()
+    else:
+        st.warning("🔒 Account Free (Vedi solo 4 candidati)")
+        if st.button("✨ Sblocca Tutto il Database"):
+            st.session_state.abbonamento_attivo = True
+            st.rerun()
 
 # ============================================================
 # STORE HEADER UFFICIALE
@@ -361,7 +418,6 @@ st.markdown(
 
 menu_opzioni = [
     "Panoramica",
-    "🗺️ Mappa & Radar Milano",
     "Database & Filtri Azienda",
     "Area Lavoratore",
     "Piani & Abbonamenti",
@@ -380,7 +436,7 @@ if scelta == "Panoramica":
         <div style="text-align: center; max-width: 800px; margin: 0 auto 2.5rem auto;">
             <span class="badge-pop badge-purple">Copertura Iper-Locale: Milano</span>
             <h2 style='font-weight:800; font-size:2.3rem; margin-top:10px; color:#211e33;'>Il talento che cercavi alla portata di mano.</h2>
-            <p style='color:var(--text-muted); font-size:1.1rem; line-height:1.6; margin-top:10px;'>Flashjob connette in tempo reale i migliori professionisti dell'HORECA e dell'accoglienza a Milano, dai Navigli a Corso Como, azzerando le attese e le agenzie di intermediazione.</p>
+            <p style='color:var(--text-muted); font-size:1.1rem; line-height:1.6; margin-top:10px;'>Flashjob connette in tempo reale i migliori professionisti dell'HORECA e dell'accoglienza a Milano, azzerando le attese e le agenzie di intermediazione.</p>
         </div>
     """,
         unsafe_allow_html=True,
@@ -395,7 +451,7 @@ if scelta == "Panoramica":
             <span class="badge-pop badge-blue">Per i Ristoratori & Locali</span>
             <h3 style="font-size: 1.3rem; margin-top: 5px;">Copri i turni vuoti in 10 secondi</h3>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-                Usa il radar geolocalizzato e contatta direttamente via WhatsApp i professionisti con il pallino verde liberi adesso nel tuo quartiere.
+                Visualizza un'anteprima gratuita di 4 candidati oppure attiva l'abbonamento per accedere all'intero database di professionisti verificati a Milano.
             </p>
         </div>
         """,
@@ -416,82 +472,8 @@ if scelta == "Panoramica":
             unsafe_allow_html=True,
         )
 
-    st.markdown(
-        "<br><h3 style='text-align:center; font-size:1.4rem; font-weight:800; margin-bottom:1.5rem;'>Cosa vuoi fare adesso?</h3>",
-        unsafe_allow_html=True,
-    )
-    c_btn1, c_btn2 = st.columns(2, gap="medium")
-    with c_btn1:
-        if st.button("🏢 Cerco Personale per il mio Locale"):
-            st.session_state.selected_id = None
-            # Switch simulato tramite reindirizzamento logico o interazione
-            st.toast(
-                "Vai su 'Database & Filtri Azienda' per trovare personale!"
-            )
-    with c_btn2:
-        if st.button("⚡ Voglio Lavorare (Accendi Disponibilità)"):
-            st.toast("Vai su 'Area Lavoratore' per attivare il pallino verde!")
-
 # ============================================================
-# 2. MAPPA & RADAR MILANO (CON FILTRO PROSSIMITÀ)
-# ============================================================
-elif scelta == "🗺️ Mappa & Radar Milano":
-    st.markdown(
-        """
-        <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>🗺️ Radar Mappa Interattiva - Milano</h2>
-        <p style='color:var(--text-muted); margin-bottom:1.5rem;'>Visualizzazione live dei professionisti attivi sul territorio milanese con opzione di raggio km.</p>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    raggio_km = st.slider(
-        "Filtra raggio di prossimità dal centro (Duomo)",
-        min_value=1,
-        max_value=10,
-        value=5,
-    )
-
-    # Filtriamo i lavoratori attivi
-    lavoratori_attivi = [l for l in st.session_state.lavoratori if l["disponibile"]]
-
-    if lavoratori_attivi:
-        df_mappa = pd.DataFrame(lavoratori_attivi)
-        st.map(
-            df_mappa,
-            latitude="lat",
-            longitude="lon",
-            size=60,
-            color="#a78bfa",
-            zoom=13,
-        )
-        st.caption(
-            f"📍 Mostrati i professionisti attivi nel raggio di {raggio_km} km selezionato."
-        )
-    else:
-        st.warning(
-            "Nessun professionista online con pallino verde al momento. Attivalo dall'Area Lavoratore!"
-        )
-
-    st.markdown("### 📌 Profili Pronti all'Azione a Milano")
-    for lav in st.session_state.lavoratori:
-        if lav["disponibile"]:
-            st.markdown(
-                f"""
-            <div class="custom-card" style="padding: 1.2rem; margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; flex-wrap:wrap; gap:10px;">
-                <div>
-                    <span class="pulsing-dot"></span><b style="font-size:1.1rem;">{safe(lav["nome"])}</b> — <span style="color:var(--text-muted); font-weight:600;">{safe(lav["mansione"])}</span> 
-                    <div style="font-size:0.85rem; color:#0284c7; margin-top:4px; font-weight:700;">📍 Zona: {safe(lav["zona"])} | ⭐ {safe(lav["recensioni"])}</div>
-                </div>
-                <div>
-                    <a href="{whatsapp_url(lav["tel"])}" target="_blank" style="background:linear-gradient(135deg, #34d399 0%, #059669 100%); color:white; padding:10px 18px; border-radius:12px; text-decoration:none; font-weight:700; font-size:0.85rem; box-shadow:0 4px 12px rgba(52,211,153,0.3);">Contatta su WhatsApp</a>
-                </div>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
-
-# ============================================================
-# 3. DATABASE & FILTRI AZIENDA
+# 2. DATABASE & FILTRI AZIENDA (CON PAYWALL FREEMIUM RIGOROSO)
 # ============================================================
 elif scelta == "Database & Filtri Azienda":
     selected_c = next(
@@ -504,7 +486,7 @@ elif scelta == "Database & Filtri Azienda":
     )
 
     if selected_c is not None:
-        if st.button("← Torna al database completo"):
+        if st.button("← Torna alla lista candidati"):
             st.session_state.selected_id = None
             st.rerun()
 
@@ -564,12 +546,13 @@ elif scelta == "Database & Filtri Azienda":
     else:
         st.markdown(
             """
-            <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Database Contatti & Filtri Elite</h2>
-            <p style='color:var(--text-muted); margin-bottom:1.5rem;'>Seleziona il professionista ideale filtrando per mansione e disponibilità in tempo reale.</p>
+            <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Database Professionisti Milano</h2>
+            <p style='color:var(--text-muted); margin-bottom:1.5rem;'>Cerca i migliori profili HORECA pronti per turni immediati.</p>
         """,
             unsafe_allow_html=True,
         )
 
+        # Filtri
         st.markdown(
             '<div class="custom-card" style="padding: 1.2rem; background: #fafafa;">',
             unsafe_allow_html=True,
@@ -585,8 +568,6 @@ elif scelta == "Database & Filtri Azienda":
                     "Barista / Bartender",
                     "Chef de Rang / Jolly",
                     "Aiuto Cuoco",
-                    "Hostess / Accoglienza",
-                    "Booking / Reception",
                 ],
                 key="filtro_mansione_box",
             )
@@ -608,7 +589,12 @@ elif scelta == "Database & Filtri Azienda":
         if solo_disponibili:
             lavoratori_filtrati = [l for l in lavoratori_filtrati if l["disponibile"]]
 
-        for lav in lavoratori_filtrati:
+        # PAYWALL: Se l'abbonamento non è attivo, mostriamo al massimo 4 candidati
+        limite_visib = len(lavoratori_filtrati)
+        if not st.session_state.abbonamento_attivo and len(lavoratori_filtrati) > 4:
+            limite_visib = 4
+
+        for lav in lavoratori_filtrati[:limite_visib]:
             col_info, col_btn = st.columns([3, 1], gap="medium")
 
             with col_info:
@@ -638,8 +624,34 @@ elif scelta == "Database & Filtri Azienda":
                     st.session_state.selected_id = lav["id"]
                     st.rerun()
 
+        # Blocco visivo se ci sono altri candidati nascosti dal paywall free
+        if (
+            not st.session_state.abbonamento_attivo
+            and len(lavoratori_filtrati) > 4
+        ):
+            st.markdown(
+                """
+            <div class="custom-card" style="text-align: center; background: linear-gradient(135deg, #f3e8ff 0%, #e0f2fe 100%); border: 2px dashed #a78bfa; padding: 2.5rem; margin-top: 2rem;">
+                <span class="badge-pop badge-purple">🔒 Anteprima Free (4 di """
+                + str(len(lavoratori_filtrati))
+                + """ professionisti)</span>
+                <h3 style="margin-top: 10px; font-size: 1.4rem; font-weight: 800;">Vuoi vedere tutti gli altri professionisti a Milano?</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin: 10px auto 20px auto;">
+                    Il piano gratuito ti mostra solo i primi 4 candidati. Sblocca l'abbonamento Elite per accedere all'intero database illimitato di Milano e contattare chi vuoi.
+                </p>
+            </div>
+            """,
+                unsafe_allow_html=True,
+            )
+            if st.button("🚀 Sblocca Tutto il Database Ora"):
+                st.session_state.abbonamento_attivo = True
+                st.success(
+                    "Abbonamento Elite sbloccato! Ora hai accesso completo."
+                )
+                st.rerun()
+
 # ============================================================
-# 4. AREA LAVORATORE
+# 3. AREA LAVORATORE
 # ============================================================
 elif scelta == "Area Lavoratore":
     st.markdown(
@@ -659,8 +671,6 @@ elif scelta == "Area Lavoratore":
             "Barista / Bartender",
             "Chef de Rang / Jolly",
             "Aiuto Cuoco",
-            "Hostess / Accoglienza",
-            "Booking / Reception",
         ],
         index=0,
     )
@@ -675,20 +685,11 @@ elif scelta == "Area Lavoratore":
             "Brera / Garibaldi",
             "Città Studi / Lambrate",
             "Fiera / CityLife",
+            "Isola",
         ],
         index=0,
     )
     mio["zona"] = nuova_zona
-
-    zone_coords = {
-        "Milano Centro": (45.4642, 9.1900),
-        "Navigli / Ticinese": (45.4451, 9.1702),
-        "Porta Nuova / Corso Como": (45.4815, 9.1905),
-        "Brera / Garibaldi": (45.4721, 9.1850),
-        "Città Studi / Lambrate": (45.4780, 9.2270),
-        "Fiera / CityLife": (45.4770, 9.1550),
-    }
-    mio["lat"], mio["lon"] = zone_coords.get(nuova_zona, (45.4642, 9.1900))
 
     st.markdown("### Le tue competenze certificate")
     scelta_comp = st.multiselect(
@@ -700,6 +701,7 @@ elif scelta == "Area Lavoratore":
             "Caffetteria Pro",
             "Gestione cassa",
             "Piattaforma POS",
+            "HACCP Avanzato",
         ],
         default=mio["competenze"],
     )
@@ -707,7 +709,7 @@ elif scelta == "Area Lavoratore":
 
     st.markdown("### Gestione Stato in Tempo Reale")
     nuova_disp = st.toggle(
-        "🟢 Attiva disponibilità sulla mappa di Milano",
+        "🟢 Attiva disponibilità sul database di Milano",
         value=mio["disponibile"],
         key="toggle_disponibilita_lavoratore",
     )
@@ -715,7 +717,7 @@ elif scelta == "Area Lavoratore":
     if (
         nuova_disp != mio["disponibile"]
         or mio["mansione"] != nuova_mansione
-        or mio["zona"] != nuova_zona
+        or mio["zona"] != nueva_zona
     ):
         mio["disponibile"] = nuova_disp
         trovato = next(
@@ -727,8 +729,6 @@ elif scelta == "Area Lavoratore":
                 trovato["disponibile"] = True
                 trovato["mansione"] = mio["mansione"]
                 trovato["zona"] = mio["zona"]
-                trovato["lat"] = mio["lat"]
-                trovato["lon"] = mio["lon"]
                 trovato["competenze"] = mio["competenze"]
             else:
                 st.session_state.lavoratori.append(mio.copy())
@@ -738,82 +738,60 @@ elif scelta == "Area Lavoratore":
                     item for item in st.session_state.lavoratori if item["id"] != mio["id"]
                 ]
 
-        st.success("Stato e posizione aggiornati sulla mappa interattiva!")
+        st.success("Stato aggiornato con successo!")
 
 # ============================================================
-# 5. PIANI & ABBONAMENTI (CON MODALE RADAR INTERATTIVO)
+# 4. PIANI & ABBONAMENTI
 # ============================================================
 elif scelta == "Piani & Abbonamenti":
     st.markdown(
         """
         <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Piani & Funzioni Elite ⚡</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>Strumenti avanzati per accelerare il recruiting e valorizzare la tua professionalità.</p>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Scegli il piano ideale per il tuo locale e sblocca l'accesso illimitato ai lavoratori di Milano.</p>
     """,
         unsafe_allow_html=True,
     )
 
-    col1, col2, col3 = st.columns(3, gap="medium")
+    col1, col2 = st.columns(2, gap="medium")
 
     with col1:
         st.markdown(
             """
-        <div class="custom-card">
-            <span class="badge-pop badge-blue">Novità 🚀</span>
-            <h3 style="margin-top:10px; font-size:1.2rem;">Radar Urgenze Milano</h3>
-            <div style="font-size: 1.2rem; font-weight: 800; color: #0284c7; margin: 10px 0;">Notifiche Flash Raggio 5km</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Invia un'allerta immediata a tutti i professionisti liberi nel quartiere.</p>
+        <div class="custom-card" style="border: 2px solid #e2e8f0;">
+            <span class="badge-pop badge-blue">Piano Base Free</span>
+            <h3 style="margin-top:10px; font-size:1.3rem;">Anteprima Gratuita</h3>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #0284c7; margin: 10px 0;">0 € / mese</div>
+            <p style="font-size:0.9rem; color:var(--text-muted);">Accesso limitato ai primi 4 candidati di prova per ogni ricerca.</p>
         </div>
         """,
             unsafe_allow_html=True,
         )
-
-        with st.form("form_radar_urgente"):
-            st.markdown("<b>Lancia un'emergenza live:</b>", unsafe_allow_html=True)
-            mansione_urgente = st.selectbox(
-                "Figura cercata",
-                ["Cameriere", "Bartender", "Chef de Rang", "Aiuto Cuoco"],
-            )
-            quartiere = st.selectbox(
-                "Quartiere", ["Centro", "Navigli", "Porta Nuova", "Brera"]
-            )
-            invia_radar = st.form_submit_button("🚨 Invia Allerta Radar Flash")
-            if invia_radar:
-                st.success(
-                    f"🚀 Allerta inviata con successo a tutti i {mansione_urgente} attivi in zona {quartiere}!"
-                )
+        if st.button("Seleziona Piano Base", key="btn_base_plan"):
+            st.session_state.abbonamento_attivo = False
+            st.toast("Attivo il piano Base Free (4 candidati visibili).")
+            st.rerun()
 
     with col2:
         st.markdown(
             """
-        <div class="custom-card">
-            <span class="badge-pop badge-orange">Novità 🌟</span>
-            <h3 style="margin-top:10px; font-size:1.2rem;">Badge Competenze Pro</h3>
-            <div style="font-size: 1.2rem; font-weight: 800; color: #ea580c; margin: 10px 0;">Certificazioni</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Aggiungi qualifiche speciali al tuo profilo per saltare in cima alle ricerche.</p>
+        <div class="custom-card" style="border: 2px solid #a78bfa; background: linear-gradient(135deg, #fcfbfe 0%, #f3e8ff 100%);">
+            <span class="badge-pop badge-purple">Piano Elite Ristoratori 🌟</span>
+            <h3 style="margin-top:10px; font-size:1.3rem;">Database Illimitato</h3>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #9333ea; margin: 10px 0;">79 € / mese</div>
+            <p style="font-size:0.9rem; color:var(--text-muted);">Sblocca all'istante l'intero database di professionisti a Milano e contatta chiunque via WhatsApp.</p>
         </div>
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Richiedi Badge", key="btn_badge"):
-            st.toast("Richiesta certificazione inviata al team di verifica!")
-
-    with col3:
-        st.markdown(
-            """
-        <div class="custom-card">
-            <span class="badge-pop badge-yellow">Novità ⚡</span>
-            <h3 style="margin-top:10px; font-size:1.2rem;">Reputazione Verificata</h3>
-            <div style="font-size: 1.2rem; font-weight: 800; color: #ca8a04; margin: 10px 0;">Feedback Bidirezionale</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Il sistema di recensioni incrociate per garantire affidabilità massima nel settore.</p>
-        </div>
-        """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Scopri di più", key="btn_rep"):
-            st.toast("Funzione inclusa nel tuo account attivo!")
+        if st.button("Attiva Abbonamento Elite"):
+            st.session_state.abbonamento_attivo = True
+            st.success(
+                "🎉 Abbonamento Elite attivato! Database completamente sbloccato."
+            )
+            st.rerun()
 
 # ============================================================
-# 6. DASHBOARD ADMIN
+# 5. DASHBOARD ADMIN
 # ============================================================
 elif scelta == "📊 Dashboard Admin":
     st.markdown(
@@ -843,7 +821,7 @@ elif scelta == "📊 Dashboard Admin":
             f"""
         <div class="custom-card" style="text-align: center; padding: 2.5rem;">
             <span class="badge-pop badge-purple">Conversion Monitor</span>
-            <h3 style="color: var(--text-muted); font-size: 1rem; margin-top: 10px;">Lavoratori Geolocalizzati / Online</h3>
+            <h3 style="color: var(--text-muted); font-size: 1rem; margin-top: 10px;">Lavoratori Online</h3>
             <div style="font-size: 3rem; font-weight: 800; color: #9333ea; margin: 15px 0;">{len(st.session_state.lavoratori)}</div>
         </div>
         """,
