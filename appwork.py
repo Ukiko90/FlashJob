@@ -3,32 +3,67 @@ import re
 import streamlit as st
 
 st.set_page_config(
-    page_title="Flashjob • Enterprise Hub",
+    page_title="Flashjob • Il Lavoro a Portata di Mano",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
 # ============================================================
-# DATI E STATO
+# DATABASE INIZIALE & STATO
 # ============================================================
 if "lavoratori" not in st.session_state:
     st.session_state.lavoratori = [
         {
+            "id": 1,
             "nome": "Marco Rossi",
             "mansione": "Cameriere / Sala",
             "zona": "Navigli, Milano",
             "tel": "+39 333 1234567",
             "completati": 18,
-            "referenze": "Puntuale, professionale e con ottime capacità di gestione sala anche nei momenti di massimo afflusso.",
+            "disponibile": True,
+            "referenze": (
+                "Puntuale, professionale e con ottime capacità di gestione"
+                " sala anche nei momenti di massimo afflusso."
+            ),
         },
         {
+            "id": 2,
             "nome": "Sara Bianchi",
             "mansione": "Barista / Bartender",
             "zona": "Porta Romana, Milano",
             "tel": "+39 340 9876543",
             "completati": 24,
-            "referenze": "Eccezionale nella mixology, rapidissima e dotata di grande empatia con la clientela.",
+            "disponibile": True,
+            "referenze": (
+                "Eccezionale nella mixology, rapidissima e dotata di grande"
+                " empatia con la clientela."
+            ),
+        },
+        {
+            "id": 3,
+            "nome": "Luca Verdi",
+            "mansione": "Chef de Rang / Jolly",
+            "zona": "Brera, Milano",
+            "tel": "+39 328 1122334",
+            "completati": 31,
+            "disponibile": False,
+            "referenze": (
+                "Una sicurezza assoluta per eventi e grandi coperti. Leader"
+                " naturale in squadra."
+            ),
+        },
+        {
+            "id": 4,
+            "nome": "Giulia Neri",
+            "mansione": "Aiuto Cuoco",
+            "zona": "Duomo, Milano",
+            "tel": "+39 349 5544332",
+            "completati": 12,
+            "disponibile": True,
+            "referenze": (
+                "Rapida nella linea, pulita e molto attenta alle norme HACCP."
+            ),
         },
     ]
 
@@ -45,279 +80,177 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM & STYLING (Nasconde menu, header e footer di Streamlit/GitHub)
+# DESIGN SYSTEM COLORATO & PULSAR CSS (Pallino Verde Lampeggiante)
 # ============================================================
 st.markdown(
     """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-    --bg: #f0ebe3;
-    --surface: rgba(255,255,255,.88);
-    --surface-strong: #ffffff;
-    --text: #17181b;
-    --muted: #6b7280;
-    --line: #e7e9ed;
-    --blue: #1769ff;
-    --blue-soft: #edf4ff;
-    --green: #20a463;
-    --green-soft: #eaf8f1;
-    --shadow: 0 12px 40px rgba(17,24,39,.07);
-    --radius: 18px;
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    --card-bg: #ffffff;
+    --text-main: #1a1a1a;
+    --text-muted: #757575;
+    --border-color: #eee;
+    --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    --radius: 20px;
 }
 
 html, body, [class*="css"] {
-    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .stApp {
-    background: #f0ebe3;
-    color: var(--text);
+    background: var(--bg-gradient);
+    color: var(--text-main);
 }
 
 .block-container {
-    max-width: 1180px !important;
-    padding: 0 28px 60px !important;
+    max-width: 1100px !important;
+    padding: 2rem 1.5rem 5rem !important;
 }
 
-/* Nasconde elementi nativi Streamlit e GitHub */
+/* Nasconde elementi Streamlit */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 [data-testid="stHeader"] { display: none !important; }
 [data-testid="stToolbar"] { display: none !important; }
 
-/* HERO */
-.hero {
-    margin: 0 -28px 34px;
-    padding: 54px 28px 42px;
+/* HERO COLORATA */
+.hero-box {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+    padding: 3rem 2rem;
+    border-radius: 24px;
     text-align: center;
-    background: rgba(255,255,255,.82);
-    border-bottom: 1px solid var(--line);
-    box-shadow: 0 1px 0 rgba(0,0,0,.02);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 35px rgba(56, 239, 125, 0.3);
+    margin-bottom: 2rem;
+}
+.hero-box h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin: 0 0 10px 0;
+    letter-spacing: -1px;
+}
+.hero-box p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.logo-mark {
-    width: 48px;
-    height: 48px;
-    margin: 0 auto 15px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #17181b;
-    color: #fff;
-    font-size: 23px;
-    font-weight: 700;
-    box-shadow: 0 8px 20px rgba(0,0,0,.13);
-}
-
-.hero h1 {
-    margin: 0;
-    font-size: clamp(2.2rem, 5vw, 3.7rem);
-    letter-spacing: -.055em;
-    line-height: 1;
-    font-weight: 700;
-}
-
-.hero p {
-    max-width: 680px;
-    margin: 15px auto 0;
-    color: var(--muted);
-    font-size: 1rem;
-    line-height: 1.6;
-}
-
-/* NAV */
+/* NAVIGAZIONE RADIO */
 div[data-testid="stRadio"] > label { display: none; }
 div[data-testid="stRadio"] div[role="radiogroup"] {
-    width: fit-content;
-    margin: 0 auto 34px;
-    padding: 5px;
-    gap: 3px;
-    border: 1px solid var(--line);
-    border-radius: 13px;
-    background: rgba(255,255,255,.82);
-    box-shadow: 0 4px 18px rgba(17,24,39,.04);
-    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    background: white;
+    padding: 6px;
+    border-radius: 50px;
+    box-shadow: var(--shadow);
+    margin-bottom: 2.5rem;
+    gap: 5px;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label {
-    border-radius: 9px;
-    padding: 8px 15px;
-    color: #616873 !important;
-    font-size: .82rem;
-    font-weight: 600;
-}
-div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
-    background: #f2f4f7;
+    border-radius: 40px;
+    padding: 10px 18px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-muted) !important;
+    transition: all 0.3s ease;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
-    background: #17181b;
-    color: #fff !important;
-}
-
-/* TITOLI */
-.section-title {
-    margin: 0 0 7px;
-    font-size: 1.55rem;
-    letter-spacing: -.025em;
-    font-weight: 700;
-}
-.section-subtitle {
-    margin: 0 0 25px;
-    color: var(--muted);
-    line-height: 1.6;
-    font-size: .94rem;
+    background: #11998e !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
 }
 
 /* CARD */
-.card {
-    background: var(--surface);
-    border: 1px solid rgba(17,24,39,.07);
+.custom-card {
+    background: var(--card-bg);
     border-radius: var(--radius);
-    padding: 25px;
+    padding: 1.8rem;
     box-shadow: var(--shadow);
-    backdrop-filter: blur(18px);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
 }
-.card h3 { margin: 0 0 9px; font-size: 1.08rem; letter-spacing: -.015em; }
-.card p, .card li { color: #626975; font-size: .9rem; line-height: 1.65; }
-.card ul { margin: 12px 0 0; padding-left: 19px; }
 
-/* PRICING CARD */
-.price-tag {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--text);
-    margin: 12px 0 15px 0;
-    letter-spacing: -.03em;
+/* PALLINO VERDE LAMPEGGIANTE (PULSAR) */
+@keyframes pulse-animation {
+    0% { transform: scale(0.95); boxShadow: 0 0 0 0 rgba(0, 200, 83, 0.7); }
+    70% { transform: scale(1); boxShadow: 0 0 0 10px rgba(0, 200, 83, 0); }
+    100% { transform: scale(0.95); boxShadow: 0 0 0 0 rgba(0, 200, 83, 0); }
 }
-.price-tag span {
-    font-size: .85rem;
-    color: var(--muted);
-    font-weight: 400;
+
+.pulsing-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #00c853;
+    border-radius: 50%;
+    animation: pulse-animation 1.8s infinite;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.offline-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
 }
 
 /* BADGE */
-.badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 5px 9px;
-    border-radius: 999px;
-    background: #f0f2f5;
-    color: #515762;
-    font-size: .66rem;
-    font-weight: 700;
-    letter-spacing: .07em;
+.badge-pop {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 800;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
 }
-.badge.blue { background: var(--blue-soft); color: var(--blue); }
-.badge.green { background: var(--green-soft); color: var(--green); }
+.badge-green { background: #e8f8f0; color: #00c853; }
+.badge-orange { background: #fff3e0; color: #ff9100; }
+.badge-blue { background: #e3f2fd; color: #2979ff; }
+.badge-gray { background: #f1f5f9; color: #64748b; }
 
 /* STATS */
-.stats {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    margin: 24px 0;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: 15px;
-    background: #fafbfc;
-}
-.stat { padding: 17px 10px; text-align: center; border-right: 1px solid var(--line); }
-.stat:last-child { border-right: 0; }
-.stat strong { display: block; font-size: 1.35rem; letter-spacing: -.03em; }
-.stat span {
-    display: block;
-    margin-top: 3px;
-    color: var(--muted);
-    font-size: .64rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .07em;
-}
-
-/* PROFILE */
-.profile {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 34px;
-    background: var(--surface-strong);
-    border: 1px solid var(--line);
-    border-radius: 22px;
-    box-shadow: var(--shadow);
-    backdrop-filter: blur(18px);
-}
-.profile-head { display: flex; align-items: center; gap: 17px; }
-.avatar {
-    width: 72px;
-    height: 72px;
-    flex: 0 0 72px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #fff;
-    box-shadow: 0 5px 18px rgba(0,0,0,.12);
-}
-.profile h2 { margin: 0; font-size: 1.4rem; letter-spacing: -.03em; }
-.role { margin: 4px 0 0; color: var(--blue); font-size: .88rem; font-weight: 600; }
-.meta { margin: 4px 0 0; color: var(--muted); font-size: .78rem; }
-.divider { height: 1px; margin: 25px 0; background: var(--line); }
-.quote {
-    padding: 17px 18px;
-    border-left: 3px solid var(--blue);
-    border-radius: 0 12px 12px 0;
-    background: #f7f9fc;
-    color: #3f4650;
-    font-size: .9rem;
-    line-height: 1.65;
-}
-
-/* DATABASE */
-.worker { min-height: 165px; }
-.worker-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; }
-.worker h3 { margin: 0; font-size: 1.04rem; }
-.worker-role { margin: 5px 0; color: #626975; font-size: .86rem; }
-.worker-meta { color: var(--muted); font-size: .78rem; }
-.worker-status { color: var(--green); font-size: .72rem; font-weight: 700; }
-
-/* LEGAL */
-.legal {
-    margin-top: 48px;
-    padding: 22px;
-    border: 1px solid var(--line);
+.stats-container {
+    display: flex;
+    background: #f8f9fa;
     border-radius: 16px;
-    background: rgba(255,255,255,.62);
-    color: #7b818a;
-    font-size: .7rem;
-    line-height: 1.65;
-    backdrop-filter: blur(10px);
+    padding: 1rem;
+    margin: 1.2rem 0;
+    text-align: center;
+    border: 1px solid #edf2f7;
 }
-.legal b { color: #333840; }
+.stat-box { flex: 1; border-right: 1px solid #e2e8f0; }
+.stat-box:last-child { border-right: none; }
+.stat-box strong { display: block; font-size: 1.3rem; color: #11998e; }
+.stat-box span { font-size: 0.7rem; color: #718096; font-weight: 700; text-transform: uppercase; }
 
-/* STREAMLIT BUTTONS */
+/* BOTTONI */
 .stButton > button {
     width: 100%;
-    min-height: 42px;
-    border: 1px solid #17181b;
-    border-radius: 11px;
-    background: #17181b;
-    color: #fff;
-    font-weight: 600;
-    font-size: .82rem;
-    transition: all .15s ease;
+    min-height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+    font-weight: 700;
+    border: none;
+    box-shadow: 0 4px 15px rgba(56, 239, 125, 0.35);
+    transition: all 0.2s ease;
 }
 .stButton > button:hover {
-    border-color: #000;
-    background: #000;
-    color: #fff;
-    transform: translateY(-1px);
-}
-.back-button .stButton > button {
-    width: auto;
-    background: transparent;
-    color: #333840;
-    border-color: var(--line);
+    opacity: 0.92;
+    transform: translateY(-2px);
+    color: white;
 }
 </style>
 """,
@@ -325,17 +258,13 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 )
 
 # ============================================================
-# HERO SECTION
+# HERO
 # ============================================================
 st.markdown(
     """
-<div class="hero">
-    <div class="logo-mark">⚡</div>
-    <h1>Flashjob</h1>
-    <p>
-        Enterprise Workforce Hub per Hotel, Restaurant e Hospitality.
-        Trova professionisti disponibili e copri i turni critici in pochi minuti.
-    </p>
+<div class="hero-box">
+    <h1>⚡ Flashjob</h1>
+    <p>Database contatti in tempo reale, filtri avanzati e gestione turni con disponibilità live.</p>
 </div>
 """,
     unsafe_allow_html=True,
@@ -344,26 +273,275 @@ st.markdown(
 scelta = st.radio(
     "Navigazione",
     [
-        "Panoramica & Modello",
-        "Database Aziendale",
-        "Area Personale Lavoratore",
-        "Piani & Abbonamenti ⚡",
+        "Panoramica",
+        "Database & Filtri Azienda",
+        "Area Lavoratore (Imposta Disponibilità)",
+        "Piani & Abbonamenti",
     ],
     horizontal=True,
 )
 
 # ============================================================
-# PANORAMICA & MODELLO
+# 1. PANORAMICA
 # ============================================================
-if scelta == "Panoramica & Modello":
+if scelta == "Panoramica":
     st.markdown(
         """
-<div class="section-title">Infrastruttura Operativa</div>
-<div class="section-subtitle">
-Flashjob mette in contatto aziende e professionisti hospitality attraverso
-un database operativo con profili, disponibilità, storico e referenze.
-</div>
-""",
+        <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Come funziona il Database Live</h2>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>I dipendenti impostano la propria disponibilità e i ristoratori filtrano i profili per trovare subito chi serve.</p>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    col1, col2 = st.columns(2, gap="large")
+    with col1:
+        st.markdown(
+            """
+        <div class="custom-card">
+            <span class="badge-pop badge-blue">Per i Ristoratori</span>
+            <h3>Filtri e Ricerca Rapida</h3>
+            <p>Seleziona la mansione o la zona per visualizzare all'istante solo i lavoratori con il pallino verde accesi e pronti a lavorare.</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+    with col2:
+        st.markdown(
+            """
+        <div class="custom-card">
+            <span class="badge-pop badge-green">Per i Lavoratori</span>
+            <h3>Disponibilità Istantanea</h3>
+            <p>Attiva l'interfaccia di stato: il tuo profilo si illumina con un indicatore verde lampeggiante visibile a tutti i locali in cerca.</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+# ============================================================
+# 2. DATABASE & FILTRI AZIENDA
+# ============================================================
+elif scelta == "Database & Filtri Azienda":
+    selected = st.session_state.selected_candidate
+
+    if selected is not None:
+        if st.button("← Torna al database completo"):
+            st.session_state.selected_candidate = None
+            st.rerun()
+
+        c = selected
+        stato_html = (
+            '<span class="pulsing-dot"></span><b style="color:#00c853;">DISPONIBILE ORA</b>'
+            if c["disponibile"]
+            else '<span class="offline-dot"></span><span style="color:#888;">NON DISPONIBILE</span>'
+        )
+
+        st.markdown(
+            f"""
+        <div class="custom-card" style="margin-top: 20px;">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid #38ef7d;" />
+                <div>
+                    <div style="margin-bottom:6px;">{stato_html}</div>
+                    <h2 style="margin:0; font-size:1.5rem;">{safe(c["nome"])}</h2>
+                    <p style="color:var(--text-muted); margin:4px 0 0 0; font-weight:600;">{safe(c["mansione"])} · {safe(c["zona"])}</p>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-box">
+                    <strong>{safe(c["completati"])}</strong>
+                    <span>Turni fatti</span>
+                </div>
+                <div class="stat-box">
+                    <strong>100%</strong>
+                    <span>Affidabilità</span>
+                </div>
+                <div class="stat-box">
+                    <strong>Verificato</strong>
+                    <span>Status</span>
+                </div>
+            </div>
+            
+            <div style="background:#f0fdf4; border-left:4px solid #00c853; padding:15px; border-radius:0 12px 12px 0; margin-top:15px; font-style:italic; color:#166534;">
+                “{safe(c["referenze"])}”
+            </div>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+        st.link_button(
+            "💬 Contatta e Prenota su WhatsApp",
+            whatsapp_url(c["tel"]),
+            use_container_width=True,
+        )
+
+    else:
+        st.markdown(
+            """
+            <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Database Contatti & Filtri</h2>
+            <p style='color:var(--text-muted); margin-bottom:1.5rem;'>Filtra i professionisti per trovare subito la risorsa ideale per il tuo locale.</p>
+        """,
+            unsafe_allow_html=True,
+        )
+
+        # SEZIONE FILTRI
+        st.markdown(
+            '<div class="custom-card" style="padding: 1.2rem; background: #fafbfc;">',
+            unsafe_allow_html=True,
+        )
+        col_f1, col_f2, col_f3 = st.columns(3)
+
+        with col_f1:
+            filtro_mansione = st.selectbox(
+                "Filtra per Mansione",
+                [
+                    "Tutte",
+                    "Cameriere / Sala",
+                    "Barista / Bartender",
+                    "Chef de Rang / Jolly",
+                    "Aiuto Cuoco",
+                ],
+            )
+
+        with col_f2:
+            solo_disponibili = st.checkbox(
+                "Mostra solo disponibili con pallino verde", value=False
+            )
+
+        with col_f3:
+            ricerca_testo = st.text_input(
+                "Cerca per nome o zona", placeholder="Es. Navigli o Marco..."
+            )
+
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        # APPLICAZIONE FILTRI SUL DATABASE
+        lavoratori_filtrati = st.session_state.lavoratori
+        if filtro_mansione != "Tutte":
+            lavoratori_filtrati = [
+                l for l in lavoratori_filtrati if l["mansione"] == filtro_mansione
+            ]
+        if solo_disponibili:
+            lavoratori_filtrati = [
+                l for l in lavoratori_filtrati if l["disponibile"]
+            ]
+        if ricerca_testo:
+            testo_q = ricerca_testo.lower()
+            lavoratori_filtrati = [
+                l
+                for l in lavoratori_filtrati
+                if testo_q in l["nome"].lower() or testo_q in l["zona"].lower()
+            ]
+
+        st.markdown(
+            f"<p style='color:#666; font-size:0.9rem; margin: 1rem 0;'>Trovati <b>{len(lavoratori_filtrati)}</b> professionisti in archivio.</p>",
+            unsafe_allow_html=True,
+        )
+
+        for idx, lav in enumerate(lavoratori_filtrati):
+            col_info, col_btn = st.columns([3, 1], gap="medium")
+
+            with col_info:
+                if lav["disponibile"]:
+                    badge_stato = '<span class="pulsing-dot"></span><b style="color:#00c853; font-size:0.75rem;">DISPONIBILE ORA</b>'
+                else:
+                    badge_stato = '<span class="offline-dot"></span><span style="color:#888; font-size:0.75rem;">NON DISPONIBILE</span>'
+
+                st.markdown(
+                    f"""
+                <div class="custom-card" style="margin-bottom:1rem; padding:1.2rem 1.5rem;">
+                    <div style="margin-bottom:6px;">{badge_stato}</div>
+                    <h3 style="margin:0; font-size:1.15rem;">{safe(lav["nome"])}</h3>
+                    <p style="color:var(--text-muted); margin:3px 0; font-size:0.9rem; font-weight:600;">{safe(lav["mansione"])} · {safe(lav["zona"])}</p>
+                    <span style="font-size:0.8rem; color:#888;">{safe(lav["completati"])} turni completati</span>
+                </div>
+                """,
+                    unsafe_allow_html=True,
+                )
+
+            with col_btn:
+                st.markdown(
+                    "<div style='margin-top: 30px;'></div>", unsafe_allow_html=True
+                )
+                if st.button("Vedi profilo", key=f"btn_db_{lav['id']}DATA"):
+                    st.session_state.selected_candidate = lav
+                    st.rerun()
+
+# ============================================================
+# 3. AREA LAVORATORE (IMPOSTA DISPONIBILITÀ CON PALLINO VERDE)
+# ============================================================
+elif scelta == "Area Lavoratore (Imposta Disponibilità)":
+    st.markdown(
+        """
+        <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Area Personale Lavoratore</h2>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Modifica il tuo stato: accendi la disponibilità per farti contattare subito dai ristoranti.</p>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    # Prendiamo ad esempio il primo lavoratore (Marco Rossi) come profilo demo gestito dall'utente
+    lavoratore_corrente = st.session_state.lavoratori[0]
+
+    st.markdown(
+        """
+    <div class="custom-card">
+        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem;">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" style="width:70px; height:70px; border-radius:50%; object-fit:cover;" />
+            <div>
+                <h3 style="margin:0;">Marco Rossi</h3>
+                <p style="color:var(--text-muted); margin:2px 0; font-size:0.85rem;">Cameriere / Sala · Navigli, Milano</p>
+                <span class="badge-pop badge-blue" style="margin:0;">Profilo Verificato</span>
+            </div>
+        </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown("### Gestione Stato in Tempo Reale")
+    nuova_disp = st.toggle(
+        "🟢 Attiva disponibilità per lavorare (Accendi pallino verde lampeggiante)",
+        value=lavoratore_corrente["disponibile"],
+    )
+
+    if nuova_disp != lavoratore_corrente["disponibile"]:
+        lavoratore_corrente["disponibile"] = nuova_disp
+        st.success(
+            "Stato aggiornato con successo nel database! I ristoranti vedranno"
+            " immediatamente la modifica."
+        )
+        st.rerun()
+
+    if lavoratore_corrente["disponibile"]:
+        st.markdown(
+            """
+        <div style="background:#e8f8f0; color:#00c853; padding:12px; border-radius:12px; font-weight:700; margin-top:15px;">
+            <span class="pulsing-dot"></span> Il tuo profilo è attualmente ONLINE con il pallino verde lampeggiante nel database aziendale!
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            """
+        <div style="background:#f1f5f9; color:#64748b; padding:12px; border-radius:12px; font-weight:700; margin-top:15px;">
+            <span class="offline-dot"></span> Il tuo profilo è attualmente offline.
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# ============================================================
+# 4. PIANI & ABBONAMENTI
+# ============================================================
+else:
+    st.markdown(
+        """
+        <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Listino & Upgrade ⚡</h2>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Scegli il piano ideale per sbloccare tutte le potenzialità di Flashjob.</p>
+    """,
         unsafe_allow_html=True,
     )
 
@@ -372,286 +550,39 @@ un database operativo con profili, disponibilità, storico e referenze.
     with col1:
         st.markdown(
             """
-<div class="card">
-    <span class="badge blue">Area Aziende</span>
-    <h3>Standard di Servizio</h3>
-    <ul>
-        <li>Profili professionali con referenze e storico verificabile.</li>
-        <li>Selezione rapida per coprire assenze e picchi di lavoro.</li>
-        <li>Contatto diretto con il professionista.</li>
-        <li>Processo semplice, pensato per le esigenze operative.</li>
-    </ul>
-</div>
-""",
+        <div class="custom-card">
+            <span class="badge-pop badge-blue">Per Aziende & Locali</span>
+            <h3 style="margin-top:10px;">Abbonamento Standard</h3>
+            <div style="font-size: 2.2rem; font-weight: 800; color: #11998e; margin: 10px 0;">20€ <span style="font-size:0.9rem; color:#777; font-weight:400;">/ mese</span></div>
+            <p style="font-size:0.9rem; color:var(--text-muted);">Accesso completo ai filtri avanzati e al database dei professionisti.</p>
+            <ul style="padding-left:18px; color:#555; font-size:0.9rem; line-height:1.6;">
+                <li>Filtri per mansione e zona in tempo reale</li>
+                <li>Contatto diretto WhatsApp sbloccato</li>
+                <li>Gestione turni e urgenze senza limiti</li>
+            </ul>
+        </div>
+        """,
             unsafe_allow_html=True,
         )
+        if st.button("Attiva Abbonamento Azienda"):
+            st.success("Richiesta registrata! Abbonamento attivato.")
 
     with col2:
         st.markdown(
             """
-<div class="card">
-    <span class="badge green">Area Lavoratori</span>
-    <h3>Affidabilità & Compliance</h3>
-    <ul>
-        <li>Accesso gratuito alla piattaforma.</li>
-        <li>Accettazione formale dell'offerta prima del turno.</li>
-        <li>Storico delle collaborazioni completate.</li>
-        <li>Policy di affidabilità e gestione delle assenze.</li>
-    </ul>
-</div>
-""",
+        <div class="custom-card">
+            <span class="badge-pop badge-orange">Per i Lavoratori</span>
+            <h3 style="margin-top:10px;">Piano Premium Pro</h3>
+            <div style="font-size: 2.2rem; font-weight: 800; color: #ff9100; margin: 10px 0;">10€ <span style="font-size:0.9rem; color:#777; font-weight:400;">/ mese</span></div>
+            <p style="font-size:0.9rem; color:var(--text-muted);">Mettiti in cima alle preferenze dei ristoranti e ottieni più turni.</p>
+            <ul style="padding-left:18px; color:#555; font-size:0.9rem; line-height:1.6;">
+                <li>Priorità sul pallino verde lampeggiante</li>
+                <li>Badge esclusivo "Top Verified"</li>
+                <li>Anteprima notifiche sui nuovi turni liberi</li>
+            </ul>
+        </div>
+        """,
             unsafe_allow_html=True,
         )
-
-# ============================================================
-# DATABASE AZIENDALE
-# ============================================================
-elif scelta == "Database Aziendale":
-    selected = st.session_state.selected_candidate
-
-    if selected is not None:
-        st.markdown('<div class="back-button">', unsafe_allow_html=True)
-        if st.button("← Torna al database"):
-            st.session_state.selected_candidate = None
-            st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
-
-        c = selected
-
-        profile_html = f"""<div class="profile">
-    <div class="profile-head">
-        <img class="avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Profilo">
-        <div>
-            <h2>{safe(c["nome"])}</h2>
-            <p class="role">{safe(c["mansione"])} · {safe(c["zona"])}</p>
-            <p class="meta">● Disponibile per turni urgenti</p>
-        </div>
-    </div>
-    <div class="divider"></div>
-    <span class="badge">Performance</span>
-    <div class="stats">
-        <div class="stat">
-            <strong>{safe(c["completati"])}</strong>
-            <span>Turni completati</span>
-        </div>
-        <div class="stat">
-            <strong>100%</strong>
-            <span>Affidabilità</span>
-        </div>
-        <div class="stat">
-            <strong>✓</strong>
-            <span>Profilo verificato</span>
-        </div>
-    </div>
-    <span class="badge">Referenza</span>
-    <div class="quote">“{safe(c["referenze"])}”</div>
-</div>"""
-
-        st.markdown(profile_html, unsafe_allow_html=True)
-
-        st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
-
-        st.link_button(
-            "Contatta e prenota via WhatsApp →",
-            whatsapp_url(c["tel"]),
-            use_container_width=True,
-        )
-
-    else:
-        st.markdown(
-            """
-<div class="section-title">Database Professionisti</div>
-<div class="section-subtitle">
-Seleziona un professionista per visualizzare profilo, storico e referenze.
-</div>
-""",
-            unsafe_allow_html=True,
-        )
-
-        for idx, lav in enumerate(st.session_state.lavoratori):
-            left, right = st.columns([5, 1.7], gap="large")
-
-            with left:
-                worker_html = f"""<div class="card worker">
-    <div class="worker-top">
-        <div>
-            <h3>{safe(lav["nome"])}</h3>
-            <div class="worker-role">
-                {safe(lav["mansione"])} · {safe(lav["zona"])}
-            </div>
-        </div>
-        <div class="worker-status">● DISPONIBILE</div>
-    </div>
-    <div class="worker-meta">
-        {safe(lav["completati"])} turni completati · Profilo verificato
-    </div>
-</div>"""
-                st.markdown(worker_html, unsafe_allow_html=True)
-
-            with right:
-                st.markdown("<div style='height:42px'></div>", unsafe_allow_html=True)
-                if st.button(
-                    "Visualizza profilo",
-                    key=f"profile_{idx}",
-                    use_container_width=True,
-                ):
-                    st.session_state.selected_candidate = lav
-                    st.rerun()
-
-# ============================================================
-# AREA LAVORATORE
-# ============================================================
-elif scelta == "Area Personale Lavoratore":
-    st.markdown(
-        """
-<div class="section-title">Area Personale</div>
-<div class="section-subtitle">
-Gestisci il tuo profilo, monitora i turni e consulta lo storico delle attività.
-</div>
-""",
-        unsafe_allow_html=True,
-    )
-
-    area_html = """<div class="profile">
-<div class="profile-head">
-<img class="avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Giulia Rossi">
-<div>
-<h2>Giulia Rossi</h2>
-<p class="role">Professionista Hospitality · Milano Centro</p>
-<p class="meta">● Profilo verificato · +39 334 5678901</p>
-</div>
-</div>
-<div class="stats">
-<div class="stat">
-<strong>03</strong>
-<span>In attesa</span>
-</div>
-<div class="stat">
-<strong>02</strong>
-<span>In corso</span>
-</div>
-<div class="stat">
-<strong>18</strong>
-<span>Completati</span>
-</div>
-</div>
-<span class="badge">Configurazione account</span>
-<div class="card" style="margin-top:12px; box-shadow:none; background:#fafbfc;">
-<div style="display:flex;justify-content:space-between;gap:20px;padding:7px 0;color:#343942;font-size:.88rem;">
-<span>Lingua di sistema</span>
-<strong>Italiano</strong>
-</div>
-<div style="height:1px;background:#e7e9ed;margin:9px 0;"></div>
-<div style="display:flex;justify-content:space-between;gap:20px;padding:7px 0;color:#343942;font-size:.88rem;">
-<span>Credenziali di sicurezza</span>
-<span style="color:#8a9099;">›</span>
-</div>
-</div>
-</div>"""
-
-    st.markdown(area_html, unsafe_allow_html=True)
-
-# ============================================================
-# PIANI & ABBONAMENTI
-# ============================================================
-else:
-    st.markdown(
-        """
-<div class="section-title">Listino Piani & Abbonamenti ⚡</div>
-<div class="section-subtitle">
-Scegli la soluzione su misura per la tua attività o per accelerare le tue opportunità di lavoro.
-</div>
-""",
-        unsafe_allow_html=True,
-    )
-
-    col_a, col_b = st.columns(2, gap="large")
-
-    with col_a:
-        st.markdown(
-            """
-<div class="card">
-    <span class="badge blue">Aziende & Locali</span>
-    <h3>Abbonamento Mensile Standard</h3>
-    <div class="price-tag">20€ <span>/ mese</span></div>
-    <p>Accesso illimitato al database dei professionisti hospitality e pubblicazione dei turni di copertura immediata.</p>
-    <ul>
-        <li>Ricerca avanzata per zona e mansione</li>
-        <li>Contatto diretto e chat sbloccata</li>
-        <li>Gestione completa delle emergenze di sala e cucina</li>
-    </ul>
-    <div style="margin-top: 22px;"></div>
-</div>
-""",
-            unsafe_allow_html=True,
-        )
-        if st.button("Attiva Abbonamento Azienda (20€/mo)"):
-            st.success(
-                "Richiesta di attivazione abbonamento aziendale registrata con successo!"
-            )
-
-        st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
-
-        st.markdown(
-            """
-<div class="card">
-    <span class="badge blue">Add-on Urgenze</span>
-    <h3>Job Boosting Urgente</h3>
-    <div class="price-tag">5€ <span>/ settimana</span></div>
-    <p>Per le emergenze critiche dell'ultimo minuto: metti in cima la tua richiesta e invia notifiche prioritarie.</p>
-    <ul>
-        <li>Posizionamento in evidenza nel feed dei lavoratori</li>
-        <li>Notifica push prioritaria immediata in zona</li>
-        <li>Copertura garantita in tempi record</li>
-    </ul>
-    <div style="margin-top: 22px;"></div>
-</div>
-""",
-            unsafe_allow_html=True,
-        )
-        if st.button("Lancia Job Boosting (5€/sett)"):
-            st.success(
-                "Job Boosting attivato! La tua richiesta è ora in evidenza tra i lavoratori."
-            )
-
-    with col_b:
-        st.markdown(
-            """
-<div class="card">
-    <span class="badge green">Professionisti & Lavoratori</span>
-    <h3>Piano Lavoratore Premium</h3>
-    <div class="price-tag">10€ <span>/ mese</span></div>
-    <p>Massimizza le tue opportunità e sali in cima alle preferenze dei migliori ristoranti e hotel di Milano.</p>
-    <ul>
-        <li><strong>Profilo in Primo Piano</strong> nel database aziendale</li>
-        <li><strong>Badge "Top Verified"</strong> per massima affidabilità</li>
-        <li><strong>Anticipo Notifiche</strong> sui turni liberi in arrivo</li>
-        <li>Zero commissioni sui guadagni dei turni</li>
-    </ul>
-    <div style="margin-top: 22px;"></div>
-</div>
-""",
-            unsafe_allow_html=True,
-        )
-        if st.button("Passa a Lavoratore Premium (10€/mo)"):
-            st.success(
-                "Ottimo! Il tuo account è stato aggiornato allo status Premium."
-            )
-
-# ============================================================
-# LEGAL
-# ============================================================
-st.markdown(
-    """
-<div class="legal">
-    <b>Note legali e regolamento Enterprise — Flashjob</b><br><br>
-    La piattaforma è progettata come directory e bacheca di contatto B2B
-    per il settore Hospitality & Restaurant. Le modalità effettive di
-    selezione, ingaggio e collaborazione devono essere configurate in
-    conformità alla normativa applicabile. La policy interna di affidabilità
-    può prevedere la sospensione dell'accesso in caso di assenze ingiustificate
-    reiterate.
-</div>
-""",
-    unsafe_allow_html=True,
-)
+        if st.button("Passa a Premium Lavoratore"):
+            st.success("Account aggiornato con successo allo status Premium!")
