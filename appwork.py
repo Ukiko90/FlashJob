@@ -25,7 +25,7 @@ if "lavoratori" not in st.session_state:
             "boosted": True,
             "referenze": "Eccellente gestione della sala e dei tavoli numerosi.",
             "recensioni": "4.9 ⭐ (12 recensioni verificate)",
-            "competenze": ["Lingua Inglese", "Vini & Sommelier Base", "Piattaforma POS"],
+            "competenze": ["Lingua Inglese", "Vini & Sommelier Base", "POS"],
         },
         {
             "id": 2,
@@ -38,7 +38,7 @@ if "lavoratori" not in st.session_state:
             "boosted": False,
             "referenze": "Velocità incredibile nei momenti di massimo afflusso.",
             "recensioni": "5.0 ⭐ (19 recensioni verificate)",
-            "competenze": ["Mixology Avanzata", "Caffetteria Pro", "Gestione cassa"],
+            "competenze": ["Mixology Avanzata", "Caffetteria Pro", "Cassa"],
         },
     ]
 
@@ -71,8 +71,8 @@ if "mio_profilo" not in st.session_state:
         "completati": 0,
         "disponibile": False,
         "boosted": False,
-        "referenze": "Professionista verificato nel settore HORECA e Accoglienza.",
-        "recensioni": "Nuovo utente (0 recensioni)",
+        "referenze": "Professionista verificato nel settore HORECA.",
+        "recensioni": "Nuovo utente",
         "competenze": ["Lingua Inglese"],
     }
 
@@ -87,31 +87,32 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM EDITORIALE (ISPIRATO A TEMPLATE MODERNI)
+# DESIGN SYSTEM CON SFONDO ASTRATTO DELICATO E COLORATO
 # ============================================================
 st.markdown(
     """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
 
 :root {
-    --bg-main: #f8fafc;
-    --card-bg: #ffffff;
-    --text-main: #0f172a;
+    --text-main: #1e293b;
     --text-muted: #64748b;
     --accent-teal: #0d9488;
-    --accent-sky: #0284c7;
-    --border-subtle: #e2e8f0;
-    --shadow-editorial: 0 20px 40px -15px rgba(13, 148, 136, 0.07);
-    --radius-editorial: 20px;
+    --border-glass: rgba(255, 255, 255, 0.6);
 }
 
 html, body, [class*="css"] {
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
+/* SFONDO ASTRATTO COLORATO E DELICATO (ISPIRATO A PINTEREST) */
 .stApp {
-    background-color: var(--bg-main);
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(186, 230, 253, 0.5) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(153, 246, 228, 0.4) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(254, 240, 138, 0.25) 0%, transparent 50%),
+        linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    background-attachment: fixed;
     color: var(--text-main);
 }
 
@@ -121,15 +122,16 @@ html, body, [class*="css"] {
 }
 
 #MainMenu, footer, header {visibility: hidden; display: none;}
-[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"], [data-testid="stStatusWidget"] {display: none !important;}
+[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"] {display: none !important;}
 
-/* HEADER EDITORIALE PULITO */
+/* HEADER EDITORIALE CON EFFETTO GLASS */
 .editorial-header {
-    background: linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%);
-    border: 1px solid #ccfbf1;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border-glass);
     padding: 3rem 2.5rem;
-    border-radius: 28px;
-    box-shadow: var(--shadow-editorial);
+    border-radius: 30px;
+    box-shadow: 0 20px 40px -15px rgba(13, 148, 136, 0.08);
     margin-bottom: 2.5rem;
     display: flex;
     justify-content: space-between;
@@ -144,31 +146,33 @@ html, body, [class*="css"] {
     background: linear-gradient(to bottom, #0284c7, #0d9488);
 }
 .editorial-title h1 {
-    font-size: 2.8rem;
-    font-weight: 800;
-    letter-spacing: -1.5px;
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -1px;
     color: #0f172a;
     margin: 0;
 }
 .editorial-title p {
     font-size: 1.05rem;
-    color: #475569;
+    color: var(--text-muted);
     margin: 8px 0 0 0;
     font-weight: 500;
 }
 
-/* RADIO NAVIGATION STILE MAGAZINE */
+/* NAVIGAZIONE RADIO STILE MAGAZINE */
 div[data-testid="stRadio"] > label { display: none; }
 div[data-testid="stRadio"] div[role="radiogroup"] {
     display: flex;
     justify-content: center;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
     padding: 6px;
     border-radius: 40px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
     margin-bottom: 3rem;
     gap: 4px;
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border-glass);
     flex-wrap: wrap;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label {
@@ -186,22 +190,23 @@ div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
 div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     background: #0f172a !important;
     color: white !important;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
 }
 
-/* BANNER EDITORIALI CON HOVER FLUIDO (STILE CANVA) */
+/* BANNER & CARD EDITORIALI GLASS */
 .editorial-banner {
-    background: #ffffff;
-    border: 1px solid var(--border-subtle);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-glass);
     padding: 2.5rem 2rem;
-    border-radius: var(--radius-editorial);
-    box-shadow: var(--shadow-editorial);
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.04);
     height: 100%;
-    position: relative;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .editorial-banner:hover {
     transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.95);
     border-color: #99f6e4;
     box-shadow: 0 25px 50px -12px rgba(13, 148, 136, 0.12);
 }
@@ -219,22 +224,22 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     border: 1px solid #ccfbf1;
 }
 
-/* CARD EDITORIALI */
 .editorial-card {
-    background: #ffffff;
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-editorial);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-glass);
+    border-radius: 24px;
     padding: 2rem;
-    box-shadow: var(--shadow-editorial);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.04);
     margin-bottom: 1.5rem;
     transition: all 0.3s ease;
 }
 .editorial-card:hover {
+    background: rgba(255, 255, 255, 0.95);
     border-color: #cbd5e1;
-    box-shadow: 0 20px 35px rgba(0,0,0,0.05);
 }
 .editorial-card-highlight {
-    background: linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,253,250,0.9) 100%);
     border: 2px solid #5eead4;
 }
 
@@ -296,7 +301,7 @@ with st.sidebar:
             st.rerun()
     else:
         st.warning("🔒 Account Titolare: FREE")
-        if st.button("✨ Attiva Titolare"):
+        if st.button("✨ Attiva Titolare (Demo)"):
             st.session_state.abbonamento_titolare = True
             st.success("Abbonamento attivato!")
             st.rerun()
@@ -320,7 +325,7 @@ st.markdown(
         <h1>Flashjob.</h1>
         <p>Curated Staffing & Hospitality Network • Milano HORECA</p>
     </div>
-    <div style="font-size: 2.5rem; background: #f0fdfa; padding: 15px 22px; border-radius: 20px; border: 1px solid #ccfbf1;">⚡</div>
+    <div style="font-size: 2.3rem; background: rgba(240,253,250,0.8); padding: 15px 22px; border-radius: 20px; border: 1px solid #ccfbf1;">⚡</div>
 </div>
 """,
     unsafe_allow_html=True,
@@ -330,7 +335,7 @@ menu_opzioni = [
     "Panoramica",
     "Database & Filtri Azienda",
     "Area Lavoratore & Weekend Boost",
-    "Piani Abbonamento",
+    "Piani Abbonamento (Coming Soon)",
 ]
 if mostra_admin:
     menu_opzioni.append("📊 Dashboard Admin")
@@ -338,14 +343,14 @@ if mostra_admin:
 scelta = st.radio("Navigazione", menu_opzioni, horizontal=True)
 
 # ============================================================
-# 1. PANORAMICA EDITORIALE
+# 1. PANORAMICA
 # ============================================================
 if scelta == "Panoramica":
     st.markdown(
         """
         <div style="text-align: center; max-width: 800px; margin: 0 auto 3rem auto;">
             <span class="editorial-tag">Editoriale & Visione</span>
-            <h2 style='font-weight:800; font-size:2.4rem; letter-spacing:-1px; color:#0f172a; margin-top:5px;'>Il punto d'incontro tra talenti HORECA e locali d'eccellenza.</h2>
+            <h2 style='font-family: "Playfair Display", serif; font-weight:700; font-size:2.5rem; color:#0f172a; margin-top:5px;'>Il punto d'incontro tra talenti HORECA e locali d'eccellenza.</h2>
         </div>
     """,
         unsafe_allow_html=True,
@@ -359,8 +364,7 @@ if scelta == "Panoramica":
             <h3 style="color: #0d9488; margin-top: 0; font-weight:700;">Chi Siamo</h3>
             <p style="color: var(--text-muted); line-height: 1.7; font-size: 0.95rem;">
                 Siamo professionisti della ristorazione e dell'innovazione digitale. Viviamo le sfide quotidiane 
-                del settore e sappiamo quanto sia cruciale trovare personale affidabile o emergere rapidamente 
-                nella giungla delle candidature tradizionali.
+                del settore e sappiamo quanto sia cruciale trovare personale affidabile o emergere rapidamente.
             </p>
         </div>
         """,
@@ -374,7 +378,7 @@ if scelta == "Panoramica":
             <h3 style="color: #0284c7; margin-top: 0; font-weight:700;">La Nostra Mission</h3>
             <p style="color: var(--text-muted); line-height: 1.7; font-size: 0.95rem;">
                 Azzerare le distanze tra locali e lavoratori tramite geolocalizzazione smart, disponibilità in tempo reale 
-                e contatti diretti via WhatsApp, eliminando ogni intermediario e burocrazia superflua.
+                e contatti diretti via WhatsApp, eliminando ogni intermediario superfluo.
             </p>
         </div>
         """,
@@ -382,11 +386,10 @@ if scelta == "Panoramica":
         )
 
     st.markdown(
-        "<h3 style='text-align: center; margin: 3.5rem 0 2rem 0; font-weight: 800; letter-spacing:-0.5px;'>I Pilastri del Servizio</h3>",
+        "<h3 style='text-align: center; margin: 3.5rem 0 2rem 0; font-family: Playfair Display, serif; font-weight: 700; font-size: 2rem;'>I Pilastri del Servizio</h3>",
         unsafe_allow_html=True,
     )
 
-    # 3 BANNER STILE EDITORIALE UNIFORME CON EFFETTO HOVER FLUIDO
     b1, b2, b3 = st.columns(3, gap="medium")
     with b1:
         st.markdown(
@@ -395,7 +398,7 @@ if scelta == "Panoramica":
             <span class="editorial-tag">01 / Live</span>
             <h3 style="margin: 0 0 10px 0; font-size: 1.2rem; font-weight:700;">Disponibilità Immediata</h3>
             <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin: 0;">
-                Il pallino verde lampeggiante indica chi è pronto a lavorare adesso, azzerando le telefonate a vuoto.
+                Il pallino verde lampeggiante indica chi è pronto a lavorare adesso, azzerando le chiamate a vuoto.
             </p>
         </div>
         """,
@@ -409,7 +412,7 @@ if scelta == "Panoramica":
             <span class="editorial-tag">02 / Direct</span>
             <h3 style="margin: 0 0 10px 0; font-size: 1.2rem; font-weight:700;">Contatto WhatsApp</h3>
             <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin: 0;">
-                Parla direttamente con il candidato in un singolo click grazie ai piani di accesso dedicati.
+                Parla direttamente con il candidato in un singolo click grazie ai collegamenti dedicati.
             </p>
         </div>
         """,
@@ -459,7 +462,7 @@ elif scelta == "Database & Filtri Azienda":
         <div class="editorial-card editorial-card-highlight" style="margin-top: 20px;">
             <span class="editorial-tag">Profilo Selezionato</span>
             <div style="margin-top: 10px; margin-bottom: 8px;">{stato_html}</div>
-            <h2 style="margin:0; font-size:1.8rem; font-weight:800;">{safe(selected_c["nome"])}</h2>
+            <h2 style="font-family: 'Playfair Display', serif; margin:0; font-size:2rem; font-weight:700;">{safe(selected_c["nome"])}</h2>
             <p style="color:var(--text-muted); margin:4px 0 10px 0; font-weight:600;">{safe(selected_c["mansione"])} · {safe(selected_c["zona"])}</p>
             <p style="color:#0284c7; font-weight:700; font-size:0.95rem;">⭐ {safe(selected_c["recensioni"])}</p>
             <hr style="border:0; border-top:1px solid #ccfbf1; margin:15px 0;">
@@ -470,7 +473,7 @@ elif scelta == "Database & Filtri Azienda":
         )
 
         if st.session_state.abbonamento_titolare:
-            st.success("✓ Contatto sbloccato con il tuo abbonamento Titolare!")
+            st.success("✓ Contatto sbloccato con il tuo account Titolare!")
             st.link_button(
                 f"💬 Apri Chat WhatsApp ({selected_c['tel']})",
                 whatsapp_url(selected_c["tel"]),
@@ -478,15 +481,15 @@ elif scelta == "Database & Filtri Azienda":
             )
         else:
             st.warning(
-                "🔒 I numeri di telefono diretti sono riservati ai Titolari abbonati."
+                "🔒 I numeri di telefono diretti sono riservati ai Titolari."
             )
-            if st.button("Sblocca Contatti (Abbonati)"):
+            if st.button("Sblocca Contatti (Simula Titolare)"):
                 st.session_state.abbonamento_titolare = True
                 st.rerun()
 
     else:
         st.markdown(
-            "<h2 style='font-weight:800; font-size:1.8rem; letter-spacing:-0.5px;'>Database Talenti & Filtri</h2>",
+            "<h2 style='font-family: Playfair Display, serif; font-weight:700; font-size:2rem;'>Database Talenti & Filtri</h2>",
             unsafe_allow_html=True,
         )
         st.markdown(
@@ -540,7 +543,7 @@ elif scelta == "Database & Filtri Azienda":
 # ============================================================
 elif scelta == "Area Lavoratore & Weekend Boost":
     st.markdown(
-        "<h2 style='font-weight:800; font-size:1.8rem; letter-spacing:-0.5px;'>Area Personale Lavoratore</h2>",
+        "<h2 style='font-family: Playfair Display, serif; font-weight:700; font-size:2rem;'>Area Personale Lavoratore</h2>",
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -612,15 +615,15 @@ elif scelta == "Area Lavoratore & Weekend Boost":
             st.rerun()
 
 # ============================================================
-# 4. PIANI ABBONAMENTO
+# 4. PIANI ABBONAMENTO (COMING SOON)
 # ============================================================
-elif scelta == "Piani Abbonamento":
+elif scelta == "Piani Abbonamento (Coming Soon)":
     st.markdown(
-        "<h2 style='font-weight:800; font-size:1.8rem; letter-spacing:-0.5px;'>Piani & Listino Prezzi ⚡</h2>",
+        "<h2 style='font-family: Playfair Display, serif; font-weight:700; font-size:2rem;'>Piani & Listino • In Arrivo ⚡</h2>",
         unsafe_allow_html=True,
     )
     st.markdown(
-        "<p style='color:var(--text-muted); margin-bottom:2.5rem;'>Soluzioni trasparenti e flessibili per locali, hotel e professionisti dell'HORECA.</p>",
+        "<p style='color:var(--text-muted); margin-bottom:2.5rem;'>Stiamo ultimando lo sviluppo dei piani dedicati. Saranno disponibili a breve per locali e professionisti.</p>",
         unsafe_allow_html=True,
     )
 
@@ -632,8 +635,8 @@ elif scelta == "Piani Abbonamento":
     with col_sub1:
         st.markdown(
             """
-        <div class="editorial-card" style="height: 100%;">
-            <span class="editorial-tag">Pass</span>
+        <div class="editorial-card" style="height: 100%; opacity: 0.85;">
+            <span class="editorial-tag" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;">Coming Soon</span>
             <h3 style="font-size: 1.2rem; font-weight:700; margin-top: 5px;">Turno Singolo</h3>
             <div style="font-size: 1.6rem; font-weight: 800; color: #0284c7; margin: 8px 0;">7 € <span style="font-size: 0.8rem; color: var(--text-muted);">/ evento</span></div>
             <p style="color: var(--text-muted); font-size: 0.85rem;">Ideale per coprire un'emergenza o un turno serale last-minute.</p>
@@ -641,15 +644,13 @@ elif scelta == "Piani Abbonamento":
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Acquista Flash Pass"):
-            st.success("Flash Pass acquistato!")
-            st.rerun()
+        st.info("🕒 Arriva tra poco")
 
     with col_sub2:
         st.markdown(
             """
-        <div class="editorial-card editorial-card-highlight" style="height: 100%;">
-            <span class="editorial-tag">Full Access</span>
+        <div class="editorial-card editorial-card-highlight" style="height: 100%; opacity: 0.85;">
+            <span class="editorial-tag" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;">Coming Soon</span>
             <h3 style="font-size: 1.2rem; font-weight:700; margin-top: 5px;">Mensile Titolari</h3>
             <div style="font-size: 1.6rem; font-weight: 800; color: #0d9488; margin: 8px 0;">20 € <span style="font-size: 0.8rem; color: var(--text-muted);">/ mese</span></div>
             <p style="color: var(--text-muted); font-size: 0.85rem;">Contatti diretti illimitati su WhatsApp per tutti i lavoratori.</p>
@@ -657,19 +658,13 @@ elif scelta == "Piani Abbonamento":
         """,
             unsafe_allow_html=True,
         )
-        if st.session_state.abbonamento_titolare:
-            st.success("✅ Attivo")
-        else:
-            if st.button("Abbonati Mensile"):
-                st.session_state.abbonamento_titolare = True
-                st.success("Abbonamento Titolare attivato!")
-                st.rerun()
+        st.info("🕒 Arriva tra poco")
 
     with col_sub3:
         st.markdown(
             """
-        <div class="editorial-card" style="height: 100%;">
-            <span class="editorial-tag">Enterprise</span>
+        <div class="editorial-card" style="height: 100%; opacity: 0.85;">
+            <span class="editorial-tag" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;">Coming Soon</span>
             <h3 style="font-size: 1.2rem; font-weight:700; margin-top: 5px;">Catene & Hotel</h3>
             <div style="font-size: 1.6rem; font-weight: 800; color: #0f172a; margin: 8px 0;">49 € <span style="font-size: 0.8rem; color: var(--text-muted);">/ mese</span></div>
             <p style="color: var(--text-muted); font-size: 0.85rem;">Account multi-sede e supporto prioritario dedicato.</p>
@@ -677,9 +672,7 @@ elif scelta == "Piani Abbonamento":
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Attiva Enterprise"):
-            st.success("Richiesta Enterprise inviata!")
-            st.rerun()
+        st.info("🕒 Arriva tra poco")
 
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown(
@@ -690,8 +683,8 @@ elif scelta == "Piani Abbonamento":
     with col_lsub1:
         st.markdown(
             """
-        <div class="editorial-card" style="height: 100%;">
-            <span class="editorial-tag">Weekend</span>
+        <div class="editorial-card" style="height: 100%; opacity: 0.85;">
+            <span class="editorial-tag" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;">Coming Soon</span>
             <h3 style="font-size: 1.2rem; font-weight:700; margin-top: 5px;">In Evidenza Weekend</h3>
             <div style="font-size: 1.6rem; font-weight: 800; color: #0d9488; margin: 8px 0;">5 € <span style="font-size: 0.8rem; color: var(--text-muted);">/ weekend</span></div>
             <p style="color: var(--text-muted); font-size: 0.85rem;">Metti in evidenza il profilo nei giorni di maggiore afflusso.</p>
@@ -699,20 +692,13 @@ elif scelta == "Piani Abbonamento":
         """,
             unsafe_allow_html=True,
         )
-        if st.session_state.mio_profilo["boosted"]:
-            st.success("✅ Boost Attivo")
-        else:
-            if st.button("Attiva Weekend Boost"):
-                st.session_state.mio_profilo["boosted"] = True
-                st.session_state.boost_attivi_count += 1
-                st.success("Boost attivato!")
-                st.rerun()
+        st.info("🕒 Arriva tra poco")
 
     with col_lsub2:
         st.markdown(
             """
-        <div class="editorial-card editorial-card-highlight" style="height: 100%;">
-            <span class="editorial-tag">PRO Talento</span>
+        <div class="editorial-card editorial-card-highlight" style="height: 100%; opacity: 0.85;">
+            <span class="editorial-tag" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;">Coming Soon</span>
             <h3 style="font-size: 1.2rem; font-weight:700; margin-top: 5px;">Abbonamento PRO</h3>
             <div style="font-size: 1.6rem; font-weight: 800; color: #0d9488; margin: 8px 0;">12 € <span style="font-size: 0.8rem; color: var(--text-muted);">/ mese</span></div>
             <p style="color: var(--text-muted); font-size: 0.85rem;">Visibilità costante tutto il mese e badge verificato oro.</p>
@@ -720,17 +706,14 @@ elif scelta == "Piani Abbonamento":
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Attiva PRO Mensile"):
-            st.session_state.mio_profilo["boosted"] = True
-            st.success("Abbonamento PRO attivato!")
-            st.rerun()
+        st.info("🕒 Arriva tra poco")
 
 # ============================================================
 # 5. DASHBOARD ADMIN
 # ============================================================
 elif scelta == "📊 Dashboard Admin" and mostra_admin:
     st.markdown(
-        "<h2 style='font-weight:800; font-size:1.8rem; letter-spacing:-0.5px;'>📊 Dashboard Admin Live</h2>",
+        "<h2 style='font-family: Playfair Display, serif; font-weight:700; font-size:2rem;'>📊 Dashboard Admin Live</h2>",
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -755,13 +738,13 @@ elif scelta == "📊 Dashboard Admin" and mostra_admin:
         st.metric(
             label="Abbonamenti Titolari",
             value="Attivo" if st.session_state.abbonamento_titolare else "Inattivo",
-            delta="20€ / mo",
+            delta="Demo Mode",
         )
     with m4:
         st.metric(
             label="Boost Attivi",
             value=st.session_state.boost_attivi_count,
-            delta="5€ l'uno",
+            delta="Preview",
         )
 
     st.markdown("---")
@@ -771,9 +754,9 @@ elif scelta == "📊 Dashboard Admin" and mostra_admin:
         st.markdown(
             """
         <div class="editorial-card">
-            <h4 style="margin-top:0; font-weight:700;">Fatturato Stimato Mensile</h4>
-            <p style="font-size: 1.8rem; font-weight: 800; color: #0d9488; margin: 10px 0;">€ 412,00</p>
-            <p style="color: var(--text-muted); font-size: 0.85rem;">Calcolato su abbonamenti attivi, flash pass e boost.</p>
+            <h4 style="margin-top:0; font-weight:700;">Stato Rilascio Piani</h4>
+            <p style="font-size: 1.5rem; font-weight: 800; color: #0284c7; margin: 10px 0;">In lavorazione 🛠️</p>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">I pagamenti e i piani in abbonamento arriveranno nel prossimo aggiornamento.</p>
         </div>
         """,
             unsafe_allow_html=True,
@@ -784,7 +767,7 @@ elif scelta == "📊 Dashboard Admin" and mostra_admin:
             """
         <div class="editorial-card">
             <h4 style="margin-top:0; font-weight:700;">Stato Database</h4>
-            <p style="font-size: 1.8rem; font-weight: 800; color: #0d9488; margin: 10px 0;">Ottimale 🟢</p>
+            <p style="font-size: 1.5rem; font-weight: 800; color: #0d9488; margin: 10px 0;">Ottimale 🟢</p>
             <p style="color: var(--text-muted); font-size: 0.85rem;">Latenza media di risposta server: <b>14 ms</b>.</p>
         </div>
         """,
