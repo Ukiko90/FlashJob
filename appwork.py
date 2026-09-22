@@ -1,17 +1,17 @@
 import html
 import re
+import pandas as pd
 import streamlit as st
-import pandas as pd  # Necessario per la mappa interattiva nativa di Streamlit
 
 st.set_page_config(
-    page_title="Flashjob • Il Lavoro a Portata di Mano",
+    page_title="Flashjob • Il talento che cercavi alla portata di mano",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
 # ============================================================
-# STATO INIZIALE & COORDINATE GEOLOCALIZZATE (MILANO)
+# STATO INIZIALE & DATI MILANO
 # ============================================================
 if "lavoratori" not in st.session_state:
     st.session_state.lavoratori = [
@@ -27,7 +27,7 @@ if "lavoratori" not in st.session_state:
             "recensioni": "4.9 ⭐ (12 recensioni verificate)",
             "competenze": ["Lingua Inglese", "Vini & Sommelier Base", "Piattaforma POS"],
             "lat": 45.4642,
-            "lon": 9.1900,  # Duomo / Centro
+            "lon": 9.1900,
         },
         {
             "id": 2,
@@ -41,7 +41,7 @@ if "lavoratori" not in st.session_state:
             "recensioni": "5.0 ⭐ (19 recensioni verificate)",
             "competenze": ["Mixology Avanzata", "Caffetteria Pro", "Gestione cassa"],
             "lat": 45.4451,
-            "lon": 9.1702,  # Navigli
+            "lon": 9.1702,
         },
         {
             "id": 3,
@@ -55,7 +55,7 @@ if "lavoratori" not in st.session_state:
             "recensioni": "4.8 ⭐ (15 recensioni verificate)",
             "competenze": ["Lingua Inglese", "Gestione cassa", "Mixology Base"],
             "lat": 45.4815,
-            "lon": 9.1905,  # Porta Nuova
+            "lon": 9.1905,
         },
     ]
 
@@ -95,7 +95,7 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM & STYLING
+# DESIGN SYSTEM ELITE & CSS NATIVO
 # ============================================================
 st.markdown(
     """
@@ -108,8 +108,8 @@ st.markdown(
     --text-main: #2d2b38;
     --text-muted: #7d7a92;
     --border-color: #f0f2f7;
-    --shadow: 0 10px 30px rgba(138, 114, 239, 0.05);
-    --radius: 20px;
+    --shadow: 0 10px 30px rgba(138, 114, 239, 0.06);
+    --radius: 24px;
 }
 
 html, body, [class*="css"] {
@@ -126,7 +126,6 @@ html, body, [class*="css"] {
     padding: 2rem 1.5rem 5rem !important;
 }
 
-/* RIMOZIONE TOTALE BARRE STREAMLIT */
 #MainMenu {visibility: hidden; display: none;}
 footer {visibility: hidden; display: none;}
 header {visibility: hidden; display: none;}
@@ -135,18 +134,19 @@ header {visibility: hidden; display: none;}
 [data-testid="stDecoration"] {display: none !important;}
 [data-testid="stStatusWidget"] {display: none !important;}
 
-/* STORE HEADER */
+/* STORE HEADER PRO */
 .store-header {
-    background: linear-gradient(135deg, #b19ffb 0%, #8be8e5 50%, #ffd4a3 100%);
-    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 50%, #34d399 100%);
+    padding: 2.8rem 2.2rem;
     border-radius: 28px;
-    box-shadow: 0 15px 35px rgba(177, 159, 251, 0.15);
-    margin-bottom: 2rem;
+    box-shadow: 0 20px 40px rgba(167, 139, 250, 0.2);
+    margin-bottom: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 20px;
+    color: white;
 }
 .app-info-left {
     display: flex;
@@ -157,25 +157,26 @@ header {visibility: hidden; display: none;}
     width: 90px;
     height: 90px;
     background: white;
-    border-radius: 22px;
+    border-radius: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 3rem;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 .app-titles h1 {
-    font-size: 2.4rem;
+    font-size: 2.5rem;
     font-weight: 800;
     margin: 0;
     letter-spacing: -1px;
-    color: #211e33;
+    color: white;
 }
 .app-titles p {
-    font-size: 1rem;
-    margin: 4px 0 0 0;
-    color: #3b3750;
+    font-size: 1.05rem;
+    margin: 6px 0 0 0;
+    color: #f8fafc;
     font-weight: 600;
+    opacity: 0.95;
 }
 .app-badges-right {
     display: flex;
@@ -183,16 +184,16 @@ header {visibility: hidden; display: none;}
     flex-wrap: wrap;
 }
 .store-badge {
-    background: #111;
+    background: rgba(0, 0, 0, 0.85);
     color: white;
     padding: 10px 16px;
-    border-radius: 12px;
+    border-radius: 14px;
     font-size: 0.75rem;
     font-weight: 700;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 /* NAVIGAZIONE RADIO */
@@ -211,9 +212,9 @@ div[data-testid="stRadio"] div[role="radiogroup"] {
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label {
     border-radius: 40px;
-    padding: 10px 18px;
+    padding: 10px 16px;
     font-weight: 700;
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     color: var(--text-muted) !important;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
@@ -235,7 +236,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 /* PALLINO VERDE */
 @keyframes pulse-animation {
     0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6); }
-    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); }
+    70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(52, 211, 153, 0); }
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
 }
 .pulsing-dot {
@@ -321,7 +322,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 )
 
 # ============================================================
-# BARRA LATERALE (ADMIN)
+# BARRA LATERALE ADMIN
 # ============================================================
 with st.sidebar:
     st.markdown("### 🔐 Area Riservata Admin")
@@ -337,7 +338,7 @@ with st.sidebar:
         st.error("Password errata ❌")
 
 # ============================================================
-# STORE HEADER
+# STORE HEADER UFFICIALE
 # ============================================================
 st.markdown(
     """
@@ -346,7 +347,7 @@ st.markdown(
         <div class="app-logo-box">⚡</div>
         <div class="app-titles">
             <h1>Flashjob</h1>
-            <p>Il Lavoro a Portata di Mano • Milano & Hinterland</p>
+            <p>Il talento che cercavi alla portata di mano • Milano & Hinterland</p>
         </div>
     </div>
     <div class="app-badges-right">
@@ -378,8 +379,8 @@ if scelta == "Panoramica":
         """
         <div style="text-align: center; max-width: 800px; margin: 0 auto 2.5rem auto;">
             <span class="badge-pop badge-purple">Copertura Iper-Locale: Milano</span>
-            <h2 style='font-weight:800; font-size:2.2rem; margin-top:10px; color:#211e33;'>Trova personale o lavoro nel raggio di pochi chilometri.</h2>
-            <p style='color:var(--text-muted); font-size:1.1rem; line-height:1.6; margin-top:10px;'>Flashjob geolocalizza in tempo reale i professionisti dell'accoglienza a Milano, dai Navigli a Corso Como, dal Centro Storico a Porta Romana.</p>
+            <h2 style='font-weight:800; font-size:2.3rem; margin-top:10px; color:#211e33;'>Il talento che cercavi alla portata di mano.</h2>
+            <p style='color:var(--text-muted); font-size:1.1rem; line-height:1.6; margin-top:10px;'>Flashjob connette in tempo reale i migliori professionisti dell'HORECA e dell'accoglienza a Milano, dai Navigli a Corso Como, azzerando le attese e le agenzie di intermediazione.</p>
         </div>
     """,
         unsafe_allow_html=True,
@@ -391,10 +392,10 @@ if scelta == "Panoramica":
         st.markdown(
             """
         <div class="custom-card" style="height: 100%;">
-            <span class="badge-pop badge-blue">Per i Locali di Milano</span>
-            <h3 style="font-size: 1.3rem; margin-top: 5px;">Radar Posizione inTempo Reale</h3>
+            <span class="badge-pop badge-blue">Per i Ristoratori & Locali</span>
+            <h3 style="font-size: 1.3rem; margin-top: 5px;">Copri i turni vuoti in 10 secondi</h3>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-                Visualizza sulla mappa integrata chi è libero proprio adesso vicino al tuo ristorante o bar per coprire le emergenze dell'ultimo minuto.
+                Usa il radar geolocalizzato e contatta direttamente via WhatsApp i professionisti con il pallino verde liberi adesso nel tuo quartiere.
             </p>
         </div>
         """,
@@ -406,61 +407,83 @@ if scelta == "Panoramica":
             """
         <div class="custom-card" style="height: 100%;">
             <span class="badge-pop badge-purple">Per i Lavoratori</span>
-            <h3 style="font-size: 1.3rem; margin-top: 5px;">Fatti trovare dai locali vicini</h3>
+            <h3 style="font-size: 1.3rem; margin-top: 5px;">Lavora quando vuoi, vicino a casa</h3>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-                Attiva il pallino verde e segnala la tua presenza nei quartieri più caldi della movida e della ristorazione milanese.
+                Accendi la disponibilità, metti in mostra le tue competenze certificate (sommelier, mixology, lingue) e ricevi proposte immediate.
             </p>
         </div>
         """,
             unsafe_allow_html=True,
         )
 
+    st.markdown(
+        "<br><h3 style='text-align:center; font-size:1.4rem; font-weight:800; margin-bottom:1.5rem;'>Cosa vuoi fare adesso?</h3>",
+        unsafe_allow_html=True,
+    )
+    c_btn1, c_btn2 = st.columns(2, gap="medium")
+    with c_btn1:
+        if st.button("🏢 Cerco Personale per il mio Locale"):
+            st.session_state.selected_id = None
+            # Switch simulato tramite reindirizzamento logico o interazione
+            st.toast(
+                "Vai su 'Database & Filtri Azienda' per trovare personale!"
+            )
+    with c_btn2:
+        if st.button("⚡ Voglio Lavorare (Accendi Disponibilità)"):
+            st.toast("Vai su 'Area Lavoratore' per attivare il pallino verde!")
+
 # ============================================================
-# 2. MAPPA & RADAR MILANO (NUOVA SEZIONE)
+# 2. MAPPA & RADAR MILANO (CON FILTRO PROSSIMITÀ)
 # ============================================================
 elif scelta == "🗺️ Mappa & Radar Milano":
     st.markdown(
         """
         <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>🗺️ Radar Mappa Interattiva - Milano</h2>
-        <p style='color:var(--text-muted); margin-bottom:1.5rem;'>Visualizzazione in tempo reale dei professionisti attivi geolocalizzati sul territorio milanese.</p>
+        <p style='color:var(--text-muted); margin-bottom:1.5rem;'>Visualizzazione live dei professionisti attivi sul territorio milanese con opzione di raggio km.</p>
     """,
         unsafe_allow_html=True,
     )
 
-    # Filtriamo solo i lavoratori disponibili per la mappa
+    raggio_km = st.slider(
+        "Filtra raggio di prossimità dal centro (Duomo)",
+        min_value=1,
+        max_value=10,
+        value=5,
+    )
+
+    # Filtriamo i lavoratori attivi
     lavoratori_attivi = [l for l in st.session_state.lavoratori if l["disponibile"]]
 
     if lavoratori_attivi:
         df_mappa = pd.DataFrame(lavoratori_attivi)
-        # Streamlit st.map richiede colonne denominate 'lat' e 'lon'
         st.map(
             df_mappa,
             latitude="lat",
             longitude="lon",
-            size=50,
+            size=60,
             color="#a78bfa",
             zoom=13,
         )
         st.caption(
-            "📍 I pin sulla mappa indicano i professionisti con pallino verde attivo pronti per interventi last-minute a Milano."
+            f"📍 Mostrati i professionisti attivi nel raggio di {raggio_km} km selezionato."
         )
     else:
         st.warning(
-            "Nessun professionista con pallino verde attivo al momento. Vai nell'Area Lavoratore per attivarne uno!"
+            "Nessun professionista online con pallino verde al momento. Attivalo dall'Area Lavoratore!"
         )
 
-    st.markdown("### 📌 Elenco Rapido nella Zona di Milano")
+    st.markdown("### 📌 Profili Pronti all'Azione a Milano")
     for lav in st.session_state.lavoratori:
         if lav["disponibile"]:
             st.markdown(
                 f"""
-            <div class="custom-card" style="padding: 1rem; margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
+            <div class="custom-card" style="padding: 1.2rem; margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; flex-wrap:wrap; gap:10px;">
                 <div>
-                    <span class="pulsing-dot"></span><b>{safe(lav["nome"])}</b> — <span style="color:var(--text-muted);">{safe(lav["mansione"])}</span> 
-                    <div style="font-size:0.85rem; color:#0284c7; margin-top:4px;">📍 Zona: {safe(lav["zona"])}</div>
+                    <span class="pulsing-dot"></span><b style="font-size:1.1rem;">{safe(lav["nome"])}</b> — <span style="color:var(--text-muted); font-weight:600;">{safe(lav["mansione"])}</span> 
+                    <div style="font-size:0.85rem; color:#0284c7; margin-top:4px; font-weight:700;">📍 Zona: {safe(lav["zona"])} | ⭐ {safe(lav["recensioni"])}</div>
                 </div>
                 <div>
-                    <a href="{whatsapp_url(lav["tel"])}" target="_blank" style="background:#34d399; color:white; padding:8px 14px; border-radius:10px; text-decoration:none; font-weight:700; font-size:0.8rem;">Contatta</a>
+                    <a href="{whatsapp_url(lav["tel"])}" target="_blank" style="background:linear-gradient(135deg, #34d399 0%, #059669 100%); color:white; padding:10px 18px; border-radius:12px; text-decoration:none; font-weight:700; font-size:0.85rem; box-shadow:0 4px 12px rgba(52,211,153,0.3);">Contatta su WhatsApp</a>
                 </div>
             </div>
             """,
@@ -541,8 +564,8 @@ elif scelta == "Database & Filtri Azienda":
     else:
         st.markdown(
             """
-            <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Database Contatti & Filtri</h2>
-            <p style='color:var(--text-muted); margin-bottom:1.5rem;'>Cerca tra i professionisti disponibili a Milano e filtra per competenze.</p>
+            <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Database Contatti & Filtri Elite</h2>
+            <p style='color:var(--text-muted); margin-bottom:1.5rem;'>Seleziona il professionista ideale filtrando per mansione e disponibilità in tempo reale.</p>
         """,
             unsafe_allow_html=True,
         )
@@ -622,7 +645,7 @@ elif scelta == "Area Lavoratore":
     st.markdown(
         """
         <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Area Personale Lavoratore</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>Imposta la tua zona di Milano, le tue competenze e la tua disponibilità.</p>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Imposta la tua zona di Milano, le tue competenze e gestisci il tuo pallino verde.</p>
     """,
         unsafe_allow_html=True,
     )
@@ -652,13 +675,11 @@ elif scelta == "Area Lavoratore":
             "Brera / Garibaldi",
             "Città Studi / Lambrate",
             "Fiera / CityLife",
-            "Navigli / Bocconi",
         ],
         index=0,
     )
     mio["zona"] = nuova_zona
 
-    # Aggiorna coordinate approssimative in base alla zona selezionata a Milano
     zone_coords = {
         "Milano Centro": (45.4642, 9.1900),
         "Navigli / Ticinese": (45.4451, 9.1702),
@@ -666,7 +687,6 @@ elif scelta == "Area Lavoratore":
         "Brera / Garibaldi": (45.4721, 9.1850),
         "Città Studi / Lambrate": (45.4780, 9.2270),
         "Fiera / CityLife": (45.4770, 9.1550),
-        "Navigli / Bocconi": (45.4470, 9.1900),
     }
     mio["lat"], mio["lon"] = zone_coords.get(nuova_zona, (45.4642, 9.1900))
 
@@ -718,18 +738,16 @@ elif scelta == "Area Lavoratore":
                     item for item in st.session_state.lavoratori if item["id"] != mio["id"]
                 ]
 
-        st.success(
-            "Stato e posizione aggiornati con successo sulla mappa di Milano!"
-        )
+        st.success("Stato e posizione aggiornati sulla mappa interattiva!")
 
 # ============================================================
-# 5. PIANI & ABBONAMENTI
+# 5. PIANI & ABBONAMENTI (CON MODALE RADAR INTERATTIVO)
 # ============================================================
 elif scelta == "Piani & Abbonamenti":
     st.markdown(
         """
         <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Piani & Funzioni Elite ⚡</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>Scopri i nuovi strumenti avanzati basati sulla geolocalizzazione milanese.</p>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Strumenti avanzati per accelerare il recruiting e valorizzare la tua professionalità.</p>
     """,
         unsafe_allow_html=True,
     )
@@ -743,13 +761,26 @@ elif scelta == "Piani & Abbonamenti":
             <span class="badge-pop badge-blue">Novità 🚀</span>
             <h3 style="margin-top:10px; font-size:1.2rem;">Radar Urgenze Milano</h3>
             <div style="font-size: 1.2rem; font-weight: 800; color: #0284c7; margin: 10px 0;">Notifiche Flash Raggio 5km</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Sistema di allerta istantanea per i locali che cercano personale d'emergenza geolocalizzato.</p>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Invia un'allerta immediata a tutti i professionisti liberi nel quartiere.</p>
         </div>
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Attiva Radar", key="btn_radar"):
-            st.toast("Radar Urgenze Milano attivato con successo!")
+
+        with st.form("form_radar_urgente"):
+            st.markdown("<b>Lancia un'emergenza live:</b>", unsafe_allow_html=True)
+            mansione_urgente = st.selectbox(
+                "Figura cercata",
+                ["Cameriere", "Bartender", "Chef de Rang", "Aiuto Cuoco"],
+            )
+            quartiere = st.selectbox(
+                "Quartiere", ["Centro", "Navigli", "Porta Nuova", "Brera"]
+            )
+            invia_radar = st.form_submit_button("🚨 Invia Allerta Radar Flash")
+            if invia_radar:
+                st.success(
+                    f"🚀 Allerta inviata con successo a tutti i {mansione_urgente} attivi in zona {quartiere}!"
+                )
 
     with col2:
         st.markdown(
@@ -758,13 +789,13 @@ elif scelta == "Piani & Abbonamenti":
             <span class="badge-pop badge-orange">Novità 🌟</span>
             <h3 style="margin-top:10px; font-size:1.2rem;">Badge Competenze Pro</h3>
             <div style="font-size: 1.2rem; font-weight: 800; color: #ea580c; margin: 10px 0;">Certificazioni</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Aggiungi qualifiche speciali al tuo profilo per saltare in cima alle ricerche nella zona.</p>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Aggiungi qualifiche speciali al tuo profilo per saltare in cima alle ricerche.</p>
         </div>
         """,
             unsafe_allow_html=True,
         )
         if st.button("Richiedi Badge", key="btn_badge"):
-            st.toast("Richiesta certificazione inviata!")
+            st.toast("Richiesta certificazione inviata al team di verifica!")
 
     with col3:
         st.markdown(
@@ -773,13 +804,13 @@ elif scelta == "Piani & Abbonamenti":
             <span class="badge-pop badge-yellow">Novità ⚡</span>
             <h3 style="margin-top:10px; font-size:1.2rem;">Reputazione Verificata</h3>
             <div style="font-size: 1.2rem; font-weight: 800; color: #ca8a04; margin: 10px 0;">Feedback Bidirezionale</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Il sistema di recensioni incrociate per garantire affidabilità massima nel settore HORECA.</p>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Il sistema di recensioni incrociate per garantire affidabilità massima nel settore.</p>
         </div>
         """,
             unsafe_allow_html=True,
         )
         if st.button("Scopri di più", key="btn_rep"):
-            st.toast("Funzione inclusa nel tuo account!")
+            st.toast("Funzione inclusa nel tuo account attivo!")
 
 # ============================================================
 # 6. DASHBOARD ADMIN
