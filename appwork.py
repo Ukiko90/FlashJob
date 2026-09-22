@@ -48,7 +48,7 @@ def whatsapp_url(phone):
 
 
 # ============================================================
-# DESIGN SYSTEM: UI FLUIDA E PULITA
+# DESIGN SYSTEM & PULIZIA TOTALE (RIMUOVE "GESTISCI L'APP")
 # ============================================================
 st.markdown(
     """
@@ -79,10 +79,26 @@ html, body, [class*="css"] {
     padding: 2rem 1.5rem 5rem !important;
 }
 
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-[data-testid="stHeader"] { display: none !important; }
-[data-testid="stToolbar"] { display: none !important; }
+/* RIMOZIONE TOTALE BARRE, MENU, FOOTER E PULSANTE "GESTISCI L'APP" */
+#MainMenu {visibility: hidden; display: none;}
+footer {visibility: hidden; display: none;}
+header {visibility: hidden; display: none;}
+[data-testid="stHeader"] {display: none !important;}
+[data-testid="stToolbar"] {display: none !important; visibility: hidden !important;}
+[data-testid="stDecoration"] {display: none !important;}
+[data-testid="stStatusWidget"] {display: none !important;}
+.viewerBadge_container__1QSob {display: none !important; visibility: hidden !important;}
+.styles_viewerBadge__1yB5_ {display: none !important; visibility: hidden !important;}
+div.viewerBadge_link__1S137 {display: none !important; visibility: hidden !important;}
+#is-app-hosting-badge {display: none !important; visibility: hidden !important;}
+.stAppViewerBadge {display: none !important; visibility: hidden !important;}
+iframe[data-testid="stToaster"] {display: none !important;}
+
+/* Nasconde specificamente il box fluttuante in basso a destra "Gestisci l'app" */
+div[class*="viewerBadge"], section[class*="viewerBadge"], div[class*="styles_viewerBadge"] {
+    display: none !important;
+    visibility: hidden !important;
+}
 
 /* STORE HEADER */
 .store-header {
@@ -568,7 +584,6 @@ elif scelta == "Area Lavoratore":
       unsafe_allow_html=True,
   )
 
-  # Selezione Mansione personale
   nuova_mansione = st.selectbox(
       "Seleziona la tua mansione principale",
       [
