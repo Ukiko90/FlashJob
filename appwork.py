@@ -48,11 +48,12 @@ if "selected_id" not in st.session_state:
 if "abbonamento_titolare" not in st.session_state:
     st.session_state.abbonamento_titolare = False
 
-# Metriche Admin Live
 if "visite_totali" not in st.session_state:
-    st.session_state.visite_totali = 1240  # Partenza realistica
+    st.session_state.visite_totali = 1240
+
 if "click_whatsapp" not in st.session_state:
     st.session_state.click_whatsapp = 312
+
 if "boost_attivi_count" not in st.session_state:
     st.session_state.boost_attivi_count = 8
 
@@ -81,12 +82,12 @@ def safe(value):
 
 
 def whatsapp_url(phone):
-    st.session_state.click_whatsapp += 1  # Tracciamento live click
+    st.session_state.click_whatsapp += 1
     return "https://wa.me/" + re.sub(r"\D", "", phone)
 
 
 # ============================================================
-# DESIGN SYSTEM & CSS
+# DESIGN SYSTEM & CSS (STILE MODERN UI)
 # ============================================================
 st.markdown(
     """
@@ -121,10 +122,11 @@ html, body, [class*="css"] {
 [data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"], [data-testid="stStatusWidget"] {display: none !important;}
 
 .store-header {
-    background: linear-gradient(135deg, #b19ffb 0%, #8be8e5 50%, #ffd4a3 100%);
+    background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
+    color: white;
     padding: 2.5rem 2rem;
     border-radius: 28px;
-    box-shadow: 0 15px 35px rgba(177, 159, 251, 0.15);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     margin-bottom: 2rem;
     display: flex;
     align-items: center;
@@ -138,54 +140,85 @@ html, body, [class*="css"] {
     gap: 20px;
 }
 .app-logo-box {
-    width: 90px;
-    height: 90px;
-    background: white;
+    width: 85px;
+    height: 85px;
+    background: #d9f99d;
+    color: #18181b;
     border-radius: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    font-size: 2.8rem;
+    box-shadow: 0 8px 20px rgba(217, 249, 157, 0.3);
 }
 .app-titles h1 {
     font-size: 2.4rem;
     font-weight: 800;
     margin: 0;
     letter-spacing: -1px;
-    color: #211e33;
+    color: white;
 }
 .app-titles p {
-    font-size: 1rem;
-    margin: 4px 0 0 0;
-    color: #3b3750;
-    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 6px 0 0 0;
+    color: #a1a1aa;
+    font-weight: 500;
 }
 
+/* RADIO NAVIGATION "FIGA" STYLE */
 div[data-testid="stRadio"] > label { display: none; }
 div[data-testid="stRadio"] div[role="radiogroup"] {
     display: flex;
     justify-content: center;
-    background: white;
-    padding: 6px;
+    background: #18181b;
+    padding: 8px;
     border-radius: 50px;
-    box-shadow: var(--shadow);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     margin-bottom: 2.5rem;
-    gap: 5px;
-    border: 1px solid var(--border-color);
+    gap: 6px;
+    border: 1px solid #27272a;
     flex-wrap: wrap;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label {
     border-radius: 40px;
-    padding: 10px 18px;
+    padding: 10px 20px;
     font-weight: 700;
-    font-size: 0.82rem;
-    color: var(--text-muted) !important;
+    font-size: 0.85rem;
+    color: #a1a1aa !important;
+    transition: all 0.3s ease;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
-    background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%) !important;
-    color: white !important;
-    box-shadow: 0 4px 15px rgba(167, 139, 250, 0.3);
+    background: #d9f99d !important;
+    color: #18181b !important;
+    box-shadow: 0 4px 15px rgba(217, 249, 157, 0.4);
+}
+
+/* BANNER "FIGHI" STYLE APP REFERENCE */
+.feature-banner {
+    background: #18181b;
+    color: white;
+    padding: 2rem;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid #27272a;
+    height: 100%;
+}
+.feature-banner.highlight {
+    background: linear-gradient(145deg, #18181b 0%, #27272a 100%);
+    border: 2px solid #d9f99d;
+}
+.feature-tag {
+    background: #d9f99d;
+    color: #18181b;
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 15px;
 }
 
 .custom-card {
@@ -237,24 +270,23 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     margin-bottom: 10px;
 }
 .badge-purple { background: #f3e8ff; color: #9333ea; }
-.badge-blue { background: #e0f2fe; color: #0284c7; }
 .badge-boost { background: #ede9fe; color: #7c3aed; border: 1px solid #c4b5fd; }
 
 .stButton > button {
     width: 100%;
     min-height: 48px;
     border-radius: 14px;
-    background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%);
-    color: white;
-    font-weight: 700;
+    background: #d9f99d;
+    color: #18181b;
+    font-weight: 800;
     border: none;
-    box-shadow: 0 4px 15px rgba(167, 139, 250, 0.25);
+    box-shadow: 0 4px 15px rgba(217, 249, 157, 0.3);
     transition: all 0.2s ease;
 }
 .stButton > button:hover {
-    opacity: 0.92;
+    opacity: 0.9;
     transform: translateY(-2px);
-    color: white;
+    color: #18181b;
 }
 </style>
 """,
@@ -289,7 +321,7 @@ with st.sidebar:
         st.success("Admin Autorizzato ✅")
 
 # ============================================================
-# STORE HEADER
+# STORE HEADER (STILE DARK PREMIUM)
 # ============================================================
 st.markdown(
     """
@@ -318,7 +350,7 @@ if mostra_admin:
 scelta = st.radio("Navigazione", menu_opzioni, horizontal=True)
 
 # ============================================================
-# 1. PANORAMICA (CHI SIAMO, A COSA SERVE & 3 BANNER)
+# 1. PANORAMICA (CHI SIAMO, A COSA SERVE & BANNER FIGHI)
 # ============================================================
 if scelta == "Panoramica":
     st.markdown(
@@ -340,9 +372,9 @@ if scelta == "Panoramica":
             <h3 style="color: #7c3aed; margin-top: 0;">👥 Chi Siamo</h3>
             <p style="color: var(--text-muted); line-height: 1.7; font-size: 0.95rem;">
                 Siamo un team di professionisti della ristorazione, dell'hotellerie e dell'innovazione digitale. 
-                Viviamo quotidianamente le sfide del settore e sappiamo quanto sia difficile, sia per un titolare 
-                trovare personale affidabile all'ultimo minuto, sia per un lavoratore emergere nella giungla delle candidature tradizionali. 
-                Flashjob nasce per azzerare le distanze e dare valore al tempo di tutti.
+                Viviamo quotidianamente le sfide del settore e sappiamo quanto sia difficile trovare personale affidabile 
+                all'ultimo minuto o emergere nella giungla delle candidature tradizionali. Flashjob nasce per azzerare 
+                le distanze e dare valore al tempo di tutti.
             </p>
         </div>
         """,
@@ -357,8 +389,7 @@ if scelta == "Panoramica":
             <p style="color: var(--text-muted); line-height: 1.7; font-size: 0.95rem;">
                 Flashjob è la piattaforma smart pensata per la gestione flessibile e immediata del personale nel settore HORECA. 
                 Attraverso la geolocalizzazione, lo stato di disponibilità in tempo reale (il pallino verde lampeggiante) e 
-                canali di contatto diretti via WhatsApp, permettiamo ai locali di coprire turni o eventi improvvisi in pochi minuti, 
-                offrendo ai lavoratori l'opportunità di massimizzare i propri guadagni nei momenti di maggiore richiesta.
+                canali di contatto diretti via WhatsApp, permettiamo ai locali di coprire turni o eventi improvvisi in pochi minuti.
             </p>
         </div>
         """,
@@ -370,16 +401,16 @@ if scelta == "Panoramica":
         unsafe_allow_html=True,
     )
 
-    # 3 Banner Punti di Forza
+    # 3 BANNER FIGHI (Stile Dark & Lime della Reference)
     b1, b2, b3 = st.columns(3, gap="medium")
     with b1:
         st.markdown(
             """
-        <div class="custom-card" style="text-align: center; border-top: 4px solid #34d399;">
-            <div style="font-size: 2.5rem; margin-bottom: 10px;">🟢</div>
-            <h4 style="margin: 0 0 10px 0; font-weight: 700;">Disponibilità Live</h4>
-            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">
-                Il pallino verde lampeggiante mostra all'istante chi è pronto a lavorare adesso, eliminando chiamate a vuoto e perdite di tempo.
+        <div class="feature-banner highlight">
+            <span class="feature-tag">Velocità 🟢</span>
+            <h3 style="margin: 10px 0; color: white; font-size: 1.25rem;">Disponibilità Live</h3>
+            <p style="color: #a1a1aa; font-size: 0.85rem; line-height: 1.6; margin: 0;">
+                Il pallino verde lampeggiante mostra all'istante chi è pronto a lavorare adesso, eliminando telefonate a vuoto e perdite di tempo.
             </p>
         </div>
         """,
@@ -389,11 +420,11 @@ if scelta == "Panoramica":
     with b2:
         st.markdown(
             """
-        <div class="custom-card" style="text-align: center; border-top: 4px solid #a78bfa;">
-            <div style="font-size: 2.5rem; margin-bottom: 10px;">💬</div>
-            <h4 style="margin: 0 0 10px 0; font-weight: 700;">Contatto Diretto WhatsApp</h4>
-            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">
-                Nessuna intermediazione burocratica. Con l'abbonamento Titolare parli direttamente con il candidato in un click.
+        <div class="feature-banner">
+            <span class="feature-tag" style="background: #a78bfa; color: white;">Diretto 💬</span>
+            <h3 style="margin: 10px 0; color: white; font-size: 1.25rem;">Chat & WhatsApp</h3>
+            <p style="color: #a1a1aa; font-size: 0.85rem; line-height: 1.6; margin: 0;">
+                Nessuna intermediazione burocratica. Con l'abbonamento Titolare parli direttamente con il candidato in un singolo click.
             </p>
         </div>
         """,
@@ -403,11 +434,11 @@ if scelta == "Panoramica":
     with b3:
         st.markdown(
             """
-        <div class="custom-card" style="text-align: center; border-top: 4px solid #60a5fa;">
-            <div style="font-size: 2.5rem; margin-bottom: 10px;">🚀</div>
-            <h4 style="margin: 0 0 10px 0; font-weight: 700;">Weekend Boost</h4>
-            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">
-                I lavoratori possono potenziare la propria visibilità nei giorni di maggiore afflusso per ricevere molte più offerte.
+        <div class="feature-banner">
+            <span class="feature-tag" style="background: #60a5fa; color: white;">Visibilità 🚀</span>
+            <h3 style="margin: 10px 0; color: white; font-size: 1.25rem;">Weekend Boost</h3>
+            <p style="color: #a1a1aa; font-size: 0.85rem; line-height: 1.6; margin: 0;">
+                I lavoratori possono potenziare la propria visibilità nei giorni di maggiore afflusso per ricevere molte più offerte di lavoro.
             </p>
         </div>
         """,
@@ -586,10 +617,10 @@ elif scelta == "Piani Abbonamento (Titolari 20€)":
     with col1:
         st.markdown(
             """
-        <div class="custom-card" style="border-top: 5px solid #a78bfa;">
-            <span class="badge-pop badge-purple">Titolari & Aziende</span>
+        <div class="custom-card" style="border-top: 5px solid #18181b;">
+            <span class="badge-pop" style="background:#18181b; color:white;">Titolari & Aziende</span>
             <h3 style="font-size: 1.5rem; margin-top: 5px;">Abbonamento Full Access</h3>
-            <div style="font-size: 2rem; font-weight: 800; color: #9333ea; margin: 10px 0;">20 € <span style="font-size: 1rem; color: var(--text-muted);">/ mese</span></div>
+            <div style="font-size: 2rem; font-weight: 800; color: #18181b; margin: 10px 0;">20 € <span style="font-size: 1rem; color: var(--text-muted);">/ mese</span></div>
             <p style="color: var(--text-muted);">Sblocca i numeri di telefono diretti e contatta subito qualsiasi lavoratore su WhatsApp.</p>
         </div>
         """,
@@ -605,7 +636,7 @@ elif scelta == "Piani Abbonamento (Titolari 20€)":
                 st.rerun()
 
 # ============================================================
-# 5. DASHBOARD ADMIN PROFESSIONALE
+# 5. DASHBOARD ADMIN PROFESSIONALE (LIVE STATS)
 # ============================================================
 elif scelta == "📊 Dashboard Admin" and mostra_admin:
     st.markdown(
@@ -617,7 +648,6 @@ elif scelta == "📊 Dashboard Admin" and mostra_admin:
         unsafe_allow_html=True,
     )
 
-    # 4 Metric Cards in 2x2 o 4 colonne
     m1, m2, m3, m4 = st.columns(4)
     with m1:
         st.metric(
@@ -653,7 +683,7 @@ elif scelta == "📊 Dashboard Admin" and mostra_admin:
             """
         <div class="custom-card">
             <h4 style="margin-top:0;">Fatturato Stimato Mensile</h4>
-            <p style="font-size: 1.8rem; font-weight: 800; color: #7c3aed; margin: 10px 0;">€ 360,00</p>
+            <p style="font-size: 1.8rem; font-weight: 800; color: #18181b; margin: 10px 0;">€ 360,00</p>
             <p style="color: var(--text-muted); font-size: 0.85rem;">Calcolato su 1 abbonamento titolare attivo + pacchetti boost weekend attivi.</p>
         </div>
         """,
