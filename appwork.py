@@ -111,9 +111,7 @@ if "sessione_contata" not in st.session_state:
     st.session_state.sessione_contata = True
 
 if "abbonamento_attivo" not in st.session_state:
-    st.session_state.abbonamento_attivo = (
-        False  # False = vede solo 4 candidati, True = sbloccato tutto
-    )
+    st.session_state.abbonamento_attivo = False
 
 if "mio_profilo" not in st.session_state:
     st.session_state.mio_profilo = {
@@ -315,8 +313,6 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 }
 .badge-purple { background: #f3e8ff; color: #9333ea; }
 .badge-blue { background: #e0f2fe; color: #0284c7; }
-.badge-orange { background: #ffedd5; color: #ea580c; }
-.badge-yellow { background: #fef9c3; color: #ca8a04; }
 
 .skill-pill {
     display: inline-block;
@@ -717,7 +713,7 @@ elif scelta == "Area Lavoratore":
     if (
         nuova_disp != mio["disponibile"]
         or mio["mansione"] != nuova_mansione
-        or mio["zona"] != nueva_zona
+        or mio["zona"] != nuova_zona
     ):
         mio["disponibile"] = nuova_disp
         trovato = next(
