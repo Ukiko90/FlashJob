@@ -285,36 +285,55 @@ scelta = st.radio(
 )
 
 # ============================================================
-# 1. PANORAMICA
+# 1. PANORAMICA (COSA FACCIAMO & COME FUNZIONA)
 # ============================================================
 if scelta == "Panoramica":
     st.markdown(
         """
-        <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Come funziona il Database Live</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>I dipendenti di qualsiasi mansione impostano la propria disponibilità e i ristoratori filtrano i profili per trovare subito chi serve.</p>
+        <div style="text-align: center; max-width: 800px; margin: 0 auto 2.5rem auto;">
+            <span class="badge-pop badge-purple">Il tuo partner strategico HORECA</span>
+            <h2 style='font-weight:800; font-size:2.2rem; margin-top:10px; color:#211e33;'>Rivoluzioniamo il modo in cui il lavoro incontra il talento.</h2>
+            <p style='color:var(--text-muted); font-size:1.1rem; line-height:1.6; margin-top:10px;'>Flashjob è la piattaforma intelligente progettata per azzerare i tempi morti del recruiting nella ristorazione e nell'ospitalità. Che tu sia un locale in cerca di supporto immediato o un professionista pronto a scendere in campo, noi facciamo una sola cosa: ti connettiamo in tempo zero.</p>
+        </div>
     """,
         unsafe_allow_html=True,
     )
 
     col1, col2 = st.columns(2, gap="large")
+
     with col1:
         st.markdown(
             """
-        <div class="custom-card">
-            <span class="badge-pop badge-blue">Per i Ristoratori</span>
-            <h3>Filtri e Ricerca Rapida</h3>
-            <p>Seleziona la mansione o la zona per visualizzare all'istante qualsiasi profilo con il pallino verde acceso e pronto a lavorare.</p>
+        <div class="custom-card" style="height: 100%;">
+            <span class="badge-pop badge-blue">Per i Ristoratori & Locali</span>
+            <h3 style="font-size: 1.3rem; margin-top: 5px;">Cerca il professionista perfetto, senza attese</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
+                Un'emergenza in sala o un picco di lavoro inaspettato? Con Flashjob non devi sfogliare centinaia di CV cartacei o fare decine di chiamate a vuoto. 
+            </p>
+            <ul style="padding-left: 18px; color: #444; font-size: 0.9rem; line-height: 1.6; margin-top: 15px;">
+                <li><b>Filtri di precisione:</b> Seleziona mansione, zona di Milano o competenze specifiche con un click.</li>
+                <li><b>Indicatori di stato live:</b> Visualizza all'istante chi ha il pallino verde acceso, segnalando di essere libero e pronto a lavorare adesso.</li>
+                <li><b>Contatto diretto:</b> Accedi subito al numero verificato e avvia la trattativa o la prenotazione tramite chat istantanea.</li>
+            </ul>
         </div>
         """,
             unsafe_allow_html=True,
         )
+
     with col2:
         st.markdown(
             """
-        <div class="custom-card">
-            <span class="badge-pop badge-purple">Per i Lavoratori</span>
-            <h3>Disponibilità Istantanea</h3>
-            <p>Qualunque sia il tuo ruolo, attiva l'interfaccia: il tuo profilo si illumina con un indicatore verde lampeggiante visibile a tutti i locali.</p>
+        <div class="custom-card" style="height: 100%;">
+            <span class="badge-pop badge-purple">Per i Lavoratori HORECA</span>
+            <h3 style="font-size: 1.3rem; margin-top: 5px;">Il lavoro cerca te, esattamente quando vuoi</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
+                Sei un cameriere, un barista, uno chef de rang o un aiuto cuoco? Gestisci i tuoi turni e la tua libertà professionale senza intermediari.
+            </p>
+            <ul style="padding-left: 18px; color: #444; font-size: 0.9rem; line-height: 1.6; margin-top: 15px;">
+                <li><b>Disponibilità a comando:</b> Accendi il tuo profilo dall'Area Lavoratore e renditi visibile a decine di ristoranti in cerca di rinforzi.</li>
+                <li><b>Massima flessibilità:</b> Lavora quando ti è più comodo, gestendo i tuoi impegni in totale autonomia.</li>
+                <li><b>Visibilità garantita:</b> Mettiti in mostra con recensioni verificate, storico turni e referenze certificate.</li>
+            </ul>
         </div>
         """,
             unsafe_allow_html=True,
