@@ -221,6 +221,9 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     height: 100%;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .enterprise-card:hover {
     transform: translateY(-2px);
@@ -608,16 +611,19 @@ elif scelta == "Database Talenti":
                 boost_label = ' <span class="badge-top">Top</span>' if lav.get("boosted") else ""
 
                 with c_target:
+                    # Contenitore unificato pulito per evitare scompaginamenti nella griglia
                     st.markdown(
                         f"""
-                    <div class="{card_class}" style="margin-bottom: 1rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                            {badge_stato}
-                            {boost_label}
+                    <div class="{card_class}" style="margin-bottom: 1rem; min-height: 160px;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                {badge_stato}
+                                {boost_label}
+                            </div>
+                            <h3 style="margin: 0 0 2px 0; font-size: 1rem; font-weight: 700; color: var(--text-main);">{safe(lav["nome"])}</h3>
+                            <p style="color: var(--text-muted); margin: 0 0 6px 0; font-size: 0.78rem; font-weight: 600;">{safe(lav["mansione"])} • {safe(lav["zona"])}</p>
+                            <p style="color: var(--text-muted); font-size: 0.75rem; margin: 0 0 8px 0;">{safe(lav["recensioni"])}</p>
                         </div>
-                        <h3 style="margin: 0 0 2px 0; font-size: 1rem; font-weight: 700; color: var(--text-main);">{safe(lav["nome"])}</h3>
-                        <p style="color: var(--text-muted); margin: 0 0 6px 0; font-size: 0.78rem; font-weight: 600;">{safe(lav["mansione"])} • {safe(lav["zona"])}</p>
-                        <p style="color: var(--text-muted); font-size: 0.75rem; margin: 0 0 8px 0;">{safe(lav["recensioni"])}</p>
                     </div>
                     """,
                         unsafe_allow_html=True,
