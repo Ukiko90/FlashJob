@@ -10,33 +10,41 @@ st.set_page_config(
 )
 
 # ============================================================
-# STATO INIZIALE (DATABASE PUBBLICO VUOTO & PROFILO PERSONALE)
+# STATO INIZIALE & TRACCIAMENTO VISITE / ISCRITTI
 # ============================================================
 if "lavoratori" not in st.session_state:
-    st.session_state.lavoratori = []
+  st.session_state.lavoratori = []
 
 if "selected_id" not in st.session_state:
-    st.session_state.selected_id = None
+  st.session_state.selected_id = None
+
+# Contatore Visite (Aperture App)
+if "visite_totali" not in st.session_state:
+  st.session_state.visite_totali = 0
+
+if "sessione_contata" not in st.session_state:
+  st.session_state.visite_totali += 1
+  st.session_state.sessione_contata = True
 
 if "mio_profilo" not in st.session_state:
-    st.session_state.mio_profilo = {
-        "id": 999,
-        "nome": "Il Tuo Nome",
-        "mansione": "Cameriere / Sala",
-        "zona": "Milano",
-        "tel": "+39 333 0000000",
-        "completati": 0,
-        "disponibile": False,
-        "referenze": "Professionista verificato nel settore HORECA.",
-    }
+  st.session_state.mio_profilo = {
+      "id": 999,
+      "nome": "Il Tuo Nome",
+      "mansione": "Cameriere / Sala",
+      "zona": "Milano",
+      "tel": "+39 333 0000000",
+      "completati": 0,
+      "disponibile": False,
+      "referenze": "Professionista verificato nel settore HORECA.",
+  }
 
 
 def safe(value):
-    return html.escape(str(value))
+  return html.escape(str(value))
 
 
 def whatsapp_url(phone):
-    return "https://wa.me/" + re.sub(r"\D", "", phone)
+  return "https://wa.me/" + re.sub(r"\D", "", phone)
 
 
 # ============================================================
@@ -148,12 +156,13 @@ div[data-testid="stRadio"] div[role="radiogroup"] {
     margin-bottom: 2.5rem;
     gap: 5px;
     border: 1px solid var(--border-color);
+    flex-wrap: wrap;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label {
     border-radius: 40px;
-    padding: 10px 18px;
+    padding: 10px 16px;
     font-weight: 700;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--text-muted) !important;
 }
 div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
@@ -278,93 +287,96 @@ scelta = st.radio(
     [
         "Panoramica",
         "Database & Filtri Azienda",
-        "Area Lavoratore (Imposta Disponibilità)",
+        "Area Lavoratore",
         "Piani & Abbonamenti",
+        "📊 Dashboard Admin (I Miei Numeri)",
     ],
     horizontal=True,
 )
 
 # ============================================================
-# 1. PANORAMICA (COSA FACCIAMO & COME FUNZIONA)
+# 1. PANORAMICA
 # ============================================================
 if scelta == "Panoramica":
-    st.markdown(
-        """
+  st.markdown(
+      """
         <div style="text-align: center; max-width: 800px; margin: 0 auto 2.5rem auto;">
             <span class="badge-pop badge-purple">Il tuo partner strategico HORECA</span>
             <h2 style='font-weight:800; font-size:2.2rem; margin-top:10px; color:#211e33;'>Rivoluzioniamo il modo in cui il lavoro incontra il talento.</h2>
-            <p style='color:var(--text-muted); font-size:1.1rem; line-height:1.6; margin-top:10px;'>Flashjob è la piattaforma intelligente progettata per azzerare i tempi morti del recruiting nella ristorazione e nell'ospitalità. Che tu sia un locale in cerca di supporto immediato o un professionista pronto a scendere in campo, noi facciamo una sola cosa: ti connettiamo in tempo zero.</p>
+            <p style='color:var(--text-muted); font-size:1.1rem; line-height:1.6; margin-top:10px;'>Flashjob è la piattaforma intelligente progettata per azzerare i tempi morti del recruiting nella ristorazione e nell'ospitalità. Che tu sia un locale in cerca di supporto immediato o un professionista pronto a scendere in campo, noi ti connettiamo in tempo zero.</p>
         </div>
     """,
-        unsafe_allow_html=True,
-    )
+      unsafe_allow_html=True,
+  )
 
-    col1, col2 = st.columns(2, gap="large")
+  col1, col2 = st.columns(2, gap="large")
 
-    with col1:
-        st.markdown(
-            """
+  with col1:
+    st.markdown(
+        """
         <div class="custom-card" style="height: 100%;">
             <span class="badge-pop badge-blue">Per i Ristoratori & Locali</span>
             <h3 style="font-size: 1.3rem; margin-top: 5px;">Cerca il professionista perfetto, senza attese</h3>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-                Un'emergenza in sala o un picco di lavoro inaspettato? Con Flashjob non devi sfogliare centinaia di CV cartacei o fare decine di chiamate a vuoto. 
+                Un'emergenza in sala o un picco di lavoro inaspettato? Con Flashjob trovi supporto immediato.
             </p>
             <ul style="padding-left: 18px; color: #444; font-size: 0.9rem; line-height: 1.6; margin-top: 15px;">
-                <li><b>Filtri di precisione:</b> Seleziona mansione, zona di Milano o competenze specifiche con un click.</li>
-                <li><b>Indicatori di stato live:</b> Visualizza all'istante chi ha il pallino verde acceso, segnalando di essere libero e pronto a lavorare adesso.</li>
-                <li><b>Contatto diretto:</b> Accedi subito al numero verificato e avvia la trattativa o la prenotazione tramite chat istantanea.</li>
+                <li><b>Filtri di precisione:</b> Seleziona mansione e zona con un click.</li>
+                <li><b>Indicatori di stato live:</b> Visualizza chi ha il pallino verde ed è libero adesso.</li>
+                <li><b>Contatto diretto:</b> Accedi al numero verificato e prenota via chat.</li>
             </ul>
         </div>
         """,
-            unsafe_allow_html=True,
-        )
+        unsafe_allow_html=True,
+    )
 
-    with col2:
-        st.markdown(
-            """
+  with col2:
+    st.markdown(
+        """
         <div class="custom-card" style="height: 100%;">
             <span class="badge-pop badge-purple">Per i Lavoratori HORECA</span>
             <h3 style="font-size: 1.3rem; margin-top: 5px;">Il lavoro cerca te, esattamente quando vuoi</h3>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-                Sei un cameriere, un barista, uno chef de rang o un aiuto cuoco? Gestisci i tuoi turni e la tua libertà professionale senza intermediari.
+                Gestisci i tuoi turni e la tua libertà professionale senza intermediari.
             </p>
             <ul style="padding-left: 18px; color: #444; font-size: 0.9rem; line-height: 1.6; margin-top: 15px;">
-                <li><b>Disponibilità a comando:</b> Accendi il tuo profilo dall'Area Lavoratore e renditi visibile a decine di ristoranti in cerca di rinforzi.</li>
-                <li><b>Massima flessibilità:</b> Lavora quando ti è più comodo, gestendo i tuoi impegni in totale autonomia.</li>
-                <li><b>Visibilità garantita:</b> Mettiti in mostra con recensioni verificate, storico turni e referenze certificate.</li>
+                <li><b>Disponibilità a comando:</b> Accendi il profilo e renditi visibile ai locali.</li>
+                <li><b>Massima flessibilità:</b> Lavora quando ti è più comodo.</li>
+                <li><b>Visibilità garantita:</b> Mettiti in mostra con recensioni e referenze.</li>
             </ul>
         </div>
         """,
-            unsafe_allow_html=True,
-        )
+        unsafe_allow_html=True,
+    )
 
 # ============================================================
 # 2. DATABASE & FILTRI AZIENDA
 # ============================================================
 elif scelta == "Database & Filtri Azienda":
-    selected_c = next(
-        (
-            item
-            for item in st.session_state.lavoratori
-            if item["id"] == st.session_state.selected_id
-        ),
-        None,
+  selected_c = next(
+      (
+          item
+          for item in st.session_state.lavoratori
+          if item["id"] == st.session_state.selected_id
+      ),
+      None,
+  )
+
+  if selected_c is not None:
+    if st.button("← Torna al database completo"):
+      st.session_state.selected_id = None
+      st.rerun()
+
+    stato_html = (
+        '<span class="pulsing-dot"></span><b style="color:#059669;">DISPONIBILE'
+        " ORA</b>"
+        if selected_c["disponibile"]
+        else '<span class="offline-dot"></span><span'
+        ' style="color:#888;">NON DISPONIBILE</span>'
     )
 
-    if selected_c is not None:
-        if st.button("← Torna al database completo"):
-            st.session_state.selected_id = None
-            st.rerun()
-
-        stato_html = (
-            '<span class="pulsing-dot"></span><b style="color:#059669;">DISPONIBILE ORA</b>'
-            if selected_c["disponibile"]
-            else '<span class="offline-dot"></span><span style="color:#888;">NON DISPONIBILE</span>'
-        )
-
-        st.markdown(
-            f"""
+    st.markdown(
+        f"""
         <div class="custom-card" style="margin-top: 20px;">
             <div style="display: flex; align-items: center; gap: 20px;">
                 <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid #a78bfa;" />
@@ -395,99 +407,98 @@ elif scelta == "Database & Filtri Azienda":
             </div>
         </div>
         """,
-            unsafe_allow_html=True,
-        )
+        unsafe_allow_html=True,
+    )
 
-        st.link_button(
-            "💬 Contatta e Prenota su WhatsApp",
-            whatsapp_url(selected_c["tel"]),
-            use_container_width=True,
-        )
+    st.link_button(
+        "💬 Contatta e Prenota su WhatsApp",
+        whatsapp_url(selected_c["tel"]),
+        use_container_width=True,
+    )
 
-    else:
-        st.markdown(
-            """
+  else:
+    st.markdown(
+        """
             <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Database Contatti & Filtri</h2>
             <p style='color:var(--text-muted); margin-bottom:1.5rem;'>Cerca tra tutte le mansioni disponibili per trovare subito la risorsa ideale.</p>
         """,
-            unsafe_allow_html=True,
-        )
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        '<div class="custom-card" style="padding: 1.2rem; background: #fafafa;">',
+        unsafe_allow_html=True,
+    )
+    col_f1, col_f2, col_f3 = st.columns(3)
+
+    with col_f1:
+      filtro_mansione = st.selectbox(
+          "Filtra per Mansione",
+          [
+              "Tutte",
+              "Cameriere / Sala",
+              "Barista / Bartender",
+              "Chef de Rang / Jolly",
+              "Aiuto Cuoco",
+          ],
+          key="filtro_mansione_box",
+      )
+
+    with col_f2:
+      solo_disponibili = st.checkbox(
+          "Mostra solo disponibili con pallino verde",
+          value=False,
+          key="filtro_disp_box",
+      )
+
+    with col_f3:
+      ricerca_testo = st.text_input(
+          "Cerca per nome o zona",
+          placeholder="Es. Navigli o Marco...",
+          key="filtro_testo_box",
+      )
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    lavoratori_filtrati = st.session_state.lavoratori
+    if filtro_mansione != "Tutte":
+      lavoratori_filtrati = [
+          l for l in lavoratori_filtrati if l["mansione"] == filtro_mansione
+      ]
+    if solo_disponibili:
+      lavoratori_filtrati = [l for l in lavoratori_filtrati if l["disponibile"]]
+    if ricerca_testo:
+      testo_q = ricerca_testo.lower()
+      lavoratori_filtrati = [
+          l
+          for l in lavoratori_filtrati
+          if testo_q in l["nome"].lower() or testo_q in l["zona"].lower()
+      ]
+
+    st.markdown(
+        f"<p style='color:#7d7a92; font-size:0.9rem; margin: 1"
+        f" rem 0;'>Trovati <b>{len(lavoratori_filtrati)}</b> professionisti in"
+        " archivio.</p>",
+        unsafe_allow_html=True,
+    )
+
+    if not lavoratori_filtrati:
+      st.info(
+          "Nessun lavoratore trovato nel database al momento. I lavoratori"
+          " possono attivarsi dall'Area Lavoratore."
+      )
+
+    for lav in lavoratori_filtrati:
+      col_info, col_btn = st.columns([3, 1], gap="medium")
+
+      with col_info:
+        if lav["disponibile"]:
+          badge_stato = '<span class="pulsing-dot"></span><b style="color:#059669; font-size:0.75rem;">DISPONIBILE ORA</b>'
+        else:
+          badge_stato = '<span class="offline-dot"></span><span style="color:#888; font-size:0.75rem;">NON DISPONIBILE</span>'
 
         st.markdown(
-            '<div class="custom-card" style="padding: 1.2rem; background: #fafafa;">',
-            unsafe_allow_html=True,
-        )
-        col_f1, col_f2, col_f3 = st.columns(3)
-
-        with col_f1:
-            filtro_mansione = st.selectbox(
-                "Filtra per Mansione",
-                [
-                    "Tutte",
-                    "Cameriere / Sala",
-                    "Barista / Bartender",
-                    "Chef de Rang / Jolly",
-                    "Aiuto Cuoco",
-                ],
-                key="filtro_mansione_box",
-            )
-
-        with col_f2:
-            solo_disponibili = st.checkbox(
-                "Mostra solo disponibili con pallino verde",
-                value=False,
-                key="filtro_disp_box",
-            )
-
-        with col_f3:
-            ricerca_testo = st.text_input(
-                "Cerca per nome o zona",
-                placeholder="Es. Navigli o Marco...",
-                key="filtro_testo_box",
-            )
-
-        st.markdown("</div>", unsafe_allow_html=True)
-
-        lavoratori_filtrati = st.session_state.lavoratori
-        if filtro_mansione != "Tutte":
-            lavoratori_filtrati = [
-                l for l in lavoratori_filtrati if l["mansione"] == filtro_mansione
-            ]
-        if solo_disponibili:
-            lavoratori_filtrati = [
-                l for l in lavoratori_filtrati if l["disponibile"]
-            ]
-        if ricerca_testo:
-            testo_q = ricerca_testo.lower()
-            lavoratori_filtrati = [
-                l
-                for l in lavoratori_filtrati
-                if testo_q in l["nome"].lower() or testo_q in l["zona"].lower()
-            ]
-
-        st.markdown(
-            f"<p style='color:#7d7a92; font-size:0.9rem; margin: 1rem 0;'>Trovati <b>{len(lavoratori_filtrati)}</b> professionisti in archivio.</p>",
-            unsafe_allow_html=True,
-        )
-
-        if not lavoratori_filtrati:
-            st.info(
-                "Nessun lavoratore trovato nel database al momento. I"
-                " lavoratori possono registrarsi o attivarsi dall'Area"
-                " Lavoratore."
-            )
-
-        for lav in lavoratori_filtrati:
-            col_info, col_btn = st.columns([3, 1], gap="medium")
-
-            with col_info:
-                if lav["disponibile"]:
-                    badge_stato = '<span class="pulsing-dot"></span><b style="color:#059669; font-size:0.75rem;">DISPONIBILE ORA</b>'
-                else:
-                    badge_stato = '<span class="offline-dot"></span><span style="color:#888; font-size:0.75rem;">NON DISPONIBILE</span>'
-
-                st.markdown(
-                    f"""
+            f"""
                 <div class="custom-card" style="margin-bottom:1rem; padding:1.2rem 1.5rem;">
                     <div style="margin-bottom:6px;">{badge_stato}</div>
                     <h3 style="margin:0; font-size:1.15rem;">{safe(lav["nome"])}</h3>
@@ -495,33 +506,33 @@ elif scelta == "Database & Filtri Azienda":
                     <span style="font-size:0.8rem; color:#888;">{safe(lav["completati"])} turni completati</span>
                 </div>
                 """,
-                    unsafe_allow_html=True,
-                )
+            unsafe_allow_html=True,
+        )
 
-            with col_btn:
-                st.markdown(
-                    "<div style='margin-top: 30px;'></div>", unsafe_allow_html=True
-                )
-                if st.button("Vedi profilo", key=f"btn_card_{lav['id']}"):
-                    st.session_state.selected_id = lav["id"]
-                    st.rerun()
+      with col_btn:
+        st.markdown(
+            "<div style='margin-top: 30px;'></div>", unsafe_allow_html=True
+        )
+        if st.button("Vedi profilo", key=f"btn_card_{lav['id']}"):
+          st.session_state.selected_id = lav["id"]
+          st.rerun()
 
 # ============================================================
 # 3. AREA LAVORATORE
 # ============================================================
-elif scelta == "Area Lavoratore (Imposta Disponibilità)":
-    st.markdown(
-        """
+elif scelta == "Area Lavoratore":
+  st.markdown(
+      """
         <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Area Personale Lavoratore</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>Modifica il tuo stato per qualsiasi mansione: accendi la disponibilità per farti contattare subito.</p>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Modifica il tuo stato: accendi la disponibilità per farti contattare subito dai locali.</p>
     """,
-        unsafe_allow_html=True,
-    )
+      unsafe_allow_html=True,
+  )
 
-    mio = st.session_state.mio_profilo
+  mio = st.session_state.mio_profilo
 
-    st.markdown(
-        f"""
+  st.markdown(
+      f"""
     <div class="custom-card">
         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem;">
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" style="width:70px; height:70px; border-radius:50%; object-fit:cover;" />
@@ -532,140 +543,167 @@ elif scelta == "Area Lavoratore (Imposta Disponibilità)":
             </div>
         </div>
     """,
-        unsafe_allow_html=True,
+      unsafe_allow_html=True,
+  )
+
+  st.markdown("### Gestione Stato in Tempo Reale")
+  nuova_disp = st.toggle(
+      "🟢 Attiva disponibilità per lavorare (Accendi pallino verde)",
+      value=mio["disponibile"],
+      key="toggle_disponibilita_lavoratore",
+  )
+
+  if nuova_disp != mio["disponibile"]:
+    mio["disponibile"] = nuova_disp
+    trovato = next(
+        (item for item in st.session_state.lavoratori if item["id"] == mio["id"]),
+        None,
+    )
+    if nuova_disp:
+      if trovato:
+        trovato["disponibile"] = True
+      else:
+        st.session_state.lavoratori.append(mio.copy())
+    else:
+      if trovato:
+        st.session_state.lavoratori = [
+            item for item in st.session_state.lavoratori if item["id"] != mio["id"]
+        ]
+
+    st.success(
+        "Stato aggiornato con successo nel database! I ristoranti vedranno"
+        " immediatamente la modifica."
     )
 
-    st.markdown("### Gestione Stato in Tempo Reale")
-    nuova_disp = st.toggle(
-        "🟢 Attiva disponibilità per lavorare (Accendi pallino verde lampeggiante)",
-        value=mio["disponibile"],
-        key="toggle_disponibilita_lavoratore",
-    )
-
-    if nuova_disp != mio["disponibile"]:
-        mio["disponibile"] = nuova_disp
-        trovato = next(
-            (item for item in st.session_state.lavoratori if item["id"] == mio["id"]),
-            None,
-        )
-        if nuova_disp:
-            if trovato:
-                trovato["disponibile"] = True
-            else:
-                st.session_state.lavoratori.append(mio.copy())
-        else:
-            if trovato:
-                st.session_state.lavoratori = [
-                    item
-                    for item in st.session_state.lavoratori
-                    if item["id"] != mio["id"]
-                ]
-
-        st.success(
-            "Stato aggiornato con successo nel database! I ristoranti vedranno"
-            " immediatamente la modifica."
-        )
-
-    if mio["disponibile"]:
-        st.markdown(
-            """
+  if mio["disponibile"]:
+    st.markdown(
+        """
         <div style="background:#ecfdf5; color:#059669; padding:12px; border-radius:12px; font-weight:700; margin-top:15px;">
-            <span class="pulsing-dot"></span> Il tuo profilo è attualmente ONLINE con il pallino verde lampeggiante nel database pubblico!
+            <span class="pulsing-dot"></span> Il tuo profilo è attualmente ONLINE nel database pubblico!
         </div>
         """,
-            unsafe_allow_html=True,
-        )
-    else:
-        st.markdown(
-            """
+        unsafe_allow_html=True,
+    )
+  else:
+    st.markdown(
+        """
         <div style="background:#f1f5f9; color:#64748b; padding:12px; border-radius:12px; font-weight:700; margin-top:15px;">
             <span class="offline-dot"></span> Il tuo profilo è attualmente offline.
         </div>
         """,
-            unsafe_allow_html=True,
-        )
-
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# ============================================================
-# 4. PIANI & ABBONAMENTI (COMING SOON 🚀)
-# ============================================================
-else:
-    st.markdown(
-        """
-        <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Piani & Funzioni Elite ⚡</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>Stiamo preparando strumenti rivoluzionari per connettere locali e professionisti HORECA alla massima velocità. Scopri cosa sta arrivando!</p>
-    """,
         unsafe_allow_html=True,
     )
 
-    col1, col2, col3 = st.columns(3, gap="medium")
+  st.markdown("</div>", unsafe_allow_html=True)
 
-    with col1:
-        st.markdown(
-            """
+# ============================================================
+# 4. PIANI & ABBONAMENTI
+# ============================================================
+elif scelta == "Piani & Abbonamenti":
+  st.markdown(
+      """
+        <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Piani & Funzioni Elite ⚡</h2>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Stiamo preparando strumenti rivoluzionari per connettere locali e professionisti HORECA.</p>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  col1, col2, col3 = st.columns(3, gap="medium")
+
+  with col1:
+    st.markdown(
+        """
         <div class="custom-card">
             <span class="badge-pop badge-blue">Coming Soon 🚀</span>
             <h3 style="margin-top:10px; font-size:1.2rem;">Aziende Elite</h3>
             <div style="font-size: 1.4rem; font-weight: 800; color: #0284c7; margin: 10px 0;">Accesso Anticipato</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Hai un locale e vuoi sbloccare ricerche illimitate senza attese?</p>
-            <ul style="padding-left:16px; color:#555; font-size:0.85rem; line-height:1.5;">
-                <li>Matchmaking IA con i candidati</li>
-                <li>Gestione emergenze last-minute in 1 click</li>
-                <li>Zero commissioni sulle chiamate</li>
-            </ul>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Ricerche illimitate senza attese per locali.</p>
         </div>
         """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Mettiti in Lista d'Attesa", key="btn_std"):
-            st.toast(
-                "Ottimo! Ti sei iscritto alla lista d'attesa prioritaria"
-                " Aziende. Ti avviseremo al lancio!"
-            )
+        unsafe_allow_html=True,
+    )
+    if st.button("Mettiti in Lista d'Attesa", key="btn_std"):
+      st.toast("Iscritto alla lista d'attesa prioritaria Aziende!")
 
-    with col2:
-        st.markdown(
-            """
+  with col2:
+    st.markdown(
+        """
         <div class="custom-card">
             <span class="badge-pop badge-orange">Coming Soon 🌟</span>
             <h3 style="margin-top:10px; font-size:1.2rem;">Lavoratore Pro Pass</h3>
             <div style="font-size: 1.4rem; font-weight: 800; color: #ea580c; margin: 10px 0;">Presto Disponibile</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Vuoi saltare la fila e finire dritto in cima alle preferenze dei migliori locali?</p>
-            <ul style="padding-left:16px; color:#555; font-size:0.85rem; line-height:1.5;">
-                <li>Badge esclusivo "Top Verified Pro"</li>
-                <li>Notifiche anticipate per i turni più remunerativi</li>
-                <li>Visibilità prioritaria garantita</li>
-            </ul>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Salta la fila e vai in cima alle preferenze dei locali.</p>
         </div>
         """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Avvisami al Lancio", key="btn_prem"):
-            st.toast(
-                "Registrato con successo! Sarai tra i primi a testare il Pro"
-                " Pass."
-            )
+        unsafe_allow_html=True,
+    )
+    if st.button("Avvisami al Lancio", key="btn_prem"):
+      st.toast("Registrato con successo al Pro Pass!")
 
-    with col3:
-        st.markdown(
-            """
+  with col3:
+    st.markdown(
+        """
         <div class="custom-card">
             <span class="badge-pop badge-yellow">Coming Soon ⚡</span>
             <h3 style="margin-top:10px; font-size:1.2rem;">Radar Urgenze VIP</h3>
             <div style="font-size: 1.4rem; font-weight: 800; color: #ca8a04; margin: 10px 0;">In Fase di Test</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">La funzione segreta per chi cerca o offre aiuto nel weekend in tempo zero.</p>
-            <ul style="padding-left:16px; color:#555; font-size:0.85rem; line-height:1.5;">
-                <li>Allarmi radar geolocalizzati live</li>
-                <li>Filtro ultra-rapido per urgenze notturne</li>
-                <li>Posti limitati per i primi aderenti</li>
-            </ul>
+            <p style="font-size:0.85rem; color:var(--text-muted);">La funzione segreta per le urgenze nel weekend.</p>
         </div>
         """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Richiedi Accesso Anteprima", key="btn_boost"):
-            st.toast(
-                "Richiesta inviata! Ti contatteremo per l'accesso in anteprima"
-                " esclusiva."
-            )
+        unsafe_allow_html=True,
+    )
+    if st.button("Richiedi Accesso Anteprima", key="btn_boost"):
+      st.toast("Richiesta inviata per l'anteprima esclusiva!")
+
+# ============================================================
+# 5. DASHBOARD ADMIN (VISITE & ISCRITTI)
+# ============================================================
+else:
+  st.markdown(
+      """
+        <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>📊 Dashboard Admin & Statistiche</h2>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>I dati in tempo reale sull'utilizzo della tua applicazione.</p>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  col_m1, col_m2 = st.columns(2, gap="medium")
+
+  with col_m1:
+    st.markdown(
+        f"""
+        <div class="custom-card" style="text-align: center; padding: 2.5rem;">
+            <span class="badge-pop badge-blue">Traffic Monitor</span>
+            <h3 style="color: var(--text-muted); font-size: 1rem; margin-top: 10px;">Visite Totali (Aperture App)</h3>
+            <div style="font-size: 3rem; font-weight: 800; color: #0284c7; margin: 15px 0;">{st.session_state.visite_totali}</div>
+            <p style="font-size: 0.85rem; color: #888;">Numero di volte che la pagina è stata aperta o ricaricata.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+  with col_m2:
+    st.markdown(
+        f"""
+        <div class="custom-card" style="text-align: center; padding: 2.5rem;">
+            <span class="badge-pop badge-purple">Conversion Monitor</span>
+            <h3 style="color: var(--text-muted); font-size: 1rem; margin-top: 10px;">Lavoratori Iscritti / Online</h3>
+            <div style="font-size: 3rem; font-weight: 800; color: #9333ea; margin: 15px 0;">{len(st.session_state.lavoratori)}</div>
+            <p style="font-size: 0.85rem; color: #888;">Numero di utenti attivi registrati nel database.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+  st.markdown(
+      """
+    <div class="custom-card" style="background: #f8fafc; margin-top: 1rem;">
+        <h4 style="margin-top: 0; color: #211e33;">💡 Come interpretare questi numeri:</h4>
+        <ul style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; padding-left: 20px;">
+            <li><b>Visite Totali:</b> Ti mostra quante persone stanno cliccando sul link della tua app.</li>
+            <li><b>Lavoratori Iscritti:</b> Ti mostra quanti professionisti si sono registrati o hanno attivato il profilo verde.</li>
+        </ul>
+    </div>
+    """,
+      unsafe_allow_html=True,
+  )
