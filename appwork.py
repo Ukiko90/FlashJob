@@ -13,12 +13,36 @@ st.set_page_config(
 # STATO INIZIALE & TRACCIAMENTO VISITE / ISCRITTI
 # ============================================================
 if "lavoratori" not in st.session_state:
-    st.session_state.lavoratori = []
+    st.session_state.lavoratori = [
+        {
+            "id": 1,
+            "nome": "Marco Rossi",
+            "mansione": "Cameriere / Sala",
+            "zona": "Milano Centro",
+            "tel": "+39 333 1234567",
+            "completati": 14,
+            "disponibile": True,
+            "referenze": "Eccellente gestione della sala e dei tavoli numerosi.",
+            "recensioni": "4.9 ⭐ (12 recensioni verificate)",
+            "competenze": ["Lingua Inglese", "Vini & Sommelier Base", "Piattaforma POS"],
+        },
+        {
+            "id": 2,
+            "nome": "Giulia Bianchi",
+            "mansione": "Barista / Bartender",
+            "zona": "Navigli / Ticinese",
+            "tel": "+39 333 9876543",
+            "completati": 22,
+            "disponibile": True,
+            "referenze": "Velocità incredibile nei momenti di massimo afflusso.",
+            "recensioni": "5.0 ⭐ (19 recensioni verificate)",
+            "competenze": ["Mixology Avanzata", "Caffetteria Pro", "Gestione cassa"],
+        },
+    ]
 
 if "selected_id" not in st.session_state:
     st.session_state.selected_id = None
 
-# Contatore Visite (Aperture App)
 if "visite_totali" not in st.session_state:
     st.session_state.visite_totali = 0
 
@@ -36,6 +60,8 @@ if "mio_profilo" not in st.session_state:
         "completati": 0,
         "disponibile": False,
         "referenze": "Professionista verificato nel settore HORECA e Accoglienza.",
+        "recensioni": "Nuovo utente (0 recensioni)",
+        "competenze": ["Lingua Inglese"],
     }
 
 
@@ -79,7 +105,7 @@ html, body, [class*="css"] {
     padding: 2rem 1.5rem 5rem !important;
 }
 
-/* RIMOZIONE TOTALE BARRE, MENU, FOOTER E PULSANTE "GESTISCI L'APP" */
+/* RIMOZIONE TOTALE BARRE E BADGE STREAMLIT */
 #MainMenu {visibility: hidden; display: none;}
 footer {visibility: hidden; display: none;}
 header {visibility: hidden; display: none;}
@@ -87,13 +113,6 @@ header {visibility: hidden; display: none;}
 [data-testid="stToolbar"] {display: none !important; visibility: hidden !important;}
 [data-testid="stDecoration"] {display: none !important;}
 [data-testid="stStatusWidget"] {display: none !important;}
-.viewerBadge_container__1QSob {display: none !important; visibility: hidden !important;}
-.styles_viewerBadge__1yB5_ {display: none !important; visibility: hidden !important;}
-div.viewerBadge_link__1S137 {display: none !important; visibility: hidden !important;}
-#is-app-hosting-badge {display: none !important; visibility: hidden !important;}
-.stAppViewerBadge {display: none !important; visibility: hidden !important;}
-iframe[data-testid="stToaster"] {display: none !important;}
-
 div[class*="viewerBadge"], section[class*="viewerBadge"], div[class*="styles_viewerBadge"] {
     display: none !important;
     visibility: hidden !important;
@@ -196,7 +215,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     margin-bottom: 1.5rem;
 }
 
-/* PALLINO VERDE LAMPEGGIANTE */
+/* PALLINO VERDE */
 @keyframes pulse-animation {
     0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6); }
     70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); }
@@ -222,7 +241,7 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
     vertical-align: middle;
 }
 
-/* BADGE */
+/* BADGE & TAG */
 .badge-pop {
     display: inline-block;
     padding: 5px 12px;
@@ -237,6 +256,18 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 .badge-blue { background: #e0f2fe; color: #0284c7; }
 .badge-orange { background: #ffedd5; color: #ea580c; }
 .badge-yellow { background: #fef9c3; color: #ca8a04; }
+
+.skill-pill {
+    display: inline-block;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
 
 /* STATS */
 .stats-container {
@@ -273,13 +304,11 @@ div[data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"] {
 </style>
 
 <script>
-// 1. Rimuove il badge di Streamlit
 function removeViewerBadge() {
     const badges = document.querySelectorAll('div[class*="viewerBadge"], section[class*="viewerBadge"], div[class*="styles_viewerBadge"], #is-app-hosting-badge');
     badges.forEach(el => el.remove());
 }
 
-// 2. Imposta i Meta Tag Open Graph per la condivisione social (WhatsApp, Facebook, ecc.)
 function setSocialMetaTags() {
     let metaImage = document.querySelector('meta[property="og:image"]');
     if (!metaImage) {
@@ -287,7 +316,6 @@ function setSocialMetaTags() {
         metaImage.setAttribute('property', 'og:image');
         document.head.appendChild(metaImage);
     }
-    // SOSTITUISCI IL LINK SOTTO CON IL LINK DIRETTO AL TUO LOGO UFFICIALE
     metaImage.setAttribute('content', 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500');
 
     let metaTitle = document.querySelector('meta[property="og:title"]');
@@ -297,14 +325,6 @@ function setSocialMetaTags() {
         document.head.appendChild(metaTitle);
     }
     metaTitle.setAttribute('content', 'Flashjob • Il Lavoro a Portata di Mano');
-
-    let metaDesc = document.querySelector('meta[property="og:description"]');
-    if (!metaDesc) {
-        metaDesc = document.createElement('meta');
-        metaDesc.setAttribute('property', 'og:description');
-        document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute('content', 'La piattaforma intelligente per trovare lavoro e personale nel settore HORECA e Accoglienza.');
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -318,15 +338,10 @@ setInterval(removeViewerBadge, 500);
 )
 
 # ============================================================
-# BARRA LATERALE (SIDEBAR) RISERVATA ALL'ADMIN
+# BARRA LATERALE (ADMIN)
 # ============================================================
 with st.sidebar:
     st.markdown("### 🔐 Area Riservata Admin")
-    st.markdown(
-        "Inserisci la password segreta per visualizzare i dati statistici di"
-        " Flashjob."
-    )
-
     password_inserita = st.text_input(
         "Password Admin", type="password", key="input_pwd_admin"
     )
@@ -380,7 +395,7 @@ if scelta == "Panoramica":
         <div style="text-align: center; max-width: 800px; margin: 0 auto 2.5rem auto;">
             <span class="badge-pop badge-purple">Il tuo partner strategico HORECA & Eventi</span>
             <h2 style='font-weight:800; font-size:2.2rem; margin-top:10px; color:#211e33;'>Rivoluzioniamo il modo in cui il lavoro incontra il talento.</h2>
-            <p style='color:var(--text-muted); font-size:1.1rem; line-height:1.6; margin-top:10px;'>Flashjob è la piattaforma intelligente progettata per azzerare i tempi morti del recruiting nella ristorazione, nell'ospitalità e nell'accoglienza. Dalla sala alla cucina, passando per hostess, reception e booking: ti connettiamo in tempo zero.</p>
+            <p style='color:var(--text-muted); font-size:1.1rem; line-height:1.6; margin-top:10px;'>Flashjob connette in tempo zero locali e professionisti grazie a reputazione verificata, filtri avanzati e disponibilità istantanea.</p>
         </div>
     """,
         unsafe_allow_html=True,
@@ -393,15 +408,10 @@ if scelta == "Panoramica":
             """
         <div class="custom-card" style="height: 100%;">
             <span class="badge-pop badge-blue">Per i Ristoratori & Locali</span>
-            <h3 style="font-size: 1.3rem; margin-top: 5px;">Cerca il professionista perfetto, senza attese</h3>
+            <h3 style="font-size: 1.3rem; margin-top: 5px;">Recensioni verificate e risposte lampo</h3>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-                Un'emergenza in sala, un evento speciale o un picco di prenotazioni? Trova supporto immediato.
+                Scegli a colpo sicuro valutando le recensioni lasciate da altri locali e le competenze specifiche certificate.
             </p>
-            <ul style="padding-left: 18px; color: #444; font-size: 0.9rem; line-height: 1.6; margin-top: 15px;">
-                <li><b>Filtri di precisione:</b> Seleziona mansione (Camerieri, Hostess, Booking) e zona.</li>
-                <li><b>Indicatori di stato live:</b> Visualizza chi ha il pallino verde ed è libero adesso.</li>
-                <li><b>Contatto diretto:</b> Accedi al numero verificato e prenota via chat.</li>
-            </ul>
         </div>
         """,
             unsafe_allow_html=True,
@@ -412,15 +422,10 @@ if scelta == "Panoramica":
             """
         <div class="custom-card" style="height: 100%;">
             <span class="badge-pop badge-purple">Per i Lavoratori & Professionisti</span>
-            <h3 style="font-size: 1.3rem; margin-top: 5px;">Il lavoro cerca te, esattamente quando vuoi</h3>
+            <h3 style="font-size: 1.3rem; margin-top: 5px;">Costruisci la tua reputazione</h3>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-                Gestisci i tuoi turni, i servizi di accoglienza e la tua libertà professionale.
+                Metti in mostra le tue abilità (Sommelier, lingue, mixology) e scala le preferenze dei datori di lavoro.
             </p>
-            <ul style="padding-left: 18px; color: #444; font-size: 0.9rem; line-height: 1.6; margin-top: 15px;">
-                <li><b>Disponibilità a comando:</b> Accendi il profilo e renditi visibile ai locali.</li>
-                <li><b>Tutti i ruoli inclusi:</b> Sala, Bar, Cucina, Hostess, Booking e Reception.</li>
-                <li><b>Visibilità garantita:</b> Mettiti in mostra con referenze e competenze.</li>
-            </ul>
         </div>
         """,
             unsafe_allow_html=True,
@@ -445,11 +450,13 @@ elif scelta == "Database & Filtri Azienda":
             st.rerun()
 
         stato_html = (
-            '<span class="pulsing-dot"></span><b style="color:#059669;">DISPONIBILE'
-            " ORA</b>"
+            '<span class="pulsing-dot"></span><b style="color:#059669;">DISPONIBILE ORA</b>'
             if selected_c["disponibile"]
-            else '<span class="offline-dot"></span><span'
-            ' style="color:#888;">NON DISPONIBILE</span>'
+            else '<span class="offline-dot"></span><span style="color:#888;">NON DISPONIBILE</span>'
+        )
+
+        comp_html = "".join(
+            [f'<span class="skill-pill">✓ {c}</span>' for c in selected_c["competenze"]]
         )
 
         st.markdown(
@@ -461,21 +468,23 @@ elif scelta == "Database & Filtri Azienda":
                     <div style="margin-bottom:6px;">{stato_html}</div>
                     <h2 style="margin:0; font-size:1.5rem;">{safe(selected_c["nome"])}</h2>
                     <p style="color:var(--text-muted); margin:4px 0 0 0; font-weight:600;">{safe(selected_c["mansione"])} · {safe(selected_c["zona"])}</p>
+                    <p style="color:#d97706; margin:6px 0 0 0; font-weight:700; font-size:0.9rem;">⭐ {safe(selected_c["recensioni"])}</p>
                 </div>
             </div>
             
+            <div style="margin-top: 15px;">
+                <p style="font-size:0.8rem; font-weight:700; color:#7d7a92; text-transform:uppercase; margin-bottom:8px;">Competenze certificate:</p>
+                {comp_html}
+            </div>
+
             <div class="stats-container">
                 <div class="stat-box">
                     <strong>{safe(selected_c["completati"])}</strong>
                     <span>Turni fatti</span>
                 </div>
                 <div class="stat-box">
-                    <strong>100%</strong>
-                    <span>Affidabilità</span>
-                </div>
-                <div class="stat-box">
                     <strong>Verificato</strong>
-                    <span>Status</span>
+                    <span>Profilo</span>
                 </div>
             </div>
             
@@ -497,7 +506,7 @@ elif scelta == "Database & Filtri Azienda":
         st.markdown(
             """
             <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Database Contatti & Filtri</h2>
-            <p style='color:var(--text-muted); margin-bottom:1.5rem;'>Cerca tra tutte le mansioni disponibili per trovare subito la risorsa ideale.</p>
+            <p style='color:var(--text-muted); margin-bottom:1.5rem;'>Cerca tra i professionisti disponibili e filtra per competenze.</p>
         """,
             unsafe_allow_html=True,
         )
@@ -506,7 +515,7 @@ elif scelta == "Database & Filtri Azienda":
             '<div class="custom-card" style="padding: 1.2rem; background: #fafafa;">',
             unsafe_allow_html=True,
         )
-        col_f1, col_f2, col_f3 = st.columns(3)
+        col_f1, col_f2 = st.columns(2)
 
         with col_f1:
             filtro_mansione = st.selectbox(
@@ -530,13 +539,6 @@ elif scelta == "Database & Filtri Azienda":
                 key="filtro_disp_box",
             )
 
-        with col_f3:
-            ricerca_testo = st.text_input(
-                "Cerca per nome o zona",
-                placeholder="Es. Navigli o Marco...",
-                key="filtro_testo_box",
-            )
-
         st.markdown("</div>", unsafe_allow_html=True)
 
         lavoratori_filtrati = st.session_state.lavoratori
@@ -546,35 +548,16 @@ elif scelta == "Database & Filtri Azienda":
             ]
         if solo_disponibili:
             lavoratori_filtrati = [l for l in lavoratori_filtrati if l["disponibile"]]
-        if ricerca_testo:
-            testo_q = ricerca_testo.lower()
-            lavoratori_filtrati = [
-                l
-                for l in lavoratori_filtrati
-                if testo_q in l["nome"].lower() or testo_q in l["zona"].lower()
-            ]
-
-        st.markdown(
-            f"<p style='color:#7d7a92; font-size:0.9rem; margin: 1"
-            f" rem 0;'>Trovati <b>{len(lavoratori_filtrati)}</b> professionisti in"
-            " archivio.</p>",
-            unsafe_allow_html=True,
-        )
-
-        if not lavoratori_filtrati:
-            st.info(
-                "Nessun lavoratore trovato nel database al momento. I lavoratori"
-                " possono attivarsi dall'Area Lavoratore."
-            )
 
         for lav in lavoratori_filtrati:
             col_info, col_btn = st.columns([3, 1], gap="medium")
 
             with col_info:
-                if lav["disponibile"]:
-                    badge_stato = '<span class="pulsing-dot"></span><b style="color:#059669; font-size:0.75rem;">DISPONIBILE ORA</b>'
-                else:
-                    badge_stato = '<span class="offline-dot"></span><span style="color:#888; font-size:0.75rem;">NON DISPONIBILE</span>'
+                badge_stato = (
+                    '<span class="pulsing-dot"></span><b style="color:#059669; font-size:0.75rem;">DISPONIBILE ORA</b>'
+                    if lav["disponibile"]
+                    else '<span class="offline-dot"></span><span style="color:#888; font-size:0.75rem;">NON DISPONIBILE</span>'
+                )
 
                 st.markdown(
                     f"""
@@ -582,7 +565,7 @@ elif scelta == "Database & Filtri Azienda":
                         <div style="margin-bottom:6px;">{badge_stato}</div>
                         <h3 style="margin:0; font-size:1.15rem;">{safe(lav["nome"])}</h3>
                         <p style="color:var(--text-muted); margin:3px 0; font-size:0.9rem; font-weight:600;">{safe(lav["mansione"])} · {safe(lav["zona"])}</p>
-                        <span style="font-size:0.8rem; color:#888;">{safe(lav["completati"])} turni completati</span>
+                        <p style="color:#d97706; margin:4px 0; font-weight:700; font-size:0.8rem;">⭐ {safe(lav["recensioni"])}</p>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -603,27 +586,12 @@ elif scelta == "Area Lavoratore":
     st.markdown(
         """
         <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Area Personale Lavoratore</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>Modifica il tuo stato e la tua mansione: accendi la disponibilità per farti contattare subito.</p>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Imposta le tue competenze e gestisci la tua disponibilità in tempo reale.</p>
     """,
         unsafe_allow_html=True,
     )
 
     mio = st.session_state.mio_profilo
-
-    st.markdown(
-        f"""
-    <div class="custom-card">
-        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem;">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" style="width:70px; height:70px; border-radius:50%; object-fit:cover;" />
-            <div>
-                <h3 style="margin:0;">{safe(mio["nome"])}</h3>
-                <p style="color:var(--text-muted); margin:2px 0; font-size:0.85rem;">{safe(mio["mansione"])} · {safe(mio["zona"])}</p>
-                <span class="badge-pop badge-purple" style="margin:0;">Profilo Verificato</span>
-            </div>
-        </div>
-    """,
-        unsafe_allow_html=True,
-    )
 
     nuova_mansione = st.selectbox(
         "Seleziona la tua mansione principale",
@@ -638,6 +606,21 @@ elif scelta == "Area Lavoratore":
         index=0,
     )
     mio["mansione"] = nuova_mansione
+
+    st.markdown("### Le tue competenze certificate")
+    scelta_comp = st.multiselect(
+        "Seleziona le abilità da mostrare ai locali",
+        [
+            "Lingua Inglese",
+            "Vini & Sommelier Base",
+            "Mixology Avanzata",
+            "Caffetteria Pro",
+            "Gestione cassa",
+            "Piattaforma POS",
+        ],
+        default=mio["competenze"],
+    )
+    mio["competenze"] = scelta_comp
 
     st.markdown("### Gestione Stato in Tempo Reale")
     nuova_disp = st.toggle(
@@ -656,6 +639,7 @@ elif scelta == "Area Lavoratore":
             if trovato:
                 trovato["disponibile"] = True
                 trovato["mansione"] = mio["mansione"]
+                trovato["competenze"] = mio["competenze"]
             else:
                 st.session_state.lavoratori.append(mio.copy())
         else:
@@ -664,40 +648,16 @@ elif scelta == "Area Lavoratore":
                     item for item in st.session_state.lavoratori if item["id"] != mio["id"]
                 ]
 
-        st.success(
-            "Stato aggiornato con successo nel database! I locali vedranno"
-            " immediatamente la modifica."
-        )
-
-    if mio["disponibile"]:
-        st.markdown(
-            """
-        <div style="background:#ecfdf5; color:#059669; padding:12px; border-radius:12px; font-weight:700; margin-top:15px;">
-            <span class="pulsing-dot"></span> Il tuo profilo è attualmente ONLINE nel database pubblico!
-        </div>
-        """,
-            unsafe_allow_html=True,
-        )
-    else:
-        st.markdown(
-            """
-        <div style="background:#f1f5f9; color:#64748b; padding:12px; border-radius:12px; font-weight:700; margin-top:15px;">
-            <span class="offline-dot"></span> Il tuo profilo è attualmente offline.
-        </div>
-        """,
-            unsafe_allow_html=True,
-        )
-
-    st.markdown("</div>", unsafe_allow_html=True)
+        st.success("Stato aggiornato con successo nel database!")
 
 # ============================================================
-# 4. PIANI & ABBONAMENTI
+# 4. PIANI & ABBONAMENTI (CON LE NUOVE OPZIONI)
 # ============================================================
 elif scelta == "Piani & Abbonamenti":
     st.markdown(
         """
         <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>Piani & Funzioni Elite ⚡</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>Stiamo preparando strumenti rivoluzionari per connettere locali, eventi e professionisti.</p>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Scopri i nuovi strumenti avanzati per accelerare il recruiting e valorizzare la tua professionalità.</p>
     """,
         unsafe_allow_html=True,
     )
@@ -708,55 +668,55 @@ elif scelta == "Piani & Abbonamenti":
         st.markdown(
             """
         <div class="custom-card">
-            <span class="badge-pop badge-blue">Coming Soon 🚀</span>
-            <h3 style="margin-top:10px; font-size:1.2rem;">Aziende ed Eventi Elite</h3>
-            <div style="font-size: 1.4rem; font-weight: 800; color: #0284c7; margin: 10px 0;">Accesso Anticipato</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Ricerche illimitate per ristoranti e agenzie eventi.</p>
+            <span class="badge-pop badge-blue">Novità 🚀</span>
+            <h3 style="margin-top:10px; font-size:1.2rem;">Radar Urgenze VIP</h3>
+            <div style="font-size: 1.2rem; font-weight: 800; color: #0284c7; margin: 10px 0;">Notifiche Flash</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Sistema di allerta istantanea per i locali che cercano personale d'emergenza nel raggio di pochi km.</p>
         </div>
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Mettiti in Lista d'Attesa", key="btn_std"):
-            st.toast("Iscritto alla lista d'attesa prioritaria Aziende!")
+        if st.button("Attiva Radar", key="btn_radar"):
+            st.toast("Radar Urgenze attivato con successo!")
 
     with col2:
         st.markdown(
             """
         <div class="custom-card">
-            <span class="badge-pop badge-orange">Coming Soon 🌟</span>
-            <h3 style="margin-top:10px; font-size:1.2rem;">Pro Pass (Hostess & Sala)</h3>
-            <div style="font-size: 1.4rem; font-weight: 800; color: #ea580c; margin: 10px 0;">Presto Disponibile</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Salta la fila e vai in cima alle preferenze dei locali.</p>
+            <span class="badge-pop badge-orange">Novità 🌟</span>
+            <h3 style="margin-top:10px; font-size:1.2rem;">Badge Competenze Pro</h3>
+            <div style="font-size: 1.2rem; font-weight: 800; color: #ea580c; margin: 10px 0;">Certificazioni</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Aggiungi qualifiche speciali al tuo profilo per saltare in cima alle ricerche dei migliori locali.</p>
         </div>
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Avvisami al Lancio", key="btn_prem"):
-            st.toast("Registrato con successo al Pro Pass!")
+        if st.button("Richiedi Badge", key="btn_badge"):
+            st.toast("Richiesta certificazione inviata!")
 
     with col3:
         st.markdown(
             """
         <div class="custom-card">
-            <span class="badge-pop badge-yellow">Coming Soon ⚡</span>
-            <h3 style="margin-top:10px; font-size:1.2rem;">Radar Urgenze VIP</h3>
-            <div style="font-size: 1.4rem; font-weight: 800; color: #ca8a04; margin: 10px 0;">In Fase di Test</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">La funzione segreta per le urgenze nel weekend.</p>
+            <span class="badge-pop badge-yellow">Novità ⚡</span>
+            <h3 style="margin-top:10px; font-size:1.2rem;">Reputazione Verificata</h3>
+            <div style="font-size: 1.2rem; font-weight: 800; color: #ca8a04; margin: 10px 0;">Feedback Bidirezionale</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Il sistema di recensioni incrociate per garantire affidabilità massima sia ai lavoratori che ai datori.</p>
         </div>
         """,
             unsafe_allow_html=True,
         )
-        if st.button("Richiedi Accesso Anteprima", key="btn_boost"):
-            st.toast("Richiesta inviata per l'anteprima esclusiva!")
+        if st.button("Scopri di più", key="btn_rep"):
+            st.toast("Funzione inclusa nel tuo account!")
 
 # ============================================================
-# 5. DASHBOARD ADMIN (VISITA PROTETTA DA PASSWORD)
+# 5. DASHBOARD ADMIN
 # ============================================================
 elif scelta == "📊 Dashboard Admin":
     st.markdown(
         """
         <h2 style='font-weight:800; font-size:1.8rem; margin-bottom:5px;'>📊 Dashboard Admin & Statistiche</h2>
-        <p style='color:var(--text-muted); margin-bottom:2rem;'>Area protetta. Qui puoi vedere i dati in tempo reale sull'utilizzo della tua applicazione.</p>
+        <p style='color:var(--text-muted); margin-bottom:2rem;'>Area protetta per il controllo del traffico e dei profili attivi.</p>
     """,
         unsafe_allow_html=True,
     )
@@ -770,7 +730,6 @@ elif scelta == "📊 Dashboard Admin":
             <span class="badge-pop badge-blue">Traffic Monitor</span>
             <h3 style="color: var(--text-muted); font-size: 1rem; margin-top: 10px;">Visite Totali (Aperture App)</h3>
             <div style="font-size: 3rem; font-weight: 800; color: #0284c7; margin: 15px 0;">{st.session_state.visite_totali}</div>
-            <p style="font-size: 0.85rem; color: #888;">Numero di volte che la pagina è stata aperta o ricaricata.</p>
         </div>
         """,
             unsafe_allow_html=True,
@@ -783,7 +742,6 @@ elif scelta == "📊 Dashboard Admin":
             <span class="badge-pop badge-purple">Conversion Monitor</span>
             <h3 style="color: var(--text-muted); font-size: 1rem; margin-top: 10px;">Lavoratori Iscritti / Online</h3>
             <div style="font-size: 3rem; font-weight: 800; color: #9333ea; margin: 15px 0;">{len(st.session_state.lavoratori)}</div>
-            <p style="font-size: 0.85rem; color: #888;">Numero di utenti attivi registrati nel database.</p>
         </div>
         """,
             unsafe_allow_html=True,
